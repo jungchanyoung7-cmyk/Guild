@@ -3,209 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>이옌 길드전 가이드 빌더</title>
+    <title>이옌 길드전 가이드용 앱</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-color: #f8fafc; --card-bg: #ffffff; --text-main: #1e293b; --border-color: #e2e8f0; }
-        .dark-mode { --bg-color: #0f172a; --card-bg: #1e293b; --text-main: #f1f5f9; --border-color: #334155; }
-        
-        body { background-color: var(--bg-color); color: var(--text-main); font-family: 'Noto Sans KR', sans-serif; transition: 0.3s; -webkit-tap-highlight-color: transparent; }
-        .card-shadow { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); border: 1px solid var(--border-color); }
-
-        /* 슬롯 디자인 */
-        .slot { aspect-ratio: 1/1; border: 2px solid var(--border-color); border-radius: 16px; position: relative; cursor: pointer; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--card-bg); transition: 0.1s; }
-        .slot:active { transform: scale(0.95); }
+        body { font-family: 'Noto Sans KR', sans-serif; transition: background-color 0.3s, color 0.3s; }
+        .dark-mode { background-color: #1a1a1a; color: #ffffff; }
+        .dark-mode .card { background-color: #2d2d2d; border-color: #444; }
+        .slot { aspect-ratio: 1 / 1; border: 2px dashed #ccc; border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; position: relative; background: rgba(255,255,255,0.1); }
         .slot img { width: 100%; height: 100%; object-fit: cover; }
-        .slot-label { position: absolute; bottom: 0; width: 100%; background: rgba(0,0,0,0.7); color: white; font-size: 10px; text-align: center; padding: 2px 0; z-index: 10; font-weight: 500; }
-
-        /* 진형 미리보기 (이미지 참조) */
-        .formation-preview { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; width: 90px; margin: 0 auto; padding: 10px; background: #f1f5f9; border-radius: 12px; }
-        .dark-mode .formation-preview { background: #334155; }
-        .pos-unit { width: 22px; height: 22px; border-radius: 5px; border: 1.5px solid #cbd5e1; font-size: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-        .pos-blue { background: #dbeafe; border-color: #3b82f6; color: #1d4ed8; } /* 전방/방패 */
-        .pos-red { background: #fee2e2; border-color: #ef4444; color: #b91c1c; }  /* 후방/숫자 */
-
-        .formation-card { border: 2.5px solid transparent; border-radius: 20px; transition: 0.2s; cursor: pointer; background: var(--card-bg); padding: 15px; text-align: center; }
-        .formation-card.active { border-color: #3b82f6; background-color: rgba(59, 130, 246, 0.03); }
-
-        /* 모달 레이아웃 */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem; }
-        .modal-content { background: var(--card-bg); width: 100%; max-width: 500px; max-height: 85vh; border-radius: 28px; overflow-y: auto; padding: 24px; position: relative; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        
-        .tag { font-size: 10px; font-weight: bold; padding: 4px 10px; border-radius: 20px; color: white; }
-        .tag-공격 { background: #ef4444; }
-        .tag-방어 { background: #f59e0b; }
-        .tag-카운터 { background: #10b981; }
+        .slot-label { position: absolute; bottom: 0; width: 100%; background: rgba(0,0,0,0.6); color: white; font-size: 10px; text-align: center; }
+        .formation-btn { border: 2px solid transparent; transition: all 0.2s; }
+        .formation-btn.active { border-color: #3b82f6; background-color: rgba(59, 130, 246, 0.1); transform: scale(0.95); }
+        .popup-card { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 50; padding: 20px; overflow-y: auto; }
+        .grid-layout { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; }
+        .mobile-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; border-top: 1px solid #ddd; display: flex; justify-content: space-around; padding: 10px; z-index: 40; }
+        .dark-mode .mobile-nav { background: #2d2d2d; border-color: #444; }
+        /* DeskTop vs Mobile */
+        @media (min-width: 768px) {
+            .main-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 350px; gap: 20px; }
+            .mobile-nav { display: none; }
+        }
     </style>
 </head>
-<body class="p-4 pb-24">
+<body class="bg-gray-50 text-gray-900">
 
-    <header class="flex justify-between items-center mb-8 px-2 max-w-4xl mx-auto">
-        <div>
-            <h1 class="text-2xl font-bold tracking-tight text-slate-800 dark:text-white">이옌 길드전</h1>
-            <p class="text-[11px] text-slate-400 font-medium uppercase tracking-widest">Rebirth Guide Builder</p>
-        </div>
-        <button id="menuTrigger" class="w-12 h-12 rounded-2xl bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 flex items-center justify-center text-xl">☰</button>
+    <header class="p-4 flex justify-between items-center bg-white shadow-sm dark:bg-zinc-900 sticky top-0 z-30">
+        <h1 class="text-xl font-bold">이옌 길드전 가이드</h1>
+        <button id="menuBtn" class="p-2 text-2xl">☰</button>
     </header>
 
-    <div class="max-w-4xl mx-auto space-y-8">
+    <div class="main-container p-4 pb-24">
         
-        <section class="card-shadow p-6 rounded-[32px] bg-white dark:bg-slate-800">
-            <h2 class="text-xs font-bold text-slate-400 mb-6 uppercase tracking-widest flex items-center gap-2">
-                <span class="w-1 h-3 bg-blue-500 rounded-full"></span> 진형 카테고리
-            </h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="formation-card active" id="f-기본" onclick="changeFormation('기본')">
-                    <div class="formation-preview mb-3">
-                        <div></div><div class="pos-unit pos-red">4</div><div class="pos-unit pos-blue">2</div>
-                        <div class="pos-unit pos-red">3</div><div class="pos-unit pos-red">5</div><div class="pos-unit pos-blue">1</div>
-                        <div></div><div></div><div></div>
-                    </div>
-                    <span class="text-[13px] font-bold">기본 진형</span>
-                </div>
-                <div class="formation-card" id="f-밸런스" onclick="changeFormation('밸런스')">
-                    <div class="formation-preview mb-3">
-                        <div></div><div class="pos-unit pos-red">5</div><div class="pos-unit pos-blue">3</div>
-                        <div class="pos-unit pos-red">4</div><div class="pos-unit pos-blue">1</div><div class="pos-unit pos-blue">2</div>
-                        <div></div><div></div><div></div>
-                    </div>
-                    <span class="text-[13px] font-bold">밸런스 진형</span>
-                </div>
-                <div class="formation-card" id="f-공격" onclick="changeFormation('공격')">
-                    <div class="formation-preview mb-3">
-                        <div class="pos-unit pos-red">2</div><div class="pos-unit pos-red">4</div><div class="pos-unit pos-blue">1</div>
-                        <div class="pos-unit pos-red">3</div><div class="pos-unit pos-red">5</div><div></div>
-                        <div></div><div></div><div></div>
-                    </div>
-                    <span class="text-[13px] font-bold">공격 진형</span>
-                </div>
-                <div class="formation-card" id="f-보호" onclick="changeFormation('보호')">
-                    <div class="formation-preview mb-3">
-                        <div></div><div class="pos-unit pos-blue">2</div><div class="pos-unit pos-blue">4</div>
-                        <div class="pos-unit pos-red">5</div><div class="pos-unit pos-blue">1</div><div class="pos-unit pos-blue">3</div>
-                        <div></div><div></div><div></div>
-                    </div>
-                    <span class="text-[13px] font-bold">보호 진형</span>
-                </div>
-            </div>
-        </section>
-
-        <section class="card-shadow p-6 rounded-[32px] bg-white dark:bg-slate-800">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                    <span class="w-1 h-3 bg-red-500 rounded-full"></span> 덱 배치
-                </h2>
-                <span class="text-[10px] font-bold text-blue-500">영웅 길게 누르면 상세 설정</span>
-            </div>
-            <div class="grid grid-cols-3 md:grid-cols-6 gap-4 mb-8">
-                <div class="slot hero-slot" data-idx="0" onclick="openSelector('hero', 0)"><span class="text-[10px] text-slate-300">영웅 1</span></div>
-                <div class="slot hero-slot" data-idx="1" onclick="openSelector('hero', 1)"><span class="text-[10px] text-slate-300">영웅 2</span></div>
-                <div class="slot hero-slot" data-idx="2" onclick="openSelector('hero', 2)"><span class="text-[10px] text-slate-300">영웅 3</span></div>
-                <div class="slot hero-slot" data-idx="3" onclick="openSelector('hero', 3)"><span class="text-[10px] text-slate-300">영웅 4</span></div>
-                <div class="slot hero-slot" data-idx="4" onclick="openSelector('hero', 4)"><span class="text-[10px] text-slate-300">영웅 5</span></div>
-                <div class="slot border-dashed border-blue-400" onclick="openSelector('pet', 0)">
-                    <span class="text-[10px] text-blue-400 font-bold">PET</span>
+        <section>
+            <div class="mb-6">
+                <h2 class="text-sm font-bold mb-3">진형 선택</h2>
+                <div class="grid grid-cols-4 gap-2">
+                    <button class="formation-btn active p-2 rounded bg-white dark:bg-zinc-800 shadow" onclick="setFormation('기본')">
+                        <div class="text-[10px] text-gray-500">Lv.2</div>
+                        <div class="font-bold">기본</div>
+                    </button>
+                    <button class="formation-btn p-2 rounded bg-white dark:bg-zinc-800 shadow" onclick="setFormation('밸런스')">
+                        <div class="text-[10px] text-gray-500">Lv.1</div>
+                        <div class="font-bold">밸런스</div>
+                    </button>
+                    <button class="formation-btn p-2 rounded bg-white dark:bg-zinc-800 shadow" onclick="setFormation('공격')">
+                        <div class="text-[10px] text-gray-500">Lv.1</div>
+                        <div class="font-bold">공격</div>
+                    </button>
+                    <button class="formation-btn p-2 rounded bg-white dark:bg-zinc-800 shadow" onclick="setFormation('보호')">
+                        <div class="text-[10px] text-gray-500">Lv.10</div>
+                        <div class="font-bold">보호</div>
+                    </button>
                 </div>
             </div>
 
-            <div class="flex items-center gap-5 pt-6 border-t border-slate-50 dark:border-slate-700">
-                <div class="text-center">
-                    <p class="text-[9px] font-black text-slate-300 uppercase leading-none">Special</p>
-                    <p class="text-[10px] font-bold text-slate-400 uppercase">Skills</p>
+            <div class="mb-6">
+                <h2 class="text-sm font-bold mb-3">영웅 슬롯 (5개) & 펫</h2>
+                <div class="grid grid-cols-3 md:grid-cols-6 gap-3">
+                    <div class="slot" onclick="openPopup('hero', 0)" oncontextmenu="openDetail(0); return false;">
+                        <span class="text-xs text-gray-400">영웅 1</span>
+                        <div class="slot-label" id="hero-name-0">선택</div>
+                    </div>
+                    <div class="slot" onclick="openPopup('hero', 1)" oncontextmenu="openDetail(1); return false;">
+                        <span class="text-xs text-gray-400">영웅 2</span>
+                        <div class="slot-label" id="hero-name-1">선택</div>
+                    </div>
+                    <div class="slot" onclick="openPopup('hero', 2)" oncontextmenu="openDetail(2); return false;">
+                        <span class="text-xs text-gray-400">영웅 3</span>
+                        <div class="slot-label" id="hero-name-2">선택</div>
+                    </div>
+                    <div class="slot" onclick="openPopup('hero', 3)" oncontextmenu="openDetail(3); return false;">
+                        <span class="text-xs text-gray-400">영웅 4</span>
+                        <div class="slot-label" id="hero-name-3">선택</div>
+                    </div>
+                    <div class="slot" onclick="openPopup('hero', 4)" oncontextmenu="openDetail(4); return false;">
+                        <span class="text-xs text-gray-400">영웅 5</span>
+                        <div class="slot-label" id="hero-name-4">선택</div>
+                    </div>
+                    <div class="slot border-blue-400" onclick="openPopup('pet', 0)">
+                        <span class="text-xs text-blue-400">PET</span>
+                        <div class="slot-label" id="pet-name-0">선택</div>
+                    </div>
                 </div>
-                <div id="skillSlotContainer" class="flex gap-3">
-                    <div class="w-14 h-14 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-700 flex items-center justify-center text-[8px] text-slate-300 font-bold">S-1</div>
-                    <div class="w-14 h-14 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-700 flex items-center justify-center text-[8px] text-slate-300 font-bold">S-2</div>
-                    <div class="w-14 h-14 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-700 flex items-center justify-center text-[8px] text-slate-300 font-bold">S-3</div>
+                <p class="text-[10px] mt-2 text-gray-400">* 영웅 슬롯 길게 누르면 상세 설정(스텟/장비)</p>
+            </div>
+
+            <div class="mb-6">
+                <h2 class="text-sm font-bold mb-3">전술 스킬 (영웅 연동)</h2>
+                <div class="flex gap-2">
+                    <div class="w-16 h-16 slot" id="skill-slot-1"><div class="text-[10px]">스킬1</div></div>
+                    <div class="w-16 h-16 slot" id="skill-slot-2"><div class="text-[10px]">스킬2</div></div>
+                    <div class="w-16 h-16 slot" id="skill-slot-3"><div class="text-[10px]">스킬3</div></div>
                 </div>
             </div>
-        </section>
 
-        <section class="card-shadow p-8 rounded-[40px] bg-white dark:bg-slate-800 space-y-6">
-            <div class="space-y-2">
-                <label class="text-[11px] font-bold text-slate-400 ml-1 uppercase">가이드 제목</label>
-                <input type="text" id="deckTitle" placeholder="예: 루디 방어덱 (아일린 카운터)" class="w-full p-5 rounded-[24px] bg-slate-50 dark:bg-slate-900 border-0 focus:ring-2 focus:ring-blue-500 outline-none font-medium">
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="space-y-2">
-                    <label class="text-[11px] font-bold text-slate-400 ml-1 uppercase">덱 속성</label>
-                    <select id="deckType" class="w-full p-5 rounded-[24px] bg-slate-50 dark:bg-slate-900 border-0 outline-none appearance-none font-medium">
+            <div class="card p-4 rounded-xl bg-white shadow-md dark:bg-zinc-800">
+                <h2 class="font-bold mb-4">덱 정보 입력</h2>
+                <div class="space-y-4">
+                    <input type="text" id="deckName" placeholder="덱 명칭 입력" class="w-full p-2 rounded border dark:bg-zinc-700">
+                    <select id="deckType" class="w-full p-2 rounded border dark:bg-zinc-700">
                         <option value="공격덱">공격덱 (빨강)</option>
                         <option value="방어덱">방어덱 (노랑)</option>
                         <option value="카운터덱">카운터덱 (초록)</option>
                     </select>
-                </div>
-                <div class="space-y-2">
-                    <label class="text-[11px] font-bold text-slate-400 ml-1 uppercase">속공 지향 여부</label>
                     <div class="flex gap-2">
-                        <select id="isSpeed" onchange="toggleSpeedInput()" class="w-1/3 p-5 rounded-[24px] bg-slate-50 dark:bg-slate-900 border-0 outline-none font-medium">
-                            <option value="N">내실</option>
-                            <option value="Y">속공</option>
+                        <select id="deckTrait" class="flex-1 p-2 rounded border dark:bg-zinc-700">
+                            <option value="내실">내실설정</option>
+                            <option value="속공">속공</option>
                         </select>
-                        <input type="number" id="speedVal" placeholder="수치" class="hidden w-2/3 p-5 rounded-[24px] bg-slate-50 dark:bg-slate-900 border-0 outline-none font-medium">
+                        <input type="number" id="speedValue" placeholder="속공수치" class="w-24 p-2 rounded border dark:bg-zinc-700">
                     </div>
+                    <textarea id="deckTip" placeholder="공략 팁 입력" class="w-full p-2 rounded border dark:bg-zinc-700 h-24"></textarea>
+                    
+                    <div>
+                        <label class="text-xs">카운터 설정</label>
+                        <select id="counterSelect" class="w-full p-2 rounded border dark:bg-zinc-700">
+                            <option value="">저장된 가이드덱 선택</option>
+                        </select>
+                    </div>
+
+                    <button onclick="saveDeck()" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold">가이드덱 저장</button>
                 </div>
             </div>
-
-            <div class="space-y-2">
-                <label class="text-[11px] font-bold text-slate-400 ml-1 uppercase">운영 팁 & 공략</label>
-                <textarea id="deckTip" placeholder="스킬 순서나 주의할 상대 덱 정보를 입력하세요" class="w-full p-5 rounded-[24px] bg-slate-50 dark:bg-slate-900 border-0 h-32 outline-none font-medium"></textarea>
-            </div>
-
-            <button onclick="saveFullDeck()" class="w-full py-6 bg-slate-900 dark:bg-blue-600 text-white rounded-[24px] font-bold text-lg shadow-xl active:scale-95 transition-all">공유 가이드 저장</button>
         </section>
 
-        <div id="deckList" class="space-y-4">
+        <section>
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="font-bold">가이드덱 리스트</h2>
+                <select onchange="filterList(this.value)" class="text-sm p-1 rounded border dark:bg-zinc-700">
+                    <option value="전체">전체보기</option>
+                    <option value="공격덱">공격덱</option>
+                    <option value="방어덱">방어덱</option>
+                    <option value="카운터덱">카운터덱</option>
+                </select>
             </div>
+            <div id="deckList" class="space-y-4">
+                <div class="text-center text-gray-400 py-10">저장된 데이터가 없습니다.</div>
+            </div>
+        </section>
     </div>
 
-    <div id="selectModal" class="modal">
-        <div class="modal-content no-scrollbar">
-            <div class="flex justify-between items-center mb-6">
-                <h3 id="modalTitle" class="font-bold text-lg uppercase tracking-tighter">데이터 로드</h3>
-                <button onclick="closeModal('selectModal')" class="text-2xl text-slate-400">&times;</button>
+    <div id="selectionPopup" class="popup-card">
+        <div class="bg-white dark:bg-zinc-800 rounded-2xl p-4 max-w-md mx-auto h-full overflow-y-auto">
+            <div class="flex justify-between items-center mb-4 sticky top-0 bg-inherit py-2">
+                <h3 id="popupTitle" class="font-bold">항목 선택</h3>
+                <button onclick="closePopup()" class="text-2xl">&times;</button>
             </div>
-            <div class="flex gap-2 mb-6">
-                <input type="text" id="modalSearch" oninput="renderSelectorItems()" placeholder="이름 검색..." class="flex-1 p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 border-0 outline-none">
-                <button onclick="toggleFavFilter()" id="favBtn" class="px-5 bg-slate-100 dark:bg-slate-800 rounded-2xl text-slate-300 text-xl">★</button>
-            </div>
-            <div id="modalGrid" class="grid grid-cols-4 gap-3"></div>
+            <input type="text" id="searchInput" oninput="filterSearch(this.value)" placeholder="이름으로 검색..." class="w-full p-2 mb-4 border rounded dark:bg-zinc-700">
+            <div id="itemContainer" class="grid-layout">
+                </div>
         </div>
     </div>
 
-    <div id="detailModal" class="modal">
-        <div class="modal-content">
-            <h3 class="text-center font-bold text-xl mb-8">HERO CUSTOMIZE</h3>
-            
-            <div class="grid grid-cols-2 gap-8 mb-8">
+    <div id="detailPopup" class="popup-card">
+        <div class="bg-white dark:bg-zinc-800 rounded-2xl p-6 max-w-md mx-auto">
+            <h3 class="font-bold mb-4">영웅 상세 상세설정</h3>
+            <div class="grid grid-cols-2 gap-4 mb-6">
                 <div>
-                    <label class="text-[10px] font-black text-slate-300 uppercase block mb-3">Equipment (2x2)</label>
-                    <div class="grid grid-cols-2 gap-2">
-                        <div class="slot h-14 border-slate-100" onclick="openSelector('item', 'w1')"></div>
-                        <div class="slot h-14 border-slate-100" onclick="openSelector('item', 'w2')"></div>
-                        <div class="slot h-14 border-slate-100" onclick="openSelector('item', 'a1')"></div>
-                        <div class="slot h-14 border-slate-100" onclick="openSelector('item', 'a2')"></div>
+                    <label class="text-[10px] block">장비 (2x2)</label>
+                    <div class="grid grid-cols-2 gap-1">
+                        <div class="slot h-12" onclick="openPopup('item', 'w1')"></div>
+                        <div class="slot h-12" onclick="openPopup('item', 'w2')"></div>
+                        <div class="slot h-12" onclick="openPopup('item', 'a1')"></div>
+                        <div class="slot h-12" onclick="openPopup('item', 'a2')"></div>
                     </div>
                 </div>
                 <div>
-                    <label class="text-[10px] font-black text-slate-300 uppercase block mb-3">Accessory</label>
-                    <div class="slot h-14 border-blue-100" onclick="openSelector('acc', 0)"></div>
+                    <label class="text-[10px] block">장신구 (1)</label>
+                    <div class="slot h-12" onclick="openPopup('acc', 'acc1')"></div>
                 </div>
             </div>
-
-            <div id="statInputList" class="space-y-3 border-t pt-8 max-h-64 overflow-y-auto no-scrollbar">
+            <div class="space-y-2 text-sm overflow-y-auto max-h-60">
+                <div class="flex justify-between"><span>공격력</span><input type="number" class="w-20 border rounded px-1 dark:bg-zinc-700"></div>
+                <div class="flex justify-between"><span>방어력</span><input type="number" class="w-20 border rounded px-1 dark:bg-zinc-700"></div>
+                <div class="flex justify-between"><span>생명력</span><input type="number" class="w-20 border rounded px-1 dark:bg-zinc-700"></div>
+                <div class="flex justify-between"><span>속공</span><input type="number" class="w-20 border rounded px-1 dark:bg-zinc-700"></div>
                 </div>
-
-            <button onclick="saveHeroDetail()" class="w-full mt-8 bg-blue-600 text-white py-5 rounded-2xl font-bold shadow-lg shadow-blue-200">상세 설정 저장</button>
+            <button onclick="closeDetail()" class="w-full mt-4 bg-gray-800 text-white py-2 rounded">닫기 및 적용</button>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, push, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, set, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBObWW-nQdRW7B_HB9O5lmCJFoVRUm-Ijs",
@@ -213,14 +194,16 @@
             databaseURL: "https://guid-3755d-default-rtdb.asia-southeast1.firebasedatabase.app",
             projectId: "guid-3755d",
             storageBucket: "guid-3755d.firebasestorage.app",
-            appId: "1:397986674872:web:71ec328badbbedc6d4dc4d"
+            messagingSenderId: "397986674872",
+            appId: "1:397986674872:web:71ec328badbbedc6d4dc4d",
+            measurementId: "G-1BFM3PXK0P"
         };
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // --- 제공 데이터 통합 ---
-        const HERO_DATA = {
+        // 데이터베이스 기초자료
+        const heroData = {
             "스페셜": ["루디", "아일린", "레이첼", "델론즈", "스파이크", "제이브", "크리스", "바네사"],
             "(구)세나": ["파이", "로지", "쥬리", "밀리아", "겔리두스", "항우", "우치"],
             "다크나이츠": ["팔라누스", "플라튼", "콜트", "브란즈&브란셀", "실베스타", "멜키르"],
@@ -230,199 +213,159 @@
             "아이사": ["리나", "풍연", "소이", "백각", "비담", "권호", "조운", "관우", "초선", "강재", "나타"],
             "일반/기타": ["세인", "밍", "루리", "니아", "에스파다", "지크", "룩", "챈슬러", "에반", "카린", "유리", "리"]
         };
-        const PET_LIST = ["루", "이린", "리첼", "델로", "파이크", "맬패로", "유", "크리", "연지", "카람"];
-        const ITEM_DATA = {
+        const petList = ["루", "이린", "리첼", "델로", "파이크", "맬패로", "유", "크리", "연지", "카람"];
+        const itemData = {
             "장비": ["선봉장", "성기사", "추적자", "암살자", "수문장", "수호자", "복수자", "조율자", "주술사"],
             "장신구": ["가시반지", "공포의반지", "권능의반지", "기회의반지", "꿈의반지", "독사반지", "마법의반지", "메두사의반지", "번뜩이는반지", "보호의반지", "복수의반지", "부활의반지", "불사의반지", "샐러맨더의반지", "설원의반지", "수호의반지", "시간의반지", "자연의반지", "재앙의반지", "저주의반지", "저항의반지", "적중의반지", "죽음의반지", "집중의반지", "행운의반지"]
         };
-        const STAT_LABELS = ["공격력(물리)", "공격력(마력)", "방어력", "생명력", "속공", "치명타확률", "치명타피해", "약점 공격 확률", "막기 확률", "받는 피해 감소", "효과 적중", "효과 저항"];
 
-        const GITHUB_PATH = "https://raw.githubusercontent.com/jungchanyoung7-cmyk/Guild/main/public/도감/";
+        const GITHUB_BASE = "https://raw.githubusercontent.com/jungchanyoung7-cmyk/Guild/main/public/도감/";
 
-        // --- 앱 상태 ---
-        let appState = {
+        let currentSelection = { type: '', slotIndex: null };
+        let selectedDeckData = {
             formation: '기본',
-            selectedHeroes: [null, null, null, null, null],
-            selectedPet: null,
-            heroDetails: [{}, {}, {}, {}, {}],
-            selector: { type: '', index: 0, favOnly: false },
-            favorites: JSON.parse(localStorage.getItem('favs') || '[]')
+            heroes: [null, null, null, null, null],
+            pet: null
         };
 
-        // 초기화: 스텟 필드 생성
-        const statContainer = document.getElementById('statInputList');
-        STAT_LABELS.forEach(label => {
-            statContainer.innerHTML += `
-                <div class="flex justify-between items-center text-sm px-1">
-                    <span class="text-slate-500 font-semibold">${label}</span>
-                    <input type="number" data-stat="${label}" class="w-28 p-2 rounded-xl bg-slate-50 dark:bg-slate-900 border-0 text-right outline-none font-bold" placeholder="0">
-                </div>
-            `;
-        });
-
-        // --- 핵심 로직 ---
-
-        // 1. 진형 선택 (이미지 매칭)
-        window.changeFormation = (name) => {
-            appState.formation = name;
-            document.querySelectorAll('.formation-card').forEach(c => c.classList.toggle('active', c.id === `f-${name}`));
+        // 전역 함수 연결
+        window.openPopup = (type, index) => {
+            currentSelection = { type, index };
+            document.getElementById('selectionPopup').style.display = 'block';
+            renderSelectionItems(type);
         };
 
-        // 2. 선택기 팝업
-        window.openSelector = (type, index) => {
-            appState.selector.type = type;
-            appState.selector.index = index;
-            document.getElementById('modalTitle').innerText = `${type.toUpperCase()} 선택`;
-            document.getElementById('selectModal').style.display = 'flex';
-            renderSelectorItems();
+        window.closePopup = () => {
+            document.getElementById('selectionPopup').style.display = 'none';
         };
 
-        window.renderSelectorItems = () => {
-            const grid = document.getElementById('modalGrid');
-            const search = document.getElementById('modalSearch').value;
-            grid.innerHTML = '';
-
-            let source = [];
-            let folder = '';
-            if(appState.selector.type === 'hero') { 
-                Object.values(HERO_DATA).forEach(group => source.push(...group));
-                folder = '캐릭터 아이콘 모음';
-            } else if(appState.selector.type === 'pet') {
-                source = PET_LIST; folder = '펫 아이콘 모음';
-            } else if(appState.selector.type === 'item') {
-                source = ITEM_DATA.장비; folder = '장비';
-            } else {
-                source = ITEM_DATA.장신구; folder = '장신구';
-            }
-
-            source.filter(n => n.includes(search)).forEach(name => {
-                if(appState.selector.favOnly && !appState.favorites.includes(name)) return;
-                const isFav = appState.favorites.includes(name);
-                const itemDiv = document.createElement('div');
-                itemDiv.className = "relative";
-                itemDiv.innerHTML = `
-                    <div class="slot border bg-white dark:bg-slate-800" onclick="applyChoice('${name}', '${folder}')">
-                        <img src="${GITHUB_PATH}${folder}/${name}.png" onerror="this.src='${GITHUB_PATH}${folder}/${name}.jpg'">
-                        <div class="slot-label">${name}</div>
-                    </div>
-                    <button onclick="toggleFav('${name}')" class="absolute -top-1 -right-1 z-20 ${isFav ? 'text-yellow-400' : 'text-slate-200'}">★</button>
-                `;
-                grid.appendChild(itemDiv);
-            });
-        };
-
-        window.applyChoice = (name, folder) => {
-            const { type, index } = appState.selector;
-            if(type === 'hero') {
-                appState.selectedHeroes[index] = name;
-                const slots = document.querySelectorAll('.hero-slot');
-                slots[index].innerHTML = `<img src="${GITHUB_PATH}${folder}/${name}.png" onerror="this.src='${GITHUB_PATH}${folder}/${name}.jpg'"><div class="slot-label">${name}</div>`;
-                if(index === 0) syncSkillSlots(name);
-            } else if(type === 'pet') {
-                appState.selectedPet = name;
-                const petSlot = document.querySelectorAll('.slot')[5];
-                petSlot.innerHTML = `<img src="${GITHUB_PATH}${folder}/${name}.png" onerror="this.src='${GITHUB_PATH}${folder}/${name}.jpg'"><div class="slot-label">${name}</div>`;
-            }
-            closeModal('selectModal');
-        };
-
-        // 3. 스킬 슬롯 자동 연동 (이미지 없을 시 텍스트 표기)
-        function syncSkillSlots(heroName) {
-            const container = document.getElementById('skillSlotContainer');
+        function renderSelectionItems(type) {
+            const container = document.getElementById('itemContainer');
             container.innerHTML = '';
-            const rules = [
-                { s: '-2', l: '(위)' },
-                { s: '-3', l: '(아래)' },
-                { s: '-4', l: '(패시브)' }
-            ];
+            let list = [];
+            let path = '';
 
-            rules.forEach(rule => {
-                const skillDiv = document.createElement('div');
-                skillDiv.className = "w-14 h-14 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-700 overflow-hidden flex items-center justify-center relative";
-                const imgFile = `${heroName}${rule.s}`;
-                
-                skillDiv.innerHTML = `
-                    <img src="${GITHUB_PATH}캐릭터 스킬 모음/${imgFile}.png" 
-                         class="w-full h-full object-cover"
-                         onerror="this.onerror=null; this.src='${GITHUB_PATH}캐릭터 스킬 모음/${imgFile}.jpg'; 
-                         this.parentElement.innerHTML='<div class=\"text-[9px] text-center font-bold px-1 leading-tight text-blue-600\">${heroName}<br>${rule.l}</div>';">
+            if (type === 'hero') {
+                Object.keys(heroData).forEach(cat => list.push(...heroData[cat]));
+                path = "캐릭터 아이콘 모음/";
+            } else if (type === 'pet') {
+                list = petList;
+                path = "펫 아이콘 모음/";
+            } else if (type === 'item') {
+                list = itemData.장비;
+                path = "장비/";
+            } else if (type === 'acc') {
+                list = itemData.장신구;
+                path = "장신구/";
+            }
+
+            list.forEach(name => {
+                const item = document.createElement('div');
+                item.className = "text-center cursor-pointer p-1 hover:bg-gray-100 rounded";
+                item.innerHTML = `
+                    <div class="w-full aspect-square bg-gray-200 rounded-lg mb-1 overflow-hidden flex items-center justify-center text-[10px]">
+                        <img src="${GITHUB_BASE}${path}${name}.png" onerror="this.src='https://via.placeholder.com/80?text=${name}'">
+                    </div>
+                    <div class="text-[10px] truncate">${name}</div>
                 `;
-                container.appendChild(skillDiv);
+                item.onclick = () => selectItem(name, `${GITHUB_BASE}${path}${name}.png`);
+                container.appendChild(item);
             });
         }
 
-        // 4. 롱프레스 감지 (상세 설정)
-        let timer;
-        document.querySelectorAll('.hero-slot').forEach(slot => {
-            slot.addEventListener('touchstart', (e) => {
-                const idx = e.currentTarget.dataset.idx;
-                timer = setTimeout(() => {
-                    if(!appState.selectedHeroes[idx]) return alert('영웅을 먼저 선택하세요.');
-                    appState.selector.index = idx;
-                    document.getElementById('detailModal').style.display = 'flex';
-                }, 700);
+        function selectItem(name, imgUrl) {
+            const { type, index } = currentSelection;
+            if (type === 'hero') {
+                selectedDeckData.heroes[index] = name;
+                document.getElementById(`hero-name-${index}`).innerText = name;
+                // 스킬 연동 로직 (영웅명-2 등)
+                if (index === 0) updateSkills(name);
+            } else if (type === 'pet') {
+                selectedDeckData.pet = name;
+                document.getElementById(`pet-name-0`).innerText = name;
+            }
+            closePopup();
+        }
+
+        function updateSkills(heroName) {
+            // 메인 영웅 스킬 3개 표시 로직
+            const skillPath = "캐릭터 스킬 모음/";
+            for(let i=1; i<=3; i++) {
+                const slot = document.getElementById(`skill-slot-${i}`);
+                slot.innerHTML = `<img src="${GITHUB_BASE}${skillPath}${heroName}-${i+1}.png" onerror="this.parentElement.innerHTML='<div class=\'text-[8px]\'>${heroName}(위/아래)</div>'">`;
+            }
+        }
+
+        window.setFormation = (f) => {
+            selectedDeckData.formation = f;
+            document.querySelectorAll('.formation-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.innerText.includes(f)) btn.classList.add('active');
             });
-            slot.addEventListener('touchend', () => clearTimeout(timer));
-        });
+        };
 
-        // 5. 저장 및 리스트 로드 (Firebase)
-        window.saveFullDeck = () => {
-            const title = document.getElementById('deckTitle').value;
-            if(!title) return alert('가이드 제목을 입력해 주세요.');
+        // 저장 로직
+        window.saveDeck = () => {
+            const deckName = document.getElementById('deckName').value;
+            if(!deckName) return alert("덱 명칭을 입력하세요.");
 
-            const payload = {
-                title,
-                formation: appState.formation,
-                heroes: appState.selectedHeroes,
-                pet: appState.selectedPet,
+            const newDeck = {
+                ...selectedDeckData,
+                name: deckName,
                 type: document.getElementById('deckType').value,
-                speed: document.getElementById('speedVal').value || 0,
+                trait: document.getElementById('deckTrait').value,
+                speed: document.getElementById('speedValue').value,
                 tip: document.getElementById('deckTip').value,
                 timestamp: Date.now()
             };
 
-            push(ref(db, 'guides'), payload).then(() => {
-                alert('가이드가 성공적으로 공유되었습니다.');
+            const deckRef = ref(db, 'decks');
+            push(deckRef, newDeck).then(() => {
+                alert("가이드덱이 성공적으로 저장되었습니다.");
                 location.reload();
             });
         };
 
-        onValue(ref(db, 'guides'), (snap) => {
-            const list = document.getElementById('deckList');
-            list.innerHTML = '';
-            const data = snap.val();
-            if(!data) return;
-
-            Object.entries(data).reverse().forEach(([id, g]) => {
-                const banner = document.createElement('div');
-                banner.className = "card-shadow p-5 rounded-[28px] bg-white dark:bg-slate-800 animate-fade-in";
-                banner.innerHTML = `
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="tag tag-${g.type.replace('덱','')}">${g.type}</span>
-                        <span class="text-[10px] text-slate-400 font-mono">SPEED: ${g.speed}</span>
-                    </div>
-                    <h3 class="font-bold mb-4 truncate text-sm">${g.title}</h3>
-                    <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-2">
-                        ${g.heroes.map(h => `<img src="${GITHUB_PATH}캐릭터 아이콘 모음/${h}.png" class="w-8 h-8 rounded-lg border border-slate-50">`).join('')}
-                        <div class="w-px h-5 bg-slate-200 mx-1"></div>
-                        <img src="${GITHUB_PATH}펫 아이콘 모음/${g.pet}.png" class="w-8 h-8 rounded-lg border border-blue-100">
-                    </div>
-                `;
-                list.appendChild(banner);
-            });
+        // 실시간 리스트 업데이트
+        onValue(ref(db, 'decks'), (snapshot) => {
+            const data = snapshot.val();
+            const listContainer = document.getElementById('deckList');
+            const counterSelect = document.getElementById('counterSelect');
+            listContainer.innerHTML = '';
+            
+            if (data) {
+                Object.keys(data).reverse().forEach(key => {
+                    const deck = data[key];
+                    const color = deck.type === '공격덱' ? 'bg-red-500' : deck.type === '방어덱' ? 'bg-yellow-500' : 'bg-green-500';
+                    
+                    const card = document.createElement('div');
+                    card.className = "card p-4 rounded-xl bg-white shadow-sm dark:bg-zinc-800 border-l-4 " + (deck.type === '공격덱' ? 'border-red-500' : deck.type === '방어덱' ? 'border-yellow-500' : 'border-green-500');
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="${color} text-white text-[10px] px-2 py-0.5 rounded">${deck.type}</span>
+                            <span class="text-xs text-gray-400">${deck.trait} ${deck.speed || ''}</span>
+                        </div>
+                        <h3 class="font-bold">${deck.name}</h3>
+                        <div class="flex gap-1 my-2">
+                            ${deck.heroes.map(h => `<div class="w-8 h-8 bg-gray-100 rounded overflow-hidden"><img src="${GITHUB_BASE}캐릭터 아이콘 모음/${h}.png" onerror="this.src='https://via.placeholder.com/32?text=?'"></div>`).join('')}
+                            <div class="w-8 h-8 border border-blue-200 rounded overflow-hidden"><img src="${GITHUB_BASE}펫 아이콘 모음/${deck.pet}.png" onerror="this.src='https://via.placeholder.com/32?text=P'"></div>
+                        </div>
+                        <button class="text-xs text-blue-500" onclick="alert('전체 상세 팝업 준비중...')">상세보기 & 카운터 비교</button>
+                    `;
+                    listContainer.appendChild(card);
+                    
+                    // 카운터 선택 리스트 추가
+                    const opt = document.createElement('option');
+                    opt.value = key;
+                    opt.text = deck.name;
+                    counterSelect.appendChild(opt);
+                });
+            }
         });
 
-        // 유틸리티
-        window.closeModal = (id) => document.getElementById(id).style.display = 'none';
-        window.toggleSpeedInput = () => {
-            const isY = document.getElementById('isSpeed').value === 'Y';
-            document.getElementById('speedVal').classList.toggle('hidden', !isY);
-        };
-        window.toggleFav = (n) => {
-            if(appState.favorites.includes(n)) appState.favorites = appState.favorites.filter(f => f !== n);
-            else appState.favorites.push(n);
-            localStorage.setItem('favs', JSON.stringify(appState.favorites));
-            renderSelectorItems();
+        // 테마 설정
+        document.getElementById('menuBtn').onclick = () => {
+            document.body.classList.toggle('dark-mode');
         };
 
     </script>
