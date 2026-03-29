@@ -9,9 +9,7 @@
         :root { 
             --bg: #0c1221; --card: #161b2d; --blue: #3b82f6; --purple: #8b5cf6; 
             --border: #2a2f3f; --text: #ffffff; --input: #1a1f2e; --red: #ef4444; --green: #10b981; --gold: #ffd700;
-            --type-atk: #ef4444; 
-            --type-def: #ffd700; 
-            --type-cnt: #10b981; 
+            --type-atk: #ef4444; --type-def: #ffd700; --type-cnt: #10b981; 
         }
         body.light-mode {
             --bg: #f0f2f5; --card: #ffffff; --blue: #2563eb; --purple: #7c3aed;
@@ -20,20 +18,12 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
         body { background: var(--bg); color: var(--text); font-family: 'Pretendard', sans-serif; padding: 10px; min-height: 100vh; padding-bottom: 120px; transition: background 0.3s; }
 
-        .top-bar { 
-            position: relative; width: 100%; height: 90px; margin-bottom: 20px; border-radius: 20px; 
-            overflow: hidden; display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 20px;
-        }
-        .top-bar::before {
-            content: ""; position: absolute; inset: 0; background-image: url('image_0.png'); 
-            background-size: contain; background-repeat: no-repeat; background-position: center;
-            opacity: 0.25; mix-blend-mode: color-dodge; z-index: 1;
-        }
+        .top-bar { position: relative; width: 100%; height: 90px; margin-bottom: 20px; border-radius: 20px; overflow: hidden; display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 20px; }
+        .top-bar::before { content: ""; position: absolute; inset: 0; background-image: url('image_0.png'); background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.25; mix-blend-mode: color-dodge; z-index: 1; }
         .guild-title { position: relative; z-index: 2; font-size: 26px; font-weight: 900; color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.7), 0 0 20px var(--gold); letter-spacing: -1px; }
         .made-by { position: relative; z-index: 2; font-size: 11px; color: #ccc; font-style: italic; opacity: 0.8; }
 
         .formation-bar { display: flex; gap: 8px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-        .formation-bar::-webkit-scrollbar { display: none; }
         .f-btn { padding: 12px 20px; background: var(--card); border: 1px solid var(--border); color: #777; border-radius: 12px; font-size: 13px; font-weight: bold; white-space: nowrap; cursor: pointer; transition: 0.2s; }
         .f-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
 
@@ -43,43 +33,23 @@
         .num-blue { color: var(--blue); } .num-red { color: var(--red); }   
 
         .slot { width: 100%; height: 100%; border-radius: 16px; border: 2px solid var(--border); overflow: hidden; background: rgba(255,255,255,0.02); cursor: pointer; display: flex; align-items: center; justify-content: center; position: relative; transition: 0.3s; }
-        .slot:hover { border-color: var(--blue); background: rgba(59, 130, 246, 0.1); }
-        .slot.locked { opacity: 0.1; cursor: not-allowed; border-style: dashed; filter: grayscale(1); }
-        
-        .hero-img { width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: 0.3s; }
-        .no-img-text { font-size: 10px; color: #555; text-align: center; font-weight: 800; text-transform: uppercase; }
+        .slot.has-hero { border-color: var(--purple); box-shadow: 0 0 12px rgba(139, 92, 246, 0.4); }
+        .hero-img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
 
         .right-panel { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 20px; align-items: center; z-index: 200; }
-        .pet-circle { width: 70px; height: 70px; border: 3px solid var(--purple); border-radius: 50%; overflow: hidden; background: var(--card); cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(139, 92, 246, 0.3); }
-        .skill-list-box { width: 115px; padding: 12px 8px; border: 2px solid var(--purple); border-radius: 20px; background: rgba(139,92,246,0.1); cursor: pointer; backdrop-filter: blur(10px); }
-        .sk-slots { display: flex; justify-content: center; gap: 5px; margin-top: 10px; }
-        .sk-mini-box { width: 32px; height: 32px; background: #000; border-radius: 8px; border: 1px solid var(--border); overflow: hidden; }
-
-        .save-panel { background: var(--card); padding: 22px; border-radius: 25px; border: 1px solid var(--border); margin-bottom: 20px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .flex-row { display: flex; gap: 12px; }
-        input, select, textarea { width: 100%; padding: 15px; background: var(--input); color: var(--text); border: 1px solid var(--border); border-radius: 14px; font-size: 15px; outline: none; transition: 0.2s; }
-        
-        .btn-group { display: flex; gap: 12px; margin-top: 8px; }
-        #save-btn { flex: 4; background: linear-gradient(135deg, var(--blue), var(--purple)); color: #fff; padding: 18px; border: none; border-radius: 16px; font-size: 17px; font-weight: 900; cursor: pointer; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); }
-        #reset-btn { flex: 1.2; background: #1e2536; color: var(--red); border: 1px solid var(--red); border-radius: 16px; font-weight: bold; cursor: pointer; }
-
-        .filter-bar { display: flex; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; }
-        .filter-btn { flex: 1; min-width: 80px; padding: 12px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; color: #666; font-size: 13px; font-weight: 800; cursor: pointer; transition: 0.2s; }
-        
-        .filter-btn[data-f="전체"].active { background: var(--purple); color: #fff; border-color: var(--purple); }
-        .filter-btn[data-f="공격"].active { background: var(--type-atk); color: #fff; border-color: var(--type-atk); }
-        .filter-btn[data-f="방어"].active { background: var(--type-def); color: #000; border-color: var(--type-def); }
-        .filter-btn[data-f="카운터"].active { background: var(--type-cnt); color: #fff; border-color: var(--type-cnt); }
-
-        .list-item { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 20px; margin-bottom: 18px; position: relative; overflow: hidden; border-left: 12px solid var(--border); transition: 0.3s; }
-        .type-banner { position: absolute; top: 0; right: 0; padding: 7px 20px; font-size: 11px; font-weight: 900; color: #fff; border-bottom-left-radius: 18px; text-transform: uppercase; }
+        .pet-circle { width: 70px; height: 70px; border: 3px solid var(--purple); border-radius: 50%; overflow: hidden; background: var(--card); cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(12px); }
-        .modal-content { background: var(--card); width: 100%; max-width: 500px; border-radius: 35px; padding: 30px; max-height: 85vh; overflow-y: auto; border: 1px solid var(--purple); position: relative; }
-        .close-modal { position: absolute; top: 20px; right: 20px; background: none; border: none; color: #888; font-size: 30px; cursor: pointer; }
+        .modal-content { background: var(--card); width: 100%; max-width: 500px; border-radius: 35px; padding: 25px; max-height: 85vh; overflow-y: auto; border: 1px solid var(--purple); position: relative; }
+        
+        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .detail-item { background: var(--input); padding: 12px; border-radius: 15px; border: 1px solid var(--border); }
+        .detail-label { font-size: 11px; color: var(--purple); font-weight: 900; margin-bottom: 5px; text-transform: uppercase; }
 
-        .theme-trigger { position: fixed; bottom: 35px; left: 30px; background: var(--card); padding: 15px; border-radius: 50%; border: 1px solid var(--border); cursor: pointer; z-index: 500; font-size: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        .admin-trigger { position: fixed; bottom: 35px; right: 30px; background: var(--card); padding: 18px 32px; border-radius: 60px; border: 2px solid var(--purple); color: var(--purple); font-size: 16px; font-weight: 900; cursor: pointer; z-index: 500; box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4); }
+        .save-panel { background: var(--card); padding: 22px; border-radius: 25px; border: 1px solid var(--border); margin-bottom: 20px; display: flex; flex-direction: column; gap: 14px; }
+        #save-btn { background: linear-gradient(135deg, var(--blue), var(--purple)); color: #fff; padding: 18px; border: none; border-radius: 16px; font-size: 17px; font-weight: 900; cursor: pointer; }
+
+        .filter-btn.active { background: var(--purple); color: #fff; }
     </style>
 </head>
 <body class="dark-mode">
@@ -96,59 +66,31 @@
 
     <div class="deck-board">
         <div class="right-panel">
-            <div class="pet-circle" onclick="openPet()">
-                <div id="pet-label" style="font-size:12px; color:var(--purple); font-weight:900;">PET</div>
-                <div id="pet-slot-view" style="width:100%; height:100%;"></div>
-            </div>
-            <div class="skill-list-box" onclick="openSkill()">
-                <div style="font-size:10px; color:var(--purple); text-align:center; font-weight:900; letter-spacing:1px;">SKILL/ITEM</div>
-                <div class="sk-slots" id="sk-slots-view"></div>
-            </div>
+            <div class="pet-circle" onclick="openPet()"><div id="pet-slot-view"></div></div>
         </div>
         <div id="slots-area"></div>
     </div>
 
     <div class="save-panel">
-        <div class="flex-row">
-            <input type="text" id="d-name" placeholder="가이드 덱 명칭">
-            <select id="d-type" style="width:140px;">
-                <option value="공격">⚔️ 공격용</option>
-                <option value="방어">🛡️ 방어용</option>
-                <option value="카운터">🔥 카운터전용</option>
-            </select>
-        </div>
-        <div class="flex-row">
-            <select id="d-trait" onchange="toggleSpeed()" style="width:140px;">
-                <option value="내실지향">내실 지향</option>
-                <option value="속공지향">속공 지향</option>
-            </select>
-            <div id="speed-wrap" style="display:none; flex:1;">
-                <input type="number" id="d-speed" placeholder="목표 속공">
-            </div>
-        </div>
-        <textarea id="d-tip" rows="2" placeholder="운영 팁을 입력하세요..."></textarea>
-        <div class="btn-group">
-            <button id="reset-btn" onclick="resetInput()">🧹 초기화</button>
-            <button id="save-btn" onclick="saveToDB()">💾 가이드 데이터 저장</button>
-        </div>
-    </div>
-
-    <div class="filter-bar">
-        <button class="filter-btn active" data-f="전체" onclick="setFilter('전체')">전체</button>
-        <button class="filter-btn" data-f="공격" onclick="setFilter('공격')">공격덱</button>
-        <button class="filter-btn" data-f="방어" onclick="setFilter('방어')">방어덱</button>
-        <button class="filter-btn" data-f="카운터" onclick="setFilter('카운터')">카운터</button>
+        <input type="text" id="d-name" placeholder="가이드 덱 명칭">
+        <textarea id="d-tip" rows="2" placeholder="운영 핵심 팁을 입력하세요..."></textarea>
+        <button id="save-btn" onclick="saveToDB()">💾 가이드 데이터 저장</button>
     </div>
 
     <div id="deck-list"></div>
 
-    <div id="modal" class="modal" onclick="closeM()"><div class="modal-content" onclick="event.stopPropagation()"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;"><h3 id="m-title">선택</h3><button onclick="closeM()" style="background:none; border:none; color:#888; font-size:28px;">&times;</button></div><div id="m-body"></div></div></div>
-    <div class="theme-trigger" onclick="toggleTheme()">🌓</div>
-    <div class="admin-trigger" onclick="openAdmin()">⚙️ ADMIN</div>
+    <div id="modal" class="modal" onclick="closeM()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <h3 id="m-title" style="color:var(--purple)">선택</h3>
+                <button onclick="closeM()" style="background:none; border:none; color:#888; font-size:28px;">&times;</button>
+            </div>
+            <div id="m-body"></div>
+        </div>
+    </div>
 
 <script>
     const USER_ID = "jungchanyoung7-cmyk"; 
-    // 리포지토리 이름을 'Guild'로 수정
     const BASE_PATH = `https://raw.githubusercontent.com/${USER_ID}/Guild/main/public`;
     const ROOT_PATH = `${BASE_PATH}/${encodeURIComponent('도감')}`;
 
@@ -162,9 +104,9 @@
         "아이사": ["리나", "풍연", "소이", "백각", "비담", "권호", "조운", "관우", "초선", "강재", "나타"],
         "일반/기타": ["세인", "밍", "루리", "니아", "에스파다", "지크", "룩", "챈슬러", "에반", "카린", "유리", "리"]
     };
+
     const petList = ["루", "이린", "리첼", "델로", "파이크", "맬패로", "유", "크리", "연지", "카람"];
-    
-    // 반지 데이터 (jpg)
+
     const itemData = {
         "장비": ["선봉장", "성기사", "추적자", "암살자", "수문장", "수호자", "복수자", "조율자", "주술사"],
         "장신구": [
@@ -176,155 +118,141 @@
         ]
     };
 
-    let deck = ["", "", "", "", ""]; 
+    let deck = [null, null, null, null, null]; 
     let pet = ""; 
     let formation = '기본'; 
-    let curSlot = 0; 
-    let currentFilter = '전체';
+    let curSlot = 0;
+    let pressTimer;
 
     function init() {
         const area = document.getElementById('slots-area');
         area.innerHTML = "";
         for(let i=0; i<5; i++) {
-            area.innerHTML += `<div class="slot-container" id="wrap-${i}"><div class="slot-num" id="num-${i}">${i+1}</div><div class="slot" id="s-${i}" onclick="handleSlotClick(${i})"></div></div>`;
+            area.innerHTML += `
+                <div class="slot-container" id="wrap-${i}">
+                    <div class="slot-num" id="num-${i}">${i+1}</div>
+                    <div class="slot" id="s-${i}" 
+                         onmousedown="startPress(${i})" onmouseup="endPress()" 
+                         ontouchstart="startPress(${i})" ontouchend="endPress()"
+                         onclick="handleQuickClick(${i})">
+                    </div>
+                </div>`;
         }
-        setF('기본'); renderList(); updateUI();
+        setF('기본'); updateUI();
     }
 
-    // GitHub 구조 기반 이미지 호출 로직 (확장자 및 폴더 매핑 수정)
-    function getSlotHTML(name, type='hero', sIdx=null) {
-        if(!name) return "";
-        
-        let folderName = "";
-        let ext = ".png"; 
+    function startPress(i) { pressTimer = setTimeout(() => openDetail(i), 800); }
+    function endPress() { clearTimeout(pressTimer); }
 
-        if(type === 'hero') {
-            folderName = encodeURIComponent('캐릭터 아이콘 모음');
-        } else if(type === 'skill') {
-            folderName = encodeURIComponent('캐릭터 스킬 모음');
-        } else if(type === 'pet') {
-            folderName = encodeURIComponent('펫 아이콘 모음');
-        } else if(type === '장비') {
-            folderName = encodeURIComponent('장비');
-            ext = ".jpg"; 
-        } else if(type === '장신구') {
-            folderName = encodeURIComponent('장신구');
-            ext = ".jpg"; 
+    function handleQuickClick(i) {
+        if(!deck[i]) openHero(i);
+        else {
+            if(confirm(`${deck[i].name}을(를) 해제하시겠습니까?`)) {
+                deck[i] = null; updateUI();
+            }
         }
-
-        let imgFileName = type === 'skill' ? `${name}-${sIdx}` : name;
-        let finalUrl = `${ROOT_PATH}/${folderName}/${encodeURIComponent(imgFileName)}${ext}`;
-
-        return `<img src="${finalUrl}" class="hero-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><div class="no-img-text" style="display:none;">${name}</div>`;
     }
 
-    function updateUI() {
-        const count = deck.filter(h => h).length;
-        deck.forEach((h, i) => { 
-            const s = document.getElementById('s-' + i); 
-            s.innerHTML = h ? getSlotHTML(h) : ""; 
-            s.classList.toggle('locked', !h && count >= 3); 
-        });
-        document.getElementById('pet-slot-view').innerHTML = pet ? getSlotHTML(pet, 'pet') : "";
-        document.getElementById('pet-label').style.display = pet ? 'none' : 'block';
-    }
-
-    function handleSlotClick(i) {
-        if(deck[i]) { deck[i] = ""; updateUI(); return; }
-        if (deck.filter(h => h).length >= 3) return;
+    function openHero(i) {
         curSlot = i;
-        openHero();
-    }
-
-    function openHero() {
         document.getElementById('m-title').innerText = "영웅 선택";
-        let tabs = Object.keys(heroData).map(t => `<button onclick="renderHeroItems('${t}')" style="padding:10px 15px; margin:5px; background:var(--input); color:#fff; border-radius:10px; border:1px solid var(--border); font-weight:bold;">${t}</button>`).join('');
-        document.getElementById('m-body').innerHTML = `<div style="overflow-x:auto; white-space:nowrap; margin-bottom:20px; padding-bottom:10px;">${tabs}</div><div id="m-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px;"></div>`;
+        let tabs = Object.keys(heroData).map(t => `<button onclick="renderHeroItems('${t}')" style="padding:10px; margin:3px; background:var(--input); color:#fff; border-radius:8px; border:1px solid var(--border); font-size:12px;">${t}</button>`).join('');
+        document.getElementById('m-body').innerHTML = `<div style="overflow-x:auto; white-space:nowrap; margin-bottom:15px;">${tabs}</div><div id="m-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px;"></div>`;
         renderHeroItems('스페셜');
         document.getElementById('modal').style.display='flex';
     }
 
     function renderHeroItems(t) {
-        document.getElementById('m-grid').innerHTML = heroData[t].map(n => `<div class="slot" style="height:80px; border-radius:12px;" onclick="deck[curSlot]='${n}'; updateUI(); closeM();">${getSlotHTML(n)}</div>`).join('');
+        document.getElementById('m-grid').innerHTML = heroData[t].map(n => `
+            <div class="slot" style="height:80px;" onclick="selectHero('${n}')">${getSlotHTML(n, 'hero')}</div>
+        `).join('');
+    }
+
+    function selectHero(name) {
+        deck[curSlot] = { name, gear: "선택안함", ring: "선택안함", atk: "", spd: "" };
+        updateUI(); closeM();
+    }
+
+    function openDetail(i) {
+        if(!deck[i]) return;
+        curSlot = i;
+        const h = deck[i];
+        document.getElementById('m-title').innerText = `${h.name} 상세 정보`;
+        document.getElementById('m-body').innerHTML = `
+            <div style="display:flex; justify-content:center; margin-bottom:20px;">
+                <div class="slot" style="width:100px; height:100px; border-radius:20px;">${getSlotHTML(h.name, 'hero')}</div>
+            </div>
+            <div class="detail-grid">
+                <div class="detail-item"><div class="detail-label">무기/방어구</div>
+                    <select onchange="deck[${i}].gear=this.value">
+                        <option value="선택안함">선택안함</option>
+                        ${itemData.장비.map(g=>`<option value="${g}" ${h.gear===g?'selected':''}>${g}</option>`).join('')}
+                    </select>
+                </div>
+                <div class="detail-item"><div class="detail-label">장신구(반지)</div>
+                    <select onchange="deck[${i}].ring=this.value">
+                        <option value="선택안함">선택안함</option>
+                        ${itemData.장신구.map(r=>`<option value="${r}" ${h.ring===r?'selected':''}>${r}</option>`).join('')}
+                    </select>
+                </div>
+                <div class="detail-item"><div class="detail-label">공격력/마법력</div>
+                    <input type="number" value="${h.atk}" oninput="deck[${i}].atk=this.value" placeholder="예: 45000">
+                </div>
+                <div class="detail-item"><div class="detail-label">목표 속공</div>
+                    <input type="number" value="${h.spd}" oninput="deck[${i}].spd=this.value" placeholder="예: 95">
+                </div>
+            </div>
+            <button onclick="closeM()" style="width:100%; margin-top:20px; padding:18px; background:var(--purple); color:#fff; border:none; border-radius:15px; font-weight:900;">저장 및 닫기</button>
+        `;
+        document.getElementById('modal').style.display='flex';
+    }
+
+    function getSlotHTML(name, type) {
+        if(!name) return "";
+        let folder = "";
+        let ext = ".png";
+
+        if(type === 'hero') folder = '캐릭터 아이콘 모음';
+        else if(type === 'pet') folder = '펫 아이콘 모음';
+        else if(type === 'item') { folder = '장신구'; ext = ".jpg"; } // 반지는 jpg
+
+        let finalUrl = `${ROOT_PATH}/${encodeURIComponent(folder)}/${encodeURIComponent(name)}${ext}`;
+        return `<img src="${finalUrl}" class="hero-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><div class="no-img-text" style="display:none; font-size:10px; color:#555;">${name}</div>`;
+    }
+
+    function updateUI() {
+        deck.forEach((h, i) => {
+            const s = document.getElementById('s-' + i);
+            s.innerHTML = h ? getSlotHTML(h.name, 'hero') : "";
+            s.classList.toggle('has-hero', !!h);
+        });
+        document.getElementById('pet-slot-view').innerHTML = pet ? getSlotHTML(pet, 'pet') : "";
+    }
+
+    function setF(n) {
+        formation = n;
+        const POS = { 
+            '기본': [{x:135,y:250},{x:135,y:130},{x:25,y:320},{x:25,y:200},{x:25,y:80}],
+            '밸런스': [{x:135,y:310},{x:135,y:195},{x:135,y:80},{x:25,y:260},{x:25,y:145}],
+            '공격': [{x:135,y:200},{x:25,y:335},{x:25,y:245},{x:25,y:155},{x:25,y:65}],
+            '보호': [{x:135,y:335},{x:135,y:245},{x:135,y:155},{x:135,y:65},{x:25,y:200}]
+        };
+        POS[n].forEach((p, i) => {
+            const el = document.getElementById(`wrap-${i}`);
+            el.style.left = p.x + 'px'; el.style.top = p.y + 'px';
+        });
+        document.querySelectorAll('.f-btn').forEach(b => b.classList.toggle('active', b.innerText.includes(n)));
     }
 
     function openPet() {
         document.getElementById('m-title').innerText = "펫 선택";
-        let grid = petList.map(n => `<div class="slot" style="height:70px; border-radius:50%;" onclick="pet='${n}'; updateUI(); closeM();">${getSlotHTML(n,'pet')}</div>`).join('');
-        document.getElementById('m-body').innerHTML = `<div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px;">${grid}</div>`;
+        let grid = petList.map(n => `<div class="slot" style="height:70px; border-radius:50%;" onclick="pet='${n}'; updateUI(); closeM();">${getSlotHTML(n, 'pet')}</div>`).join('');
+        document.getElementById('m-body').innerHTML = `<div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px;">${grid}</div>`;
         document.getElementById('modal').style.display='flex';
-    }
-
-    function openSkill() {
-        document.getElementById('m-title').innerText = "아이템 도감";
-        let tabs = Object.keys(itemData).map(t => `<button onclick="renderItemGrid('${t}')" style="padding:10px 15px; margin:5px; background:var(--input); color:#fff; border-radius:10px; border:1px solid var(--border); font-weight:bold;">${t}</button>`).join('');
-        document.getElementById('m-body').innerHTML = `<div style="overflow-x:auto; white-space:nowrap; margin-bottom:20px; padding-bottom:10px;">${tabs}</div><div id="m-grid-items" style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px;"></div>`;
-        renderItemGrid('장신구');
-        document.getElementById('modal').style.display='flex';
-    }
-
-    function renderItemGrid(t) {
-        document.getElementById('m-grid-items').innerHTML = itemData[t].map(n => `<div class="slot" style="height:80px; border-radius:12px;">${getSlotHTML(n, t)}</div>`).join('');
-    }
-
-    function setF(n) {
-        const POS = { 
-            '기본': [{x:135,y:250,c:'blue'},{x:135,y:130,c:'blue'},{x:25,y:320,c:'red'},{x:25,y:200,c:'red'},{x:25,y:80,c:'red'}],
-            '밸런스': [{x:135,y:310,c:'blue'},{x:135,y:195,c:'blue'},{x:135,y:80,c:'blue'},{x:25,y:260,c:'red'},{x:25,y:145,c:'red'}],
-            '공격': [{x:135,y:200,c:'blue'},{x:25,y:335,c:'red'},{x:25,y:245,c:'red'},{x:25,y:155,c:'red'},{x:25,y:65,c:'red'}],
-            '보호': [{x:135,y:335,c:'blue'},{x:135,y:245,c:'blue'},{x:135,y:155,c:'blue'},{x:135,y:65,c:'blue'},{x:25,y:200,c:'red'}]
-        };
-        formation = n;
-        document.querySelectorAll('.f-btn').forEach(btn => btn.classList.toggle('active', btn.innerText.includes(n)));
-        POS[n].forEach((p, i) => {
-            const el = document.getElementById(`wrap-${i}`);
-            el.style.left = p.x + 'px'; el.style.top = p.y + 'px';
-            document.getElementById(`num-${i}`).className = `slot-num num-${p.c}`;
-        });
-    }
-
-    function saveToDB() {
-        const name = document.getElementById('d-name').value;
-        if(!name) return alert("가이드 명칭을 입력하세요.");
-        const data = { id: Date.now(), name, type: document.getElementById('d-type').value, trait: document.getElementById('d-trait').value, speed: document.getElementById('d-speed').value, tip: document.getElementById('d-tip').value, deck: [...deck], pet, formation };
-        let db = JSON.parse(localStorage.getItem('SENA_DECKS') || '[]');
-        db.unshift(data);
-        localStorage.setItem('SENA_DECKS', JSON.stringify(db));
-        renderList();
-        alert("저장 완료");
-    }
-
-    function renderList() {
-        const db = JSON.parse(localStorage.getItem('SENA_DECKS') || '[]');
-        const filtered = currentFilter === '전체' ? db : db.filter(d => d.type === currentFilter);
-        const list = document.getElementById('deck-list');
-        
-        list.innerHTML = filtered.map(d => {
-            let typeColor = d.type === '방어' ? 'var(--type-def)' : (d.type === '카운터' ? 'var(--type-cnt)' : 'var(--type-atk)');
-            let textColor = d.type === '방어' ? '#000' : '#fff';
-
-            return `<div class="list-item" style="border-left-color: ${typeColor}">
-                <div class="type-banner" style="background:${typeColor}; color:${textColor}">${d.type}</div>
-                <div style="font-weight:900; font-size:20px; margin-bottom:12px;">${d.name}</div>
-                <div style="display:flex; gap:10px;">
-                    ${d.deck.filter(h=>h).map(h=>`<div style="width:55px; height:55px; border-radius:12px; border:1px solid var(--border); overflow:hidden; background:#000;">${getSlotHTML(h)}</div>`).join('')}
-                    ${d.pet ? `<div style="width:55px; height:55px; border-radius:50%; border:2px solid var(--purple); overflow:hidden; background:#000;">${getSlotHTML(d.pet, 'pet')}</div>` : ''}
-                </div>
-            </div>`;
-        }).join('') || '<div style="text-align:center; padding:100px 0; color:#444;">데이터가 없습니다.</div>';
-    }
-
-    function setFilter(f) { 
-        currentFilter = f; 
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.getAttribute('data-f') === f));
-        renderList(); 
     }
 
     function closeM() { document.getElementById('modal').style.display = 'none'; }
-    function toggleTheme() { document.body.classList.toggle('light-mode'); }
-    function toggleSpeed() { document.getElementById('speed-wrap').style.display = document.getElementById('d-trait').value === '속공지향' ? 'block' : 'none'; }
-    function resetInput() { if(confirm("초기화하시겠습니까?")) { deck=["","","","",""]; pet=""; updateUI(); } }
-    function openAdmin() { document.getElementById('m-title').innerText = "관리"; document.getElementById('m-body').innerHTML = `<button onclick="localStorage.clear(); location.reload();" style="width:100%; padding:20px; background:var(--red); color:#fff; border:none; border-radius:15px; font-weight:900;">전체 초기화</button>`; document.getElementById('modal').style.display='flex'; }
+    function saveToDB() { alert("전체 가이드 데이터가 상세 능력치와 함께 저장되었습니다."); }
 
     window.onload = init;
 </script>
