@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>이옌 길드전 가이드용 앱(전부한글)</title>
+    <title>이옌 길드전 가이드용 앱</title>
     <style>
         :root {
             --bg: #f0f2f5; --card: #ffffff; --text: #333; --primary: #4a90e2;
@@ -13,116 +13,111 @@
             --bg: #18191a; --card: #242526; --text: #e4e6eb; --border: #3e4042;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Apple SD Gothic Neo', sans-serif; }
-        body { background: var(--bg); color: var(--text); transition: 0.3s; }
+        body { background: var(--bg); color: var(--text); transition: 0.3s; overflow-x: hidden; }
 
-        /* UI 기본 구조 */
-        .app { max-width: 500px; margin: 0 auto; background: var(--card); min-height: 100vh; position: relative; padding-bottom: 80px; }
+        .app { max-width: 500px; margin: 0 auto; background: var(--card); min-height: 100vh; position: relative; padding-bottom: 100px; }
         header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: var(--primary); color: white; position: sticky; top:0; z-index: 100; }
         
-        /* 진형 선택 */
+        /* 진형 탭 */
         .formation-tabs { display: grid; grid-template-columns: repeat(4, 1fr); padding: 10px; gap: 5px; }
-        .f-tab { padding: 12px 5px; border: 1px solid var(--primary); background: transparent; color: var(--text); border-radius: 5px; cursor: pointer; font-size: 0.8rem; font-weight: bold; }
+        .f-tab { padding: 10px 2px; border: 1px solid var(--primary); background: transparent; color: var(--text); border-radius: 5px; cursor: pointer; font-size: 0.75rem; font-weight: bold; }
         .f-tab.active { background: var(--primary); color: white; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); }
 
-        /* 메인 보드 */
-        .board { position: relative; width: 100%; height: 380px; border-bottom: 2px solid var(--border); background-image: radial-gradient(var(--border) 1px, transparent 1px); background-size: 20px 20px; }
-        .slot { position: absolute; width: 80px; height: 110px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
-        .slot-frame { width: 60px; height: 60px; border-radius: 50%; border: 2px dashed var(--border); overflow: hidden; background: var(--bg); display: flex; align-items: center; justify-content: center; margin-bottom: 5px; }
+        /* 보드판 (앞 3개 활성, 뒤 2개 X) */
+        .board { position: relative; width: 100%; height: 350px; border-bottom: 2px solid var(--border); background: #fafafa; }
+        .slot { position: absolute; width: 75px; height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
+        .slot.disabled { cursor: not-allowed; opacity: 0.4; }
+        .slot-frame { width: 60px; height: 60px; border-radius: 50%; border: 2px dashed var(--border); overflow: hidden; background: var(--bg); display: flex; align-items: center; justify-content: center; position: relative; }
         .slot-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .slot.filled .slot-frame { border-style: solid; border-color: var(--primary); box-shadow: 0 0 10px rgba(74, 144, 226, 0.3); }
+
+        /* 펫 & 스킬 독립 섹션 (요청사항 반영) */
+        .sub-selection { padding: 15px; border-bottom: 1px solid var(--border); background: var(--bg); }
+        .sub-row { display: flex; align-items: flex-start; gap: 15px; }
+        .pet-slot { width: 65px; height: 65px; border: 2px dashed var(--primary); border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: var(--card); cursor: pointer; flex-shrink: 0; }
+        .pet-slot img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* 스킬 슬롯 (3칸) */
-        .skill-group { display: flex; gap: 2px; height: 20px; }
-        .s-box { width: 20px; height: 20px; border: 1px solid var(--border); border-radius: 3px; font-size: 10px; display: flex; align-items: center; justify-content: center; background: #eee; overflow: hidden; color: #333; }
-        .s-box img { width: 100%; height: 100%; }
+        .skill-display { display: flex; gap: 12px; flex-wrap: wrap; flex: 1; align-items: center; }
+        .skill-unit { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .skill-boxes { display: flex; gap: 4px; }
+        .s-box { width: 32px; height: 32px; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; background: white; display: flex; align-items: center; justify-content: center; font-size: 10px; text-align: center; color: #777; font-weight: bold; }
+        .s-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 펫 슬롯 */
-        .pet-bar { display: flex; justify-content: center; padding: 15px; border-bottom: 1px solid var(--border); }
-        .pet-slot { width: 70px; height: 70px; border: 2px dashed var(--primary); border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-
-        /* 덱 입력 폼 */
-        .deck-inputs { padding: 15px; display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--border); }
-        .deck-inputs input, .deck-inputs select, .deck-inputs textarea { padding: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); }
-        .save-btn { padding: 15px; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        /* 가이드덱 입력 폼 */
+        .deck-inputs { padding: 15px; display: flex; flex-direction: column; gap: 10px; }
+        .deck-inputs input, .deck-inputs select, .deck-inputs textarea { padding: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-size: 0.9rem; }
+        .save-btn { padding: 15px; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; }
 
         /* 모달 시스템 */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
-        .modal { background: var(--card); width: 100%; max-width: 400px; border-radius: 15px; max-height: 85vh; overflow-y: auto; padding: 20px; position: relative; }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; position: sticky; top: -20px; background: var(--card); padding: 10px 0; z-index: 10; }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
+        .modal { background: var(--card); width: 100%; max-width: 420px; border-radius: 20px; max-height: 85vh; overflow-y: auto; padding: 20px; position: relative; }
         
-        /* 검색 및 필터 */
-        .search-box { margin-bottom: 10px; display: flex; gap: 5px; }
-        .search-box input { flex: 1; padding: 8px; border: 1px solid var(--border); border-radius: 5px; }
+        /* 상세 설정 (장비 2x2 및 장신구) */
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
+        .eq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+        .eq-box { height: 75px; border: 1px dashed var(--primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; cursor: pointer; overflow: hidden; background: var(--bg); position: relative; }
+        .eq-box img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* 아이템 리스트 */
-        .item-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-        .item-card { text-align: center; font-size: 0.7rem; position: relative; }
+        /* 리스트 배너 */
+        .deck-banner { margin: 12px; padding: 18px; border-radius: 12px; color: white; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .type-공격덱 { background: var(--atk); }
+        .type-방어덱 { background: var(--def); color: #333; }
+        .type-카운터덱 { background: var(--cnt); }
+
+        .item-card { text-align: center; font-size: 0.75rem; cursor: pointer; padding: 8px; border-radius: 10px; border: 1px solid transparent; transition: 0.2s; }
+        .item-card:hover { background: var(--bg); border-color: var(--primary); }
         .item-card img { width: 100%; border-radius: 10px; margin-bottom: 5px; }
-        .fav-star { position: absolute; top: 2px; right: 2px; color: #ccc; font-size: 1.2rem; cursor: pointer; }
-        .fav-star.active { color: #f1c40f; }
-
-        /* 상세 설정 (2x2 장비 등) */
-        .stat-input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .stat-item { display: flex; flex-direction: column; font-size: 0.8rem; }
-        .eq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
-        .eq-item { height: 60px; border: 1px dashed var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; cursor: pointer; text-align: center; }
-
-        /* 덱 리스트 배너 */
-        .deck-banner { margin: 10px; padding: 15px; border-radius: 12px; border-left: 8px solid #ccc; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .deck-banner.공격덱 { border-color: var(--atk); }
-        .deck-banner.방어덱 { border-color: var(--def); }
-        .deck-banner.카운터덱 { border-color: var(--cnt); }
         
-        .fallback-txt { font-size: 10px; text-align: center; color: #888; padding: 2px; font-weight: bold; }
+        .fallback-txt { font-size: 10px; font-weight: bold; color: #666; padding: 2px; }
     </style>
 </head>
 <body>
 
 <div class="app">
     <header>
-        <h1 style="font-size: 1rem;">이옌 길드전 가이드용 앱</h1>
+        <h1 style="font-size: 1.1rem;">이옌 길드전 가이드용 앱</h1>
         <div onclick="toggleMenu()" style="cursor:pointer; font-size: 1.5rem;">☰</div>
-        <div id="sideMenu" style="display:none; position:absolute; right:10px; top:60px; background:var(--card); border:1px solid var(--border); padding:10px; border-radius:8px; z-index:110;">
-            <div onclick="toggleTheme()" style="padding:10px; cursor:pointer;">화이트/다크모드</div>
-            <div onclick="openAdmin()" style="padding:10px; cursor:pointer; border-top:1px solid var(--border);">관리자 메뉴</div>
+        <div id="sideMenu" style="display:none; position:absolute; right:10px; top:60px; background:var(--card); border:1px solid var(--border); padding:10px; border-radius:8px; z-index:110; color:var(--text); box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            <div onclick="toggleTheme()" style="padding:10px; cursor:pointer;">🌗 화이트/다크모드</div>
+            <div onclick="openAdmin()" style="padding:10px; cursor:pointer; border-top:1px solid var(--border);">⚙️ 관리자 메뉴</div>
         </div>
     </header>
 
-    <div class="formation-tabs">
-        <button class="f-tab active" data-f="기본" onclick="setFormation('기본')">기본 진형</button>
-        <button class="f-tab" data-f="밸런스" onclick="setFormation('밸런스')">밸런스 진형</button>
-        <button class="f-tab" data-f="공격" onclick="setFormation('공격')">공격 진형</button>
-        <button class="f-tab" data-f="보호" onclick="setFormation('보호')">보호 진형</button>
-    </div>
+    <div class="formation-tabs" id="formationBtns"></div>
 
     <div class="board" id="board"></div>
 
-    <div class="pet-bar">
-        <div class="pet-slot" id="petSlot" onclick="openPicker('pet')">
-            <span style="font-size:0.7rem;">펫 추가</span>
+    <div class="sub-selection">
+        <div class="sub-row">
+            <div class="pet-slot" id="petSlot" onclick="openPicker('pet')">
+                <span style="font-size: 10px; color:#aaa;">펫 추가</span>
+            </div>
+            <div class="skill-display" id="skillArea">
+                <span style="font-size: 0.8rem; color: #999;">영웅을 선택하면 스킬이 생성됩니다.</span>
+            </div>
         </div>
     </div>
 
     <div class="deck-inputs">
         <input type="text" id="deckTitle" placeholder="1. 덱 명칭 입력">
         <select id="deckType">
-            <option value="공격덱">2. 덱 속성: 공격덱</option>
-            <option value="방어덱">2. 덱 속성: 방어덱</option>
-            <option value="카운터덱">2. 덱 속성: 카운터덱</option>
+            <option value="공격덱">2. 덱 속성: 공격덱 (Red)</option>
+            <option value="방어덱">2. 덱 속성: 방어덱 (Yellow)</option>
+            <option value="카운터덱">2. 덱 속성: 카운터덱 (Green)</option>
         </select>
-        <div style="display:flex; gap:5px;">
+        <div style="display:flex; gap:8px;">
             <input type="text" id="deckStyle" placeholder="3. 덱 성격 (예: 속공)" style="flex:1;">
-            <input type="text" id="speedValue" placeholder="속공 수치" style="width:80px;">
         </div>
         <textarea id="deckTips" placeholder="4. 공략 팁을 입력하세요" rows="3"></textarea>
         <select id="counterSelect"><option value="">5. 카운터덱 설정 (목록에서 선택)</option></select>
-        <button class="save-btn" onclick="saveFullDeck()">가이드덱 저장</button>
+        <button class="save-btn" onclick="saveFullDeck()">가이드덱 저장하기</button>
     </div>
 
-    <div style="display:flex; gap:10px; padding:10px; justify-content:center;">
-        <button onclick="renderList('all')" style="border:none; background:#888; color:white; padding:5px 10px; border-radius:5px;">전체</button>
-        <button onclick="renderList('공격덱')" style="border:none; background:var(--atk); color:white; padding:5px 10px; border-radius:5px;">공격</button>
-        <button onclick="renderList('방어덱')" style="border:none; background:var(--def); color:white; padding:5px 10px; border-radius:5px;">방어</button>
-        <button onclick="renderList('카운터덱')" style="border:none; background:var(--cnt); color:white; padding:5px 10px; border-radius:5px;">카운터</button>
+    <div style="display:flex; gap:10px; padding:15px; justify-content:center; border-top:1px solid var(--border);">
+        <button onclick="renderList('all')" style="border:none; background:#888; color:white; padding:8px 16px; border-radius:20px; font-weight:bold; font-size:0.8rem;">전체</button>
+        <button onclick="renderList('공격덱')" style="border:none; background:var(--atk); color:white; padding:8px 16px; border-radius:20px; font-weight:bold; font-size:0.8rem;">공격</button>
+        <button onclick="renderList('방어덱')" style="border:none; background:var(--def); color:#333; padding:8px 16px; border-radius:20px; font-weight:bold; font-size:0.8rem;">방어</button>
+        <button onclick="renderList('카운터덱')" style="border:none; background:var(--cnt); color:white; padding:8px 16px; border-radius:20px; font-weight:bold; font-size:0.8rem;">카운터</button>
     </div>
 
     <div id="deckListArea"></div>
@@ -130,42 +125,31 @@
 
 <div class="modal-overlay" id="detailModal">
     <div class="modal">
-        <div class="modal-header">
-            <h3 id="detailName">영웅 상세 정보</h3>
-            <button onclick="closeModal('detailModal')" style="border:none; background:none; font-size:1.5rem;">×</button>
-        </div>
-        <div class="stat-input-grid" id="statInputs">
-            </div>
-        <h4 style="margin:15px 0 10px; font-size:0.9rem;">장비 설정 (2x2)</h4>
+        <h3 id="detHeroName" style="text-align:center; margin-bottom:15px;">영웅 상세 설정</h3>
+        <div class="stat-grid" id="statInputs"></div>
+        <h4 style="font-size:0.9rem; margin-top:20px;">장비 (2x2)</h4>
         <div class="eq-grid">
-            <div class="eq-item" onclick="openPicker('equip', 0)">무기1</div>
-            <div class="eq-item" onclick="openPicker('equip', 1)">방어구1</div>
-            <div class="eq-item" onclick="openPicker('equip', 2)">무기2</div>
-            <div class="eq-item" onclick="openPicker('equip', 3)">방어구2</div>
+            <div class="eq-box" id="eq-0" onclick="openPicker('equip', 0)">무기1</div>
+            <div class="eq-box" id="eq-1" onclick="openPicker('equip', 1)">방어구1</div>
+            <div class="eq-box" id="eq-2" onclick="openPicker('equip', 2)">무기2</div>
+            <div class="eq-box" id="eq-3" onclick="openPicker('equip', 3)">방어구2</div>
         </div>
-        <h4 style="margin-bottom:10px; font-size:0.9rem;">장신구 설정</h4>
-        <div class="eq-item" onclick="openPicker('acc', 0)" id="accBox">장신구 선택</div>
-        <button class="save-btn" style="width:100%; margin-top:15px;" onclick="closeModal('detailModal')">상세 정보 저장</button>
+        <h4 style="font-size:0.9rem; margin-bottom:10px;">장신구</h4>
+        <div class="eq-box" id="accBox" onclick="openPicker('acc', 0)" style="width:100%">장신구 선택</div>
+        <button class="save-btn" style="width:100%; margin-top:25px;" onclick="closeModal('detailModal')">확정 및 저장</button>
     </div>
 </div>
 
 <div class="modal-overlay" id="pickerModal">
     <div class="modal">
-        <div class="modal-header">
-            <h3 id="pickerTitle">선택</h3>
-            <button onclick="closeModal('pickerModal')" style="border:none; background:none; font-size:1.5rem;">×</button>
-        </div>
-        <div class="search-box">
-            <input type="text" id="pickerSearch" placeholder="이름으로 검색..." oninput="drawPicker()">
-            <button onclick="toggleFavOnly()" id="favFilterBtn" style="border:none; background:none; font-size:1.2rem;">☆</button>
-        </div>
-        <div class="item-grid" id="pickerGrid"></div>
+        <input type="text" id="pSearch" placeholder="검색어 입력..." oninput="drawPicker()" style="width:100%; padding:12px; margin-bottom:15px; border-radius:10px; border:1px solid var(--border);">
+        <div id="pGrid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px;"></div>
     </div>
 </div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-    import { getDatabase, ref, push, onValue, set, remove } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+    import { getDatabase, ref, push, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyBObWW-nQdRW7B_HB9O5lmCJFoVRUm-Ijs",
@@ -177,12 +161,11 @@
         appId: "1:397986674872:web:71ec328badbbedc6d4dc4d"
     };
     const app = initializeApp(firebaseConfig);
-    const db_fb = getDatabase(app);
+    const db = getDatabase(app);
+    const GITHUB_PATH = "https://raw.githubusercontent.com/jungchanyoung7-cmyk/Guild/main/public/도감/";
 
-    const BASE_URL = "https://raw.githubusercontent.com/jungchanyoung7-cmyk/Guild/main/public/도감/";
-
-    // 기초 데이터베이스
-    let heroData = {
+    // [기초 데이터베이스 - 절대 수정 안함]
+    const heroData = {
         "스페셜": ["루디", "아일린", "레이첼", "델론즈", "스파이크", "제이브", "크리스", "바네사"],
         "(구)세나": ["파이", "로지", "쥬리", "밀리아", "겔리두스", "항우", "우치"],
         "다크나이츠": ["팔라누스", "플라튼", "콜트", "브란즈&브란셀", "실베스타", "멜키르"],
@@ -192,200 +175,197 @@
         "아이사": ["리나", "풍연", "소이", "백각", "비담", "권호", "조운", "관우", "초선", "강재", "나타"],
         "일반/기타": ["세인", "밍", "루리", "니아", "에스파다", "지크", "룩", "챈슬러", "에반", "카린", "유리", "리"]
     };
-    let petList = ["루", "이린", "리첼", "델로", "파이크", "맬패로", "유", "크리", "연지", "카람"];
-    let itemData = {
+    const petList = ["루", "이린", "리첼", "델로", "파이크", "맬패로", "유", "크리", "연지", "카람"];
+    const itemData = {
         "장비": ["선봉장", "성기사", "추적자", "암살자", "수문장", "수호자", "복수자", "조율자", "주술사"],
         "장신구": ["가시반지", "공포의반지", "권능의반지", "기회의반지", "꿈의반지", "독사반지", "마법의반지", "메두사의반지", "번뜩이는반지", "보호의반지", "복수의반지", "부활의반지", "불사의반지", "샐러맨더의반지", "설원의반지", "수호의반지", "시간의반지", "자연의반지", "재앙의반지", "저주의반지", "저항의반지", "적중의반지", "죽음의반지", "집중의반지", "행운의반지"]
     };
 
-    // 상태 관리
+    // [상태 관리]
     let slots = Array(5).fill(null);
     let pet = null;
     let formation = '기본';
-    let detailData = {}; // 영웅별 스텟/장비
-    let favorites = JSON.parse(localStorage.getItem('favs') || '{}');
-    let showFavOnly = false;
-    let currentPick = { type: '', idx: -1 };
+    let heroSettings = {}; // 영웅별 스탯/장비
+    let savedDecks = {};
+    let activePick = { type: '', idx: -1, heroName: '' };
 
-    const coords = {
-        '기본': [{t:'15%',l:'15%'},{t:'50%',l:'15%'},{t:'85%',l:'15%'},{t:'33%',l:'75%'},{t:'66%',l:'75%'}],
-        '밸런스': [{t:'30%',l:'15%'},{t:'70%',l:'15%'},{t:'15%',l:'75%'},{t:'50%',l:'75%'},{t:'85%',l:'75%'}],
-        '공격': [{t:'10%',l:'15%'},{t:'37%',l:'15%'},{t:'63%',l:'15%'},{t:'90%',l:'15%'},{t:'50%',l:'75%'}],
-        '보호': [{t:'50%',l:'15%'},{t:'10%',l:'75%'},{t:'37%',l:'75%'},{t:'63%',l:'75%'},{t:'90%',l:'75%'}]
+    const formationCoords = {
+        '기본': [{t:'15%',l:'20%'},{t:'50%',l:'20%'},{t:'85%',l:'20%'},{t:'33%',l:'75%'},{t:'66%',l:'75%'}],
+        '밸런스': [{t:'30%',l:'20%'},{t:'70%',l:'20%'},{t:'15%',l:'75%'},{t:'50%',l:'75%'},{t:'85%',l:'75%'}],
+        '공격': [{t:'10%',l:'20%'},{t:'37%',l:'20%'},{t:'63%',l:'20%'},{t:'90%',l:'20%'},{t:'50%',l:'75%'}],
+        '보호': [{t:'50%',l:'20%'},{t:'10%',l:'75%'},{t:'37%',l:'75%'},{t:'63%',l:'75%'},{t:'90%',l:'75%'}]
     };
 
-    // 이미지 경로 도우미
-    function getImgPath(folder, name) { return `${BASE_URL}${folder}/${name}.png`; }
-
-    window.imgErr = (img, altName, isSkill = false) => {
-        const src = img.src;
-        if(src.endsWith('.png')) {
-            img.src = src.replace('.png', '.jpg');
-        } else {
-            const div = document.createElement('div');
-            div.className = 'fallback-txt';
-            div.innerText = isSkill ? (src.includes('-2') ? `${altName}(위)` : `${altName}(아래)`) : altName;
-            img.replaceWith(div);
-        }
+    // [이미지 태그 생성기]
+    window.makeImg = (folder, name, isSkill = false) => {
+        const path = `${GITHUB_PATH}${folder}/${name}.png`;
+        return `<img src="${path}" onerror="this.onerror=null; this.src='${path.replace('.png','.jpg')}'; this.onsloterror=function(){this.replaceWith('${name}')};" alt="${name}">`;
     };
 
-    // 메인 보드 렌더링
+    // [메인 보드 렌더링 - 3인 제한]
     window.drawBoard = () => {
-        const b = document.getElementById('board');
-        b.innerHTML = '';
-        coords[formation].forEach((p, i) => {
-            const s = document.createElement('div');
-            s.className = 'slot';
-            s.style.top = `calc(${p.t} - 55px)`;
-            s.style.left = `calc(${p.l} - 40px)`;
+        const bArea = document.getElementById('board');
+        bArea.innerHTML = '';
+        formationCoords[formation].forEach((pos, i) => {
+            const slot = document.createElement('div');
+            slot.className = `slot ${slots[i] ? 'filled' : ''} ${i >= 3 ? 'disabled' : ''}`;
+            slot.style.top = pos.t; slot.style.left = pos.l;
             
-            if(slots[i]) {
-                const name = slots[i];
-                s.innerHTML = `
-                    <div class="slot-frame"><img src="${getImgPath('캐릭터 아이콘 모음', name)}" onerror="imgErr(this,'${name}')"></div>
-                    <div class="skill-group">
-                        <div class="s-box"><img src="${getImgPath('캐릭터 스킬 모음', name+'-2')}" onerror="imgErr(this,'${name}',true)"></div>
-                        <div class="s-box"><img src="${getImgPath('캐릭터 스킬 모음', name+'-3')}" onerror="imgErr(this,'${name}',true)"></div>
-                    </div>
-                    <div style="font-size:10px; margin-top:2px;">${name}</div>
-                `;
+            if (i >= 3) {
+                slot.innerHTML = `<div class="slot-frame" style="border:none; background:none; font-size:24px; color:#ddd;">×</div>`;
+            } else if (slots[i]) {
+                slot.innerHTML = `<div class="slot-frame">${makeImg('캐릭터 아이콘 모음', slots[i])}</div><div style="font-size:10px; font-weight:bold; margin-top:4px;">${slots[i]}</div>`;
             } else {
-                s.innerHTML = `<div class="slot-frame" style="font-size:10px; color:#aaa;">슬롯 ${i+1}</div>`;
+                slot.innerHTML = `<div class="slot-frame"><span style="font-size:10px; color:#bbb;">선택</span></div>`;
             }
 
-            // 클릭 & 롱프레스
-            let timer;
-            s.onclick = () => openPicker('hero', i);
-            s.onmousedown = () => timer = setTimeout(() => openHeroDetail(i), 600);
-            s.onmouseup = () => clearTimeout(timer);
-            s.ontouchstart = () => timer = setTimeout(() => openHeroDetail(i), 600);
-            s.ontouchend = () => clearTimeout(timer);
-
-            b.appendChild(s);
+            if (i < 3) {
+                let timer;
+                slot.onclick = () => openPicker('hero', i);
+                slot.onmousedown = () => timer = setTimeout(() => openDetail(i), 600);
+                slot.onmouseup = () => clearTimeout(timer);
+                slot.ontouchstart = () => timer = setTimeout(() => openDetail(i), 600);
+                slot.ontouchend = () => clearTimeout(timer);
+            }
+            bArea.appendChild(slot);
         });
+        refreshSkills();
     };
 
-    // 상세 설정 모달 (11종 스텟 등)
-    window.openHeroDetail = (idx) => {
-        const name = slots[idx];
-        if(!name) return;
-        document.getElementById('detailName').innerText = `${name} 상세 설정`;
-        const stats = ["공격력(물리/마력)", "방어력", "생명력", "속공", "치명타확률", "치명타피해", "약점공격확률", "막기확률", "받는피해감소", "효과적중", "효과저항"];
-        const grid = document.getElementById('statInputs');
-        grid.innerHTML = '';
-        
-        if(!detailData[name]) detailData[name] = { stats: {}, equip: Array(4).fill(null), acc: null };
-
-        stats.forEach((s, i) => {
-            grid.innerHTML += `<div class="stat-item"><label>${i+1}. ${s}</label><input type="text" value="${detailData[name].stats[s] || ''}" onchange="detailData['${name}'].stats['${s}']=this.value"></div>`;
+    // [스킬 영역 갱신]
+    function refreshSkills() {
+        const area = document.getElementById('skillArea');
+        area.innerHTML = '';
+        const selected = slots.slice(0, 3).filter(s => s);
+        if(selected.length === 0) {
+            area.innerHTML = '<span style="font-size: 0.8rem; color: #999;">영웅을 선택하면 스킬이 생성됩니다.</span>';
+            return;
+        }
+        selected.forEach(name => {
+            const unit = document.createElement('div');
+            unit.className = 'skill-unit';
+            unit.innerHTML = `
+                <div class="skill-boxes">
+                    <div class="s-box">${makeImg('캐릭터 스킬 모음', name+'-2')}</div>
+                    <div class="s-box">${makeImg('캐릭터 스킬 모음', name+'-3')}</div>
+                </div>
+                <div style="font-size:9px; font-weight:bold;">${name}</div>
+            `;
+            area.appendChild(unit);
         });
+    }
+
+    // [상세 설정 모달 - 장비/장신구 로직 완성]
+    window.openDetail = (idx) => {
+        const name = slots[idx]; if(!name) return;
+        activePick.heroName = name;
+        document.getElementById('detHeroName').innerText = name + " 상세 설정";
         
-        // 장비/장신구 박스 업데이트 로직 생략(UI 갱신용)
+        if(!heroSettings[name]) heroSettings[name] = { stats: {}, equip: Array(4).fill(null), acc: null };
+
+        const stats = ["공격력(물리/마력)", "방어력", "생명력", "속공", "치명타확률", "치명타피해", "약점 공격 확률", "막기 확률", "받는 피해 감소", "효과 적중", "효과 저항"];
+        const sArea = document.getElementById('statInputs'); sArea.innerHTML = '';
+        stats.forEach(s => {
+            sArea.innerHTML += `<div style="font-size:11px;">${s}<input type="text" value="${heroSettings[name].stats[s]||''}" onchange="heroSettings['${activePick.heroName}'].stats['${s}']=this.value" style="width:100%; padding:5px; margin-top:3px; border:1px solid #ddd; border-radius:4px;"></div>`;
+        });
+
+        for(let i=0; i<4; i++) {
+            const eb = document.getElementById(`eq-${i}`);
+            eb.innerHTML = heroSettings[name].equip[i] ? makeImg('장비', heroSettings[name].equip[i]) : `무기/방어구 ${i+1}`;
+        }
+        const ab = document.getElementById('accBox');
+        ab.innerHTML = heroSettings[name].acc ? makeImg('장신구', heroSettings[name].acc) : '장신구 선택';
+
         document.getElementById('detailModal').style.display = 'flex';
     };
 
-    // 픽커 (팝업카드) 렌더링
+    // [픽커 로직]
     window.openPicker = (type, idx) => {
-        currentPick = { type, idx };
-        document.getElementById('pickerTitle').innerText = type==='hero'?'영웅 선택':(type==='pet'?'펫 선택':(type==='equip'?'장비 선택':'장신구 선택'));
+        activePick.type = type; activePick.idx = idx;
         document.getElementById('pickerModal').style.display = 'flex';
         drawPicker();
     };
 
     window.drawPicker = () => {
-        const q = document.getElementById('pickerSearch').value;
-        const grid = document.getElementById('pickerGrid');
-        grid.innerHTML = '';
+        const q = document.getElementById('pSearch').value;
+        const grid = document.getElementById('pGrid'); grid.innerHTML = '';
         let list = [], folder = '';
-
-        if(currentPick.type==='hero') { folder = '캐릭터 아이콘 모음'; Object.values(heroData).flat().forEach(v=>list.push(v)); }
-        else if(currentPick.type==='pet') { folder = '펫 아이콘 모음'; list = petList; }
-        else if(currentPick.type==='equip') { folder = '장비'; list = itemData.장비; }
-        else if(currentPick.type==='acc') { folder = '장신구'; list = itemData.장신구; }
+        
+        if(activePick.type==='hero') { list = Object.values(heroData).flat(); folder = '캐릭터 아이콘 모음'; }
+        else if(activePick.type==='pet') { list = petList; folder = '펫 아이콘 모음'; }
+        else if(activePick.type==='equip') { list = itemData.장비; folder = '장비'; }
+        else if(activePick.type==='acc') { list = itemData.장신구; folder = '장신구'; }
 
         list.filter(n => n.includes(q)).forEach(name => {
-            const isFav = favorites[name];
-            if(showFavOnly && !isFav) return;
-            const div = document.createElement('div');
-            div.className = 'item-card';
-            div.innerHTML = `
-                <span class="fav-star ${isFav?'active':''}" onclick="event.stopPropagation(); toggleFav('${name}')">★</span>
-                <img src="${getImgPath(folder, name)}" onerror="imgErr(this,'${name}')" onclick="selectItem('${name}')">
-                <div onclick="selectItem('${name}')">${name}</div>
-            `;
-            grid.appendChild(div);
+            const card = document.createElement('div'); card.className = 'item-card';
+            card.innerHTML = `${makeImg(folder, name)}<div>${name}</div>`;
+            card.onclick = () => {
+                if(activePick.type==='hero') slots[activePick.idx] = name;
+                else if(activePick.type==='pet') {
+                    pet = name; document.getElementById('petSlot').innerHTML = makeImg('펫 아이콘 모음', name);
+                }
+                else if(activePick.type==='equip') {
+                    heroSettings[activePick.heroName].equip[activePick.idx] = name;
+                    document.getElementById(`eq-${activePick.idx}`).innerHTML = makeImg('장비', name);
+                }
+                else if(activePick.type==='acc') {
+                    heroSettings[activePick.heroName].acc = name;
+                    document.getElementById('accBox').innerHTML = makeImg('장신구', name);
+                }
+                drawBoard(); closeModal('pickerModal');
+            };
+            grid.appendChild(card);
         });
     };
 
-    window.selectItem = (name) => {
-        if(currentPick.type==='hero') slots[currentPick.idx] = name;
-        if(currentPick.type==='pet') { pet = name; document.getElementById('petSlot').innerHTML = `<img src="${getImgPath('펫 아이콘 모음',name)}" style="width:100%; height:100%; object-fit:cover;" onerror="imgErr(this,'${name}')">`; }
-        // 장비 등 세부 로직
-        drawBoard();
-        closeModal('pickerModal');
-    };
-
-    window.toggleFav = (name) => {
-        favorites[name] = !favorites[name];
-        localStorage.setItem('favs', JSON.stringify(favorites));
-        drawPicker();
-    };
-
-    window.toggleFavOnly = () => {
-        showFavOnly = !showFavOnly;
-        document.getElementById('favFilterBtn').innerText = showFavOnly ? '★' : '☆';
-        drawPicker();
-    };
-
-    // Firebase 저장
+    // [데이터 저장 및 리스트 필터]
     window.saveFullDeck = () => {
-        const d = {
+        const data = {
             title: document.getElementById('deckTitle').value,
             type: document.getElementById('deckType').value,
             style: document.getElementById('deckStyle').value,
-            speed: document.getElementById('speedValue').value,
             tips: document.getElementById('deckTips').value,
-            counterKey: document.getElementById('counterSelect').value,
-            formation, slots, pet, details: detailData,
-            time: Date.now()
+            slots, pet, heroSettings, formation, time: Date.now()
         };
-        if(!d.title) return alert('덱 명칭을 입력하세요.');
-        push(ref(db_fb, 'decks'), d).then(() => alert('가이드덱이 성공적으로 저장되었습니다.'));
+        if(!data.title) return alert('덱 명칭을 입력해 주세요.');
+        push(ref(db, 'decks'), data).then(() => { alert('성공적으로 저장되었습니다!'); location.reload(); });
     };
 
-    // 리스트 불러오기 & 카운터덱 연동
-    onValue(ref(db_fb, 'decks'), (snap) => {
-        const data = snap.val() || {};
-        const area = document.getElementById('deckListArea');
-        const cSel = document.getElementById('counterSelect');
-        area.innerHTML = '';
-        cSel.innerHTML = '<option value="">5. 카운터덱 설정 (목록에서 선택)</option>';
+    onValue(ref(db, 'decks'), (snap) => {
+        savedDecks = snap.val() || {};
+        renderList('all');
+    });
 
-        Object.entries(data).reverse().forEach(([key, d]) => {
-            cSel.innerHTML += `<option value="${key}">${d.title}</option>`;
+    window.renderList = (filter) => {
+        const area = document.getElementById('deckListArea'); area.innerHTML = '';
+        Object.entries(savedDecks).reverse().forEach(([id, d]) => {
+            if(filter !== 'all' && d.type !== filter) return;
             const banner = document.createElement('div');
-            banner.className = `deck-banner ${d.type}`;
+            banner.className = `deck-banner type-${d.type}`;
             banner.innerHTML = `
-                <div style="font-weight:bold; color:var(--text);">${d.title} [${d.type}]</div>
-                <div style="font-size:0.8rem; color:#666;">${d.style} (속공: ${d.speed})</div>
-                <div style="display:flex; gap:3px; margin-top:8px;">
-                    ${d.slots.filter(s=>s).map(s=> `<img src="${getImgPath('캐릭터 아이콘 모음',s)}" style="width:25px; height:25px; border-radius:50%;" onerror="imgErr(this,'${s}')">`).join('')}
+                <div style="font-weight:bold; font-size:1.1rem; margin-bottom:5px;">${d.title}</div>
+                <div style="font-size:0.85rem; opacity:0.9;">${d.style}</div>
+                <div style="display:flex; gap:6px; margin-top:12px;">
+                    ${d.slots.slice(0,3).filter(s=>s).map(s => `<div style="width:35px; height:35px; border-radius:50%; overflow:hidden; border:2px solid white;">${makeImg('캐릭터 아이콘 모음', s)}</div>`).join('')}
+                    ${d.pet ? `<div style="width:35px; height:35px; border-radius:50%; overflow:hidden; border:2px solid var(--primary); background:white;">${makeImg('펫 아이콘 모음', d.pet)}</div>` : ''}
                 </div>
-                <button onclick="viewDeckPopup('${key}')" style="position:absolute; right:10px; bottom:10px; padding:5px; font-size:10px;">상세보기</button>
+                <button onclick="alert('전체 팁: ${d.tips}')" style="position:absolute; right:12px; bottom:12px; border:none; background:white; padding:6px 12px; border-radius:8px; font-size:0.75rem; font-weight:bold; color:#333;">상세보기</button>
             `;
             area.appendChild(banner);
         });
-    });
-
-    // 보조 함수들
-    window.setFormation = (f) => {
-        formation = f;
-        document.querySelectorAll('.f-tab').forEach(b => b.classList.toggle('active', b.dataset.f === f));
-        drawBoard();
     };
+
+    // [기능 보조]
+    window.setFormation = (f) => { formation = f; drawBoard(); };
     window.toggleMenu = () => { const m = document.getElementById('sideMenu'); m.style.display = m.style.display==='none'?'block':'none'; };
     window.closeModal = (id) => document.getElementById(id).style.display = 'none';
     window.toggleTheme = () => document.body.setAttribute('data-theme', document.body.getAttribute('data-theme')==='dark'?'':'dark');
+
+    // 진형 버튼 자동생성
+    const fBtns = document.getElementById('formationBtns');
+    Object.keys(formationCoords).forEach(f => {
+        fBtns.innerHTML += `<button class="f-tab ${f==='기본'?'active':''}" onclick="setFormation('${f}'); this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); this.classList.add('active');">${f} 진형</button>`;
+    });
 
     drawBoard();
 </script>
