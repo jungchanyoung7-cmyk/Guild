@@ -153,6 +153,7 @@
     const HERO_IMG_PATH = `${BASE_PATH}/${encodeURIComponent('도감')}`;
     const STATS = ["공격력", "방어력", "생명력", "속공", "치명타 확률", "치명타 피해", "효과 적중", "효과 저항"];
 
+    // 영웅 데이터 복구 (천상/심연 등 누락 데이터 포함)
     const registry = {
         heroData: {
             "스페셜": ["루디", "아일린", "레이첼", "델론즈", "스파이크", "제이브", "크리스", "바네사"],
@@ -198,7 +199,6 @@
         updateUI();
     }
 
-    // 롱프레스 기능 복구 및 강화
     function startPress(idx) {
         isLongPress = false;
         pressTimer = setTimeout(() => {
@@ -206,14 +206,12 @@
                 isLongPress = true;
                 openHeroSpec(idx);
             }
-        }, 800); // 0.8초 누르면 상세설정
+        }, 800);
     }
 
     function endPress(idx) {
         clearTimeout(pressTimer);
-        if(isLongPress) return; // 롱프레스였으면 클릭 동작 안함
-
-        // 짧은 클릭 로직
+        if(isLongPress) return;
         curSlot = idx;
         if(!deck[idx]) {
             openHero();
