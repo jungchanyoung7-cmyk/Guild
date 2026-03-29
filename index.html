@@ -120,19 +120,27 @@
     const USER_ID = "jungchanyoung7-cmyk"; 
     const BASE_URL = `https://raw.githubusercontent.com/${USER_ID}/Guild/main/public/%EB%8F%84%EA%B0%90`;
 
+    // 영웅 리스트 (기본 정보)
     const heroData = {
         "스페셜": ["루디", "아일린", "레이첼", "델론즈", "스파이크", "제이브", "크리스", "바네사"],
         "세나/기타": ["파이", "로지", "쥬리", "밀리아", "겔리두스", "항우", "우치", "에이스", "여포", "손오공", "린", "카르마", "태오", "연희", "카일"],
-        "기타영웅": ["리나", "풍연", "소이", "백각", "비담", "권호", "조운", "관우", "초선", "강재", "나타", "세인", "밍", "루리", "니아", "에스파다", "지크", "룩", "챈슬러", "에반", "카린", "유리", "리", "데이지", "라니아", "레오", "레이", "루시", "노호", "녹스"]
+        "기기타영웅": ["리나", "풍연", "소이", "백각", "비담", "권호", "조운", "관우", "초선", "강재", "나타", "세인", "밍", "루리", "니아", "에스파다", "지크", "룩", "챈슬러", "에반", "카린", "유리", "리", "데이지", "라니아", "레오", "레이", "루시", "노호", "녹스"]
     };
 
     const petList = ["루", "이린", "리첼", "델로", "파이크", "맬패로", "유", "크리", "연지", "카람"];
     
+    // 장비 및 장신구 리스트 (상세 설정용)
+    const itemData = {
+        "장비": ["선봉장", "성기사", "추적자", "암살자", "수문장", "수호자", "복수자", "조율자", "주술사"],
+        "장신구": ["가시반지", "공포의반지", "권능의반지", "기회의반지", "꿈의반지", "독사반지", "마법의반지", "메두사의반지", "번뜩이는반지", "보호의반지", "복수의반지", "부활의반지", "불사의반지", "샐러맨더의반지", "설원의반지", "수호의반지", "시간의반지", "자연의반지", "재앙의반지", "저주의반지", "저항의반지", "적중의반지", "죽음의반지", "집중의반지", "행운의반지"]
+    };
+
     let deck = [null, null, null, null, null];
     let skills = [];
     let pet = "";
     let formation = '기본';
     let curSlot = 0;
+    let pressTimer = null;
 
     function init() {
         const area = document.getElementById('slots-area');
@@ -141,7 +149,10 @@
             area.innerHTML += `
                 <div class="slot-container" id="wrap-${i}">
                     <div class="slot-num" id="num-${i}">${i+1}</div>
-                    <div class="slot" id="s-${i}" onclick="handleSlotClick(${i})" oncontextmenu="return false;"></div>
+                    <div class="slot" id="s-${i}" 
+                         onmousedown="startPress(${i})" onmouseup="endPress(${i})" 
+                         ontouchstart="startPress(${i})" ontouchend="endPress(${i})"
+                         oncontextmenu="return false;"></div>
                 </div>`;
         }
         setF('기본');
@@ -149,11 +160,45 @@
         updateUI();
     }
 
-    function handleSlotClick(i) {
+    // 길게 누르면 상세설정(장비/장신구), 짧게 누르면 영웅선택/해제
+    function startPress(i) { pressTimer = setTimeout(() => { if(deck[i]) openDetail(i); }, 700); }
+    function endPress(i) {
+        clearTimeout(pressTimer);
         if(!deck[i]) { curSlot = i; openHero(); }
-        else {
+        else if(event.type === 'mouseup' || event.type === 'touchend') {
             if(confirm(`${deck[i].name}을(를) 해제할까요?`)) { deck[i] = null; updateUI(); }
         }
+    }
+
+    // 상세 설정 모달 (장비/장신구)
+    function openDetail(i) {
+        if(!deck[i]) return;
+        curSlot = i;
+        const h = deck[i];
+        document.getElementById('m-title').innerText = `${h.name} 상세 설정`;
+        document.getElementById('m-body').innerHTML = `
+            <div style="display:grid; grid-template-columns: 1fr; gap:15px; margin-top:10px;">
+                <div style="background:var(--input); padding:15px; border-radius:15px;">
+                    <div style="font-size:12px; color:#888; margin-bottom:8px;">장비 (무기/방어구 세트)</div>
+                    <select onchange="deck[${i}].gear=this.value">
+                        <option value="선택안함">선택안함</option>
+                        ${itemData.장비.map(g=>`<option value="${g}" ${h.gear===g?'selected':''}>${g}</option>`).join('')}
+                    </select>
+                </div>
+                <div style="background:var(--input); padding:15px; border-radius:15px;">
+                    <div style="font-size:12px; color:#888; margin-bottom:8px;">장신구 (반지)</div>
+                    <div style="display:flex; gap:10px; align-items:center;">
+                        <div style="width:45px; height:45px; background:#000; border-radius:8px; overflow:hidden;">
+                            ${h.ring && h.ring !== "선택안함" ? getSlotHTML(h.ring, 'ring') : ''}
+                        </div>
+                        <select onchange="deck[${i}].ring=this.value; openDetail(${i});" style="flex:1;">
+                            <option value="선택안함">선택안함</option>
+                            ${itemData.장신구.map(r=>`<option value="${r}" ${h.ring===r?'selected':''}>${r}</option>`).join('')}
+                        </select>
+                    </div>
+                </div>
+            </div>`;
+        document.getElementById('modal').style.display = 'flex';
     }
 
     function openHero() {
@@ -172,9 +217,9 @@
         document.getElementById('hero-tab-content').innerHTML = heroData[cat].map(n => `<div class="slot" style="height:75px;" onclick="selectHero('${n}')">${getSlotHTML(n)}</div>`).join('');
     }
 
-    function selectHero(name) { deck[curSlot] = { name: name }; updateUI(); closeM(); }
+    function selectHero(name) { deck[curSlot] = { name: name, gear: "선택안함", ring: "선택안함" }; updateUI(); closeM(); }
 
-    // 다중 확장자(png, jpg)를 지원하는 이미지 처리 로직
+    // 이미지 경로 처리 (png/jpg 자동 대응 및 저장소 경로 준수)
     function getSlotHTML(name, type='hero', sIdx=null) {
         if(!name) return "";
         let folder = "";
@@ -183,11 +228,11 @@
         if (type === 'hero') folder = "캐릭터%20아이콘%20모음";
         else if (type === 'pet') folder = "펫%20아이콘%20모음";
         else if (type === 'skill') { folder = "캐릭터%20스킬%20모음"; fileName = `${name}-${sIdx}`; }
+        else if (type === 'ring') folder = "장신구";
 
         const pngUrl = `${BASE_URL}/${folder}/${encodeURIComponent(fileName)}.png`;
         const jpgUrl = `${BASE_URL}/${folder}/${encodeURIComponent(fileName)}.jpg`;
 
-        // png 시도 -> 실패시 jpg 시도 -> 실패시 이름 텍스트 표시
         return `
             <img src="${pngUrl}" class="hero-img" 
                  onerror="this.onerror=function(){this.style.display='none'; this.nextElementSibling.style.display='block';}; this.src='${jpgUrl}';">
@@ -259,20 +304,24 @@
     }
 
     function deleteDeck(id) { if(confirm("삭제할까요?")) { let dbList = JSON.parse(localStorage.getItem('SENA_DECKS')); dbList = dbList.filter(i=>i.id!==id); localStorage.setItem('SENA_DECKS', JSON.stringify(dbList)); renderList(); } }
+    
     function openPet() {
         let html = `<div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px;">`;
         petList.forEach(n => html += `<div class="slot" style="height:65px; border-radius:50%;" onclick="pet='${n}'; updateUI(); closeM();">${getSlotHTML(n, 'pet')}</div>`);
         document.getElementById('m-body').innerHTML = html + "</div>";
         document.getElementById('modal').style.display='flex';
     }
+
+    // 스킬 2, 3번 로드
     function openSkill() {
         const actives = deck.filter(h=>h);
         if(!actives.length) return alert("영웅을 먼저 배치하세요.");
         let html = `<div style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px;">`;
-        actives.forEach(h => { [1,2].forEach(v => html += `<div class="slot" style="height:80px;" onclick="toggleSkill('${h.name}',${v})">${getSlotHTML(h.name,'skill',v)}</div>`); });
+        actives.forEach(h => { [2,3].forEach(v => html += `<div class="slot" style="height:80px;" onclick="toggleSkill('${h.name}',${v})">${getSlotHTML(h.name,'skill',v)}</div>`); });
         document.getElementById('m-body').innerHTML = html + "</div>";
         document.getElementById('modal').style.display='flex';
     }
+
     function toggleSkill(n,v) { if(skills.length < 3) skills.push({n,v}); updateUI(); closeM(); }
     function toggleTheme() { document.body.classList.toggle('light-mode'); }
     function closeM() { document.getElementById('modal').style.display='none'; }
