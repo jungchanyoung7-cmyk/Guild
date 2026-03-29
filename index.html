@@ -101,7 +101,7 @@
                 <div id="pet-slot-view" style="width:100%; height:100%;"></div>
             </div>
             <div class="skill-list-box" onclick="openSkill()">
-                <div style="font-size:10px; color:var(--purple); text-align:center; font-weight:900; letter-spacing:1px;">SKILL ORDER</div>
+                <div style="font-size:10px; color:var(--purple); text-align:center; font-weight:900; letter-spacing:1px;">SKILL/ITEM</div>
                 <div class="sk-slots" id="sk-slots-view"></div>
             </div>
         </div>
@@ -148,10 +148,10 @@
 
 <script>
     const USER_ID = "jungchanyoung7-cmyk"; 
-    const BASE_PATH = `https://raw.githubusercontent.com/${USER_ID}/SavenKnight/main/public`;
+    // 리포지토리 이름을 'Guild'로 수정
+    const BASE_PATH = `https://raw.githubusercontent.com/${USER_ID}/Guild/main/public`;
     const ROOT_PATH = `${BASE_PATH}/${encodeURIComponent('도감')}`;
 
-    // 요청하신 대로 데이터는 절대 수정하지 않았습니다.
     const heroData = {
         "스페셜": ["루디", "아일린", "레이첼", "델론즈", "스파이크", "제이브", "크리스", "바네사"],
         "(구)세나": ["파이", "로지", "쥬리", "밀리아", "겔리두스"],
@@ -163,14 +163,21 @@
         "일반/기타": ["세인", "밍", "루리", "니아", "에스파다", "지크", "룩", "챈슬러", "에반", "카린", "유리", "리"]
     };
     const petList = ["루", "이린", "리첼", "델로", "파이크", "맬패로", "유", "크리", "연지", "카람"];
+    
+    // 반지 데이터 (jpg)
     const itemData = {
         "장비": ["선봉장", "성기사", "추적자", "암살자", "수문장", "수호자", "복수자", "조율자", "주술사"],
-        "장신구": ["대랄", "불사", "권능", "기합", "철벽", "즉사", "효저", "막기", "기타희귀"]
+        "장신구": [
+            "가시반지", "공포의반지", "권능의반지", "기회의반지", "꿈의반지", 
+            "독사반지", "마법의반지", "메두사의반지", "번뜩이는반지", "보호의반지", 
+            "복수의반지", "부활의반지", "불사의반지", "샐러맨더의반지", "설원의반지", 
+            "수호의반지", "시간의반지", "자연의반지", "재앙의반지", "저주의반지", 
+            "저항의반지", "적중의반지", "죽음의반지", "집중의반지", "행운의반지"
+        ]
     };
 
     let deck = ["", "", "", "", ""]; 
     let pet = ""; 
-    let skills = []; 
     let formation = '기본'; 
     let curSlot = 0; 
     let currentFilter = '전체';
@@ -184,17 +191,29 @@
         setF('기본'); renderList(); updateUI();
     }
 
-    // 변경된 폴더 구조 반영 로직
+    // GitHub 구조 기반 이미지 호출 로직 (확장자 및 폴더 매핑 수정)
     function getSlotHTML(name, type='hero', sIdx=null) {
         if(!name) return "";
         
         let folderName = "";
-        if(type === 'hero') folderName = encodeURIComponent('캐릭터 아이콘 모음');
-        else if(type === 'skill') folderName = encodeURIComponent('캐릭터 스킬 모음');
-        else if(type === 'pet') folderName = encodeURIComponent('펫 아이콘 모음');
+        let ext = ".png"; 
+
+        if(type === 'hero') {
+            folderName = encodeURIComponent('캐릭터 아이콘 모음');
+        } else if(type === 'skill') {
+            folderName = encodeURIComponent('캐릭터 스킬 모음');
+        } else if(type === 'pet') {
+            folderName = encodeURIComponent('펫 아이콘 모음');
+        } else if(type === '장비') {
+            folderName = encodeURIComponent('장비');
+            ext = ".jpg"; 
+        } else if(type === '장신구') {
+            folderName = encodeURIComponent('장신구');
+            ext = ".jpg"; 
+        }
 
         let imgFileName = type === 'skill' ? `${name}-${sIdx}` : name;
-        let finalUrl = `${ROOT_PATH}/${folderName}/${encodeURIComponent(imgFileName)}.png`;
+        let finalUrl = `${ROOT_PATH}/${folderName}/${encodeURIComponent(imgFileName)}${ext}`;
 
         return `<img src="${finalUrl}" class="hero-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><div class="no-img-text" style="display:none;">${name}</div>`;
     }
@@ -208,7 +227,6 @@
         });
         document.getElementById('pet-slot-view').innerHTML = pet ? getSlotHTML(pet, 'pet') : "";
         document.getElementById('pet-label').style.display = pet ? 'none' : 'block';
-        document.getElementById('sk-slots-view').innerHTML = skills.map((s, idx) => `<div class="sk-mini-box">${getSlotHTML(s.n, 'skill', s.v)}</div>`).join('') + '<div class="sk-mini-box"></div>'.repeat(3 - skills.length);
     }
 
     function handleSlotClick(i) {
@@ -238,8 +256,15 @@
     }
 
     function openSkill() {
-        alert("스킬 순서 설정 기능 (준비 중)");
-        // 필요 시 스킬 선택 로직 추가 가능
+        document.getElementById('m-title').innerText = "아이템 도감";
+        let tabs = Object.keys(itemData).map(t => `<button onclick="renderItemGrid('${t}')" style="padding:10px 15px; margin:5px; background:var(--input); color:#fff; border-radius:10px; border:1px solid var(--border); font-weight:bold;">${t}</button>`).join('');
+        document.getElementById('m-body').innerHTML = `<div style="overflow-x:auto; white-space:nowrap; margin-bottom:20px; padding-bottom:10px;">${tabs}</div><div id="m-grid-items" style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px;"></div>`;
+        renderItemGrid('장신구');
+        document.getElementById('modal').style.display='flex';
+    }
+
+    function renderItemGrid(t) {
+        document.getElementById('m-grid-items').innerHTML = itemData[t].map(n => `<div class="slot" style="height:80px; border-radius:12px;">${getSlotHTML(n, t)}</div>`).join('');
     }
 
     function setF(n) {
@@ -250,9 +275,7 @@
             '보호': [{x:135,y:335,c:'blue'},{x:135,y:245,c:'blue'},{x:135,y:155,c:'blue'},{x:135,y:65,c:'blue'},{x:25,y:200,c:'red'}]
         };
         formation = n;
-        document.querySelectorAll('.f-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.innerText.includes(n));
-        });
+        document.querySelectorAll('.f-btn').forEach(btn => btn.classList.toggle('active', btn.innerText.includes(n)));
         POS[n].forEach((p, i) => {
             const el = document.getElementById(`wrap-${i}`);
             el.style.left = p.x + 'px'; el.style.top = p.y + 'px';
@@ -263,16 +286,12 @@
     function saveToDB() {
         const name = document.getElementById('d-name').value;
         if(!name) return alert("가이드 명칭을 입력하세요.");
-        const data = { 
-            id: Date.now(), name, type: document.getElementById('d-type').value, 
-            trait: document.getElementById('d-trait').value, speed: document.getElementById('d-speed').value, 
-            tip: document.getElementById('d-tip').value, deck: [...deck], pet, formation, skills: [...skills] 
-        };
+        const data = { id: Date.now(), name, type: document.getElementById('d-type').value, trait: document.getElementById('d-trait').value, speed: document.getElementById('d-speed').value, tip: document.getElementById('d-tip').value, deck: [...deck], pet, formation };
         let db = JSON.parse(localStorage.getItem('SENA_DECKS') || '[]');
         db.unshift(data);
         localStorage.setItem('SENA_DECKS', JSON.stringify(db));
         renderList();
-        alert("가이드 저장 완료!");
+        alert("저장 완료");
     }
 
     function renderList() {
@@ -291,18 +310,8 @@
                     ${d.deck.filter(h=>h).map(h=>`<div style="width:55px; height:55px; border-radius:12px; border:1px solid var(--border); overflow:hidden; background:#000;">${getSlotHTML(h)}</div>`).join('')}
                     ${d.pet ? `<div style="width:55px; height:55px; border-radius:50%; border:2px solid var(--purple); overflow:hidden; background:#000;">${getSlotHTML(d.pet, 'pet')}</div>` : ''}
                 </div>
-                ${d.tip ? `<div style="margin-top:10px; font-size:12px; color:#aaa; line-height:1.4;">💡 ${d.tip}</div>` : ''}
-                <button onclick="deleteDeck(${d.id})" style="position:absolute; bottom:15px; right:15px; background:none; border:none; color:var(--red); cursor:pointer;">삭제</button>
             </div>`;
-        }).join('') || '<div style="text-align:center; padding:100px 0; color:#444;">저장된 가이드가 없습니다.</div>';
-    }
-
-    function deleteDeck(id) {
-        if(!confirm("이 가이드를 삭제하시겠습니까?")) return;
-        let db = JSON.parse(localStorage.getItem('SENA_DECKS') || '[]');
-        db = db.filter(d => d.id !== id);
-        localStorage.setItem('SENA_DECKS', JSON.stringify(db));
-        renderList();
+        }).join('') || '<div style="text-align:center; padding:100px 0; color:#444;">데이터가 없습니다.</div>';
     }
 
     function setFilter(f) { 
@@ -315,7 +324,7 @@
     function toggleTheme() { document.body.classList.toggle('light-mode'); }
     function toggleSpeed() { document.getElementById('speed-wrap').style.display = document.getElementById('d-trait').value === '속공지향' ? 'block' : 'none'; }
     function resetInput() { if(confirm("초기화하시겠습니까?")) { deck=["","","","",""]; pet=""; updateUI(); } }
-    function openAdmin() { document.getElementById('m-title').innerText = "관리"; document.getElementById('m-body').innerHTML = `<button onclick="localStorage.clear(); location.reload();" style="width:100%; padding:20px; background:var(--red); color:#fff; border:none; border-radius:15px; font-weight:900;">전체 로컬 데이터 삭제</button>`; document.getElementById('modal').style.display='flex'; }
+    function openAdmin() { document.getElementById('m-title').innerText = "관리"; document.getElementById('m-body').innerHTML = `<button onclick="localStorage.clear(); location.reload();" style="width:100%; padding:20px; background:var(--red); color:#fff; border:none; border-radius:15px; font-weight:900;">전체 초기화</button>`; document.getElementById('modal').style.display='flex'; }
 
     window.onload = init;
 </script>
