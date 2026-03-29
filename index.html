@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>이옌 길드전 가이드 - COLOR EDITION</title>
+    <title>이옌 길드전 가이드 - FINAL EDITION</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
     <style>
         :root { 
             --bg: #0c1221; --card: #161b2d; --blue: #3b82f6; --purple: #8b5cf6; 
             --border: #2a2f3f; --text: #ffffff; --input: #1a1f2e; --red: #ef4444; --green: #10b981; --gold: #ffd700;
-            --type-atk: #ef4444; --type-def: #ffd700; --type-cnt: #10b981; 
         }
         body.light-mode {
             --bg: #f0f2f5; --card: #ffffff; --blue: #2563eb; --purple: #7c3aed;
@@ -18,14 +17,13 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
         body { background: var(--bg); color: var(--text); font-family: 'Pretendard', sans-serif; padding: 10px; min-height: 100vh; padding-bottom: 120px; transition: background 0.3s; }
 
-        .top-bar { position: relative; width: 100%; height: 90px; margin-bottom: 20px; border-radius: 20px; overflow: hidden; display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 20px; }
-        .top-bar::before { content: ""; position: absolute; inset: 0; background-image: url('image_0.png'); background-size: contain; background-repeat: no-repeat; background-position: center; opacity: 0.25; mix-blend-mode: color-dodge; z-index: 1; }
-        .guild-title { position: relative; z-index: 2; font-size: 26px; font-weight: 900; color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.7), 0 0 20px var(--gold); letter-spacing: -1px; }
-        .made-by { position: relative; z-index: 2; font-size: 11px; color: #ccc; font-style: italic; opacity: 0.8; }
+        .top-bar { position: relative; width: 100%; height: 90px; margin-bottom: 20px; border-radius: 20px; overflow: hidden; display: flex; justify-content: space-between; align-items: flex-end; padding: 15px 20px; background: rgba(255,255,255,0.05); }
+        .guild-title { z-index: 2; font-size: 26px; font-weight: 900; color: #fff; text-shadow: 0 0 15px var(--gold); }
+        .made-by { z-index: 2; font-size: 11px; color: #ccc; }
 
         .formation-bar { display: flex; gap: 8px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-        .f-btn { padding: 12px 20px; background: var(--card); border: 1px solid var(--border); color: #777; border-radius: 12px; font-size: 13px; font-weight: bold; white-space: nowrap; cursor: pointer; transition: 0.2s; }
-        .f-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
+        .f-btn { padding: 12px 20px; background: var(--card); border: 1px solid var(--border); color: #777; border-radius: 12px; font-size: 13px; font-weight: bold; white-space: nowrap; cursor: pointer; }
+        .f-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
 
         .deck-board { position: relative; width: 100%; height: 440px; background: var(--card); border-radius: 35px; border: 2px solid var(--border); margin-bottom: 20px; overflow: hidden; box-shadow: inset 0 0 50px rgba(0,0,0,0.7); }
         .slot-container { position: absolute; width: 70px; height: 70px; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 10; }
@@ -33,28 +31,46 @@
         .num-blue { color: var(--blue); } .num-red { color: var(--red); }   
 
         .slot { width: 100%; height: 100%; border-radius: 16px; border: 2px solid var(--border); overflow: hidden; background: rgba(255,255,255,0.02); cursor: pointer; display: flex; align-items: center; justify-content: center; position: relative; transition: 0.3s; }
-        .slot.has-hero { border-color: var(--purple); box-shadow: 0 0 12px rgba(139, 92, 246, 0.4); }
         .hero-img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+        .no-img-text { font-size: 10px; color: #555; text-align: center; font-weight: 800; }
 
         .right-panel { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 20px; align-items: center; z-index: 200; }
         .pet-circle { width: 70px; height: 70px; border: 3px solid var(--purple); border-radius: 50%; overflow: hidden; background: var(--card); cursor: pointer; display: flex; align-items: center; justify-content: center; }
-
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(12px); }
-        .modal-content { background: var(--card); width: 100%; max-width: 500px; border-radius: 35px; padding: 25px; max-height: 85vh; overflow-y: auto; border: 1px solid var(--purple); position: relative; }
-        
-        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-        .detail-item { background: var(--input); padding: 12px; border-radius: 15px; border: 1px solid var(--border); }
-        .detail-label { font-size: 11px; color: var(--purple); font-weight: 900; margin-bottom: 5px; text-transform: uppercase; }
+        .skill-list-box { width: 115px; padding: 12px 8px; border: 2px solid var(--purple); border-radius: 20px; background: rgba(139,92,246,0.1); cursor: pointer; }
+        .sk-slots { display: flex; justify-content: center; gap: 5px; margin-top: 10px; }
+        .sk-mini-box { width: 32px; height: 32px; background: #000; border-radius: 8px; border: 1px solid var(--border); overflow: hidden; }
 
         .save-panel { background: var(--card); padding: 22px; border-radius: 25px; border: 1px solid var(--border); margin-bottom: 20px; display: flex; flex-direction: column; gap: 14px; }
-        #save-btn { background: linear-gradient(135deg, var(--blue), var(--purple)); color: #fff; padding: 18px; border: none; border-radius: 16px; font-size: 17px; font-weight: 900; cursor: pointer; }
+        .flex-row { display: flex; gap: 12px; }
+        input, select, textarea { width: 100%; padding: 15px; background: var(--input); color: var(--text); border: 1px solid var(--border); border-radius: 14px; font-size: 15px; outline: none; }
+        .btn-group { display: flex; gap: 12px; }
+        #save-btn { flex: 4; background: linear-gradient(135deg, var(--blue), var(--purple)); color: #fff; padding: 18px; border: none; border-radius: 16px; font-weight: 900; cursor: pointer; }
+        #reset-btn { flex: 1.2; background: #1e2536; color: var(--red); border: 1px solid var(--red); border-radius: 16px; font-weight: bold; cursor: pointer; }
 
-        .filter-btn.active { background: var(--purple); color: #fff; }
+        .list-item { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 20px; margin-bottom: 18px; position: relative; border-left: 12px solid var(--border); transition: 0.3s; }
+        .type-banner { position: absolute; top: 0; right: 0; padding: 7px 20px; font-size: 12px; font-weight: 900; color: #fff; border-bottom-left-radius: 18px; }
+
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(12px); }
+        .modal-content { background: var(--card); width: 100%; max-width: 500px; border-radius: 35px; padding: 30px; max-height: 85vh; overflow-y: auto; border: 1px solid var(--purple); position: relative; }
+        
+        .stat-row { display: flex; align-items: center; gap: 15px; margin-bottom: 12px; background: var(--input); padding: 12px 18px; border-radius: 15px; }
+        .stat-input { width: 110px; border: none; background: transparent; text-align: right; color: var(--gold); font-weight: 900; font-size: 18px; }
+        .equip-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px; }
+        .equip-slot { aspect-ratio: 1/1; border: 2px dashed #3a3f4b; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #555; overflow: hidden; background: #080c14; cursor: pointer; }
+        .equip-slot.filled { border-style: solid; border-color: var(--blue); color: #fff; }
+        .acc-slot { grid-column: span 4; height: 55px; border-color: var(--gold); color: var(--gold); font-weight: 900; }
+
+        .theme-trigger { position: fixed; bottom: 35px; left: 30px; background: var(--card); padding: 15px; border-radius: 50%; border: 1px solid var(--border); cursor: pointer; z-index: 500; font-size: 24px; }
+        .admin-trigger { position: fixed; bottom: 35px; right: 30px; background: var(--card); padding: 18px 32px; border-radius: 60px; border: 2px solid var(--purple); color: var(--purple); font-size: 16px; font-weight: 900; cursor: pointer; z-index: 500; }
+        
+        .tab-btn { padding: 10px 15px; background: var(--input); color: #888; border: 1px solid var(--border); border-radius: 10px; font-weight: 800; white-space: nowrap; cursor: pointer; }
+        .tab-btn.active { background: var(--purple); color: #fff; border-color: var(--purple); }
     </style>
 </head>
 <body class="dark-mode">
+
     <div class="top-bar">
-        <div class="guild-title">이옌 길드</div> <div class="made-by">By 시원 (jungchanyoung7-cmyk)</div>
+        <div class="guild-title">이옌 길드</div> <div class="made-by">By 시원</div>
     </div>
 
     <div class="formation-bar" id="f-bar">
@@ -66,63 +82,103 @@
 
     <div class="deck-board">
         <div class="right-panel">
-            <div class="pet-circle" onclick="openPet()"><div id="pet-slot-view"></div></div>
+            <div class="pet-circle" onclick="openPet()">
+                <div id="pet-label" style="font-size:12px; color:var(--purple); font-weight:900;">PET</div>
+                <div id="pet-slot-view" style="width:100%; height:100%;"></div>
+            </div>
+            <div class="skill-list-box" onclick="openSkill()">
+                <div style="font-size:10px; color:var(--purple); text-align:center; font-weight:900;">SKILL ORDER</div>
+                <div class="sk-slots" id="sk-slots-view"></div>
+            </div>
         </div>
         <div id="slots-area"></div>
     </div>
 
     <div class="save-panel">
-        <input type="text" id="d-name" placeholder="가이드 덱 명칭">
-        <textarea id="d-tip" rows="2" placeholder="운영 핵심 팁을 입력하세요..."></textarea>
-        <button id="save-btn" onclick="saveToDB()">💾 가이드 데이터 저장</button>
+        <div class="flex-row">
+            <input type="text" id="d-name" placeholder="가이드 덱 명칭">
+            <select id="d-type" style="width:140px;">
+                <option value="공격">⚔️ 공격용</option>
+                <option value="방어">🛡️ 방어용</option>
+                <option value="카운터">🔥 카운터전용</option>
+            </select>
+        </div>
+        <div class="flex-row">
+            <select id="d-trait" onchange="toggleSpeed()" style="width:140px;">
+                <option value="내실지향">내실 지향</option>
+                <option value="속공지향">속공 지향</option>
+            </select>
+            <div id="speed-wrap" style="display:none; flex:1;">
+                <input type="number" id="d-speed" placeholder="목표 속공">
+            </div>
+        </div>
+        <textarea id="d-tip" rows="2" placeholder="운영 팁을 입력하세요..."></textarea>
+        <div class="btn-group">
+            <button id="reset-btn" onclick="resetInput()">🧹 초기화</button>
+            <button id="save-btn" onclick="saveToDB()">💾 가이드 데이터 저장</button>
+        </div>
     </div>
 
     <div id="deck-list"></div>
 
+    <div id="spec-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="spec-hero-name" style="color:var(--purple); margin-bottom:20px;">영웅 정밀 스펙 설정</h3>
+            <div id="stat-container"></div>
+            <div class="equip-grid">
+                <div class="equip-slot" id="eq-0" onclick="openItemSelect('장비', 0)">무기1</div>
+                <div class="equip-slot" id="eq-1" onclick="openItemSelect('장비', 1)">무기2</div>
+                <div class="equip-slot" id="eq-2" onclick="openItemSelect('장비', 2)">방어구1</div>
+                <div class="equip-slot" id="eq-3" onclick="openItemSelect('장비', 3)">방어구2</div>
+                <div class="equip-slot acc-slot" id="eq-4" onclick="openItemSelect('장신구', 4)">장신구 세트 선택</div>
+            </div>
+            <button onclick="saveHeroSpec()" style="width:100%; margin-top:30px; padding:20px; background:var(--blue); border:none; border-radius:20px; color:#fff; font-weight:900;">변경사항 임시 저장</button>
+            <button onclick="closeSpec()" style="width:100%; margin-top:10px; background:none; border:none; color:#888;">닫기</button>
+        </div>
+    </div>
+
     <div id="modal" class="modal" onclick="closeM()">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                <h3 id="m-title" style="color:var(--purple)">선택</h3>
-                <button onclick="closeM()" style="background:none; border:none; color:#888; font-size:28px;">&times;</button>
-            </div>
+            <h3 id="m-title" style="margin-bottom:20px;">선택</h3>
             <div id="m-body"></div>
         </div>
     </div>
 
+    <div class="theme-trigger" onclick="toggleTheme()">🌓</div>
+    <div class="admin-trigger" onclick="openAdmin()">⚙️ ADMIN</div>
+
 <script>
     const USER_ID = "jungchanyoung7-cmyk"; 
-    const BASE_PATH = `https://raw.githubusercontent.com/${USER_ID}/Guild/main/public`;
-    const ROOT_PATH = `${BASE_PATH}/${encodeURIComponent('도감')}`;
+    const BASE_PATH = `https://raw.githubusercontent.com/${USER_ID}/SavenKnight/main/public`;
+    const HERO_IMG_PATH = `${BASE_PATH}/${encodeURIComponent('도감')}`;
+    const STATS = ["공격력", "방어력", "생명력", "속공", "치명타 확률", "치명타 피해", "효과 적중", "효과 저항"];
 
-    const heroData = {
-        "스페셜": ["루디", "아일린", "레이첼", "델론즈", "스파이크", "제이브", "크리스", "바네사"],
-        "(구)세나": ["파이", "로지", "쥬리", "밀리아", "겔리두스"],
-        "다크나이츠": ["팔라누스", "플라튼", "콜트", "브란즈&브란셀", "실베스타", "멜키르"],
-        "사황/구사황": ["에이스", "여포", "손오공", "린", "카르마", "태오", "연희", "카일"],
-        "나이트크로우": ["오를리", "타카", "칼 헤론", "아킬라"],
-        "천상/심연": ["트루드", "프레이야", "미스트", "레긴레이프", "라드그리드", "이브", "바토리", "앤티", "쥬다스"],
-        "아이사": ["리나", "풍연", "소이", "백각", "비담", "권호", "조운", "관우", "초선", "강재", "나타"],
-        "일반/기타": ["세인", "밍", "루리", "니아", "에스파다", "지크", "룩", "챈슬러", "에반", "카린", "유리", "리"]
+    const registry = {
+        heroData: {
+            "스페셜": ["루디", "아일린", "레이첼", "델론즈", "스파이크", "제이브", "크리스", "바네사"],
+            "(구)세나": ["파이", "로지", "쥬리", "밀리아", "겔리두스", "항우", "우치"],
+            "다크나이츠": ["팔라누스", "플라튼", "콜트", "브란즈&브란셀", "실베스타", "멜키르"],
+            "사황/구사황": ["에이스", "여포", "손오공", "린", "카르마", "태오", "연희", "카일"],
+            "나이트크로우": ["오를리", "타카", "칼 헤론", "아킬라"],
+            "천상/심연": ["트루드", "프레이야", "미스트", "레긴레이프", "라드그리드", "이브", "바토리", "앤티", "쥬다스"],
+            "아이사": ["리나", "풍연", "소이", "백각", "비담", "권호", "조운", "관우", "초선", "강재", "나타"],
+            "일반/기타": ["세인", "밍", "루리", "니아", "에스파다", "지크", "룩", "챈슬러", "에반", "카린", "유리", "리"]
+        },
+        pets: ["루", "이린", "리첼", "델로", "파이크", "맬패로", "유", "크리", "연지", "카람"],
+        itemData: {
+            "장비": ["선봉장", "성기사", "추적자", "암살자", "수문장", "수호자", "복수자", "조율자", "주술사"],
+            "장신구": ["대랄", "권능", "불사", "기합", "철벽", "즉사", "막기", "효저", "생명"]
+        }
     };
 
-    const petList = ["루", "이린", "리첼", "델로", "파이크", "맬패로", "유", "크리", "연지", "카람"];
-
-    const itemData = {
-        "장비": ["선봉장", "성기사", "추적자", "암살자", "수문장", "수호자", "복수자", "조율자", "주술사"],
-        "장신구": [
-            "가시반지", "공포의반지", "권능의반지", "기회의반지", "꿈의반지", 
-            "독사반지", "마법의반지", "메두사의반지", "번뜩이는반지", "보호의반지", 
-            "복수의반지", "부활의반지", "불사의반지", "샐러맨더의반지", "설원의반지", 
-            "수호의반지", "시간의반지", "자연의반지", "재앙의반지", "저주의반지", 
-            "저항의반지", "적중의반지", "죽음의반지", "집중의반지", "행운의반지"
-        ]
-    };
-
-    let deck = [null, null, null, null, null]; 
-    let pet = ""; 
-    let formation = '기본'; 
+    let deck = ["", "", "", "", ""];
+    let heroSpecs = [null, null, null, null, null];
+    let skills = [];
+    let pet = "";
+    let formation = '기본';
     let curSlot = 0;
-    let pressTimer;
+    let pressTimer = null;
+    let isLongPress = false;
 
     function init() {
         const area = document.getElementById('slots-area');
@@ -132,127 +188,183 @@
                 <div class="slot-container" id="wrap-${i}">
                     <div class="slot-num" id="num-${i}">${i+1}</div>
                     <div class="slot" id="s-${i}" 
-                         onmousedown="startPress(${i})" onmouseup="endPress()" 
-                         ontouchstart="startPress(${i})" ontouchend="endPress()"
-                         onclick="handleQuickClick(${i})">
-                    </div>
+                         onmousedown="startPress(${i})" onmouseup="endPress(${i})" 
+                         ontouchstart="startPress(${i})" ontouchend="endPress(${i})"
+                         oncontextmenu="return false;"></div>
                 </div>`;
         }
-        setF('기본'); updateUI();
+        setF('기본');
+        renderList();
+        updateUI();
     }
 
-    function startPress(i) { pressTimer = setTimeout(() => openDetail(i), 800); }
-    function endPress() { clearTimeout(pressTimer); }
+    // 롱프레스 기능 복구 및 강화
+    function startPress(idx) {
+        isLongPress = false;
+        pressTimer = setTimeout(() => {
+            if(deck[idx]) {
+                isLongPress = true;
+                openHeroSpec(idx);
+            }
+        }, 800); // 0.8초 누르면 상세설정
+    }
 
-    function handleQuickClick(i) {
-        if(!deck[i]) openHero(i);
-        else {
-            if(confirm(`${deck[i].name}을(를) 해제하시겠습니까?`)) {
-                deck[i] = null; updateUI();
+    function endPress(idx) {
+        clearTimeout(pressTimer);
+        if(isLongPress) return; // 롱프레스였으면 클릭 동작 안함
+
+        // 짧은 클릭 로직
+        curSlot = idx;
+        if(!deck[idx]) {
+            openHero();
+        } else {
+            if(confirm(`${deck[idx]}을(를) 해제할까요?`)) {
+                deck[idx] = "";
+                heroSpecs[idx] = null;
+                updateUI();
             }
         }
     }
 
-    function openHero(i) {
-        curSlot = i;
+    function openHero() {
         document.getElementById('m-title').innerText = "영웅 선택";
-        let tabs = Object.keys(heroData).map(t => `<button onclick="renderHeroItems('${t}')" style="padding:10px; margin:3px; background:var(--input); color:#fff; border-radius:8px; border:1px solid var(--border); font-size:12px;">${t}</button>`).join('');
-        document.getElementById('m-body').innerHTML = `<div style="overflow-x:auto; white-space:nowrap; margin-bottom:15px;">${tabs}</div><div id="m-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px;"></div>`;
-        renderHeroItems('스페셜');
+        let tabs = `<div style="display:flex; gap:8px; overflow-x:auto; padding-bottom:12px; margin-bottom:15px; border-bottom:1px solid var(--border);">`;
+        Object.keys(registry.heroData).forEach(cat => {
+            tabs += `<button onclick="renderHeroTab('${cat}')" class="tab-btn" id="tab-${cat}">${cat}</button>`;
+        });
+        tabs += `</div><div id="hero-tab-content" style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px;"></div>`;
+        document.getElementById('m-body').innerHTML = tabs;
+        renderHeroTab("스페셜");
+        document.getElementById('modal').style.display = 'flex';
+    }
+
+    function renderHeroTab(cat) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        const target = document.getElementById(`tab-${cat}`);
+        if(target) target.classList.add('active');
+        const container = document.getElementById('hero-tab-content');
+        container.innerHTML = registry.heroData[cat].map(n => `<div class="slot" style="height:75px;" onclick="selectHero('${n}')">${getSlotHTML(n)}</div>`).join('');
+    }
+
+    function selectHero(n) { deck[curSlot] = n; updateUI(); closeM(); }
+
+    function openHeroSpec(idx) {
+        curSlot = idx;
+        const name = deck[idx];
+        if(!heroSpecs[idx]) heroSpecs[idx] = { stats: {}, items: ["","","","",""] };
+        document.getElementById('spec-hero-name').innerText = `[${name}] 상세 설정`;
+        document.getElementById('stat-container').innerHTML = STATS.map(s => `
+            <div class="stat-row">
+                <span style="flex:1; color:#999; font-size:14px;">${s}</span>
+                <input type="number" class="stat-input" data-stat="${s}" value="${heroSpecs[idx].stats[s] || ''}">
+            </div>`).join('');
+        updateSpecItemsUI();
+        document.getElementById('spec-modal').style.display = 'flex';
+    }
+
+    function openItemSelect(type, itemIdx) {
+        let html = `<div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px;">`;
+        html += `<div class="slot" onclick="heroSpecs[curSlot].items[${itemIdx}]=''; updateSpecItemsUI(); closeM();" style="color:var(--red); font-weight:bold; height:50px; grid-column: span 3; border-style:dashed;">🗑️ 선택 해제</div>`;
+        registry.itemData[type].forEach(item => {
+            html += `<div class="slot" style="padding:10px; font-size:12px; text-align:center; font-weight:800; height:60px;" onclick="heroSpecs[curSlot].items[${itemIdx}]='${item}'; updateSpecItemsUI(); closeM();">${item}</div>`;
+        });
+        document.getElementById('m-title').innerText = `${type} 선택`;
+        document.getElementById('m-body').innerHTML = html + "</div>";
         document.getElementById('modal').style.display='flex';
     }
 
-    function renderHeroItems(t) {
-        document.getElementById('m-grid').innerHTML = heroData[t].map(n => `
-            <div class="slot" style="height:80px;" onclick="selectHero('${n}')">${getSlotHTML(n, 'hero')}</div>
-        `).join('');
+    function updateSpecItemsUI() {
+        heroSpecs[curSlot].items.forEach((item, i) => {
+            const el = document.getElementById(`eq-${i}`);
+            el.innerHTML = item ? `<div style="color:var(--gold); font-weight:900; font-size:11px;">${item}</div>` : (i < 2 ? "무기" : (i < 4 ? "방어구" : "장신구"));
+            el.classList.toggle('filled', !!item);
+        });
     }
 
-    function selectHero(name) {
-        deck[curSlot] = { name, gear: "선택안함", ring: "선택안함", atk: "", spd: "" };
-        updateUI(); closeM();
+    function saveHeroSpec() {
+        document.querySelectorAll('.stat-input').forEach(input => { heroSpecs[curSlot].stats[input.dataset.stat] = input.value; });
+        document.getElementById('spec-modal').style.display = 'none';
     }
 
-    function openDetail(i) {
-        if(!deck[i]) return;
-        curSlot = i;
-        const h = deck[i];
-        document.getElementById('m-title').innerText = `${h.name} 상세 정보`;
-        document.getElementById('m-body').innerHTML = `
-            <div style="display:flex; justify-content:center; margin-bottom:20px;">
-                <div class="slot" style="width:100px; height:100px; border-radius:20px;">${getSlotHTML(h.name, 'hero')}</div>
-            </div>
-            <div class="detail-grid">
-                <div class="detail-item"><div class="detail-label">무기/방어구</div>
-                    <select onchange="deck[${i}].gear=this.value">
-                        <option value="선택안함">선택안함</option>
-                        ${itemData.장비.map(g=>`<option value="${g}" ${h.gear===g?'selected':''}>${g}</option>`).join('')}
-                    </select>
-                </div>
-                <div class="detail-item"><div class="detail-label">장신구(반지)</div>
-                    <select onchange="deck[${i}].ring=this.value">
-                        <option value="선택안함">선택안함</option>
-                        ${itemData.장신구.map(r=>`<option value="${r}" ${h.ring===r?'selected':''}>${r}</option>`).join('')}
-                    </select>
-                </div>
-                <div class="detail-item"><div class="detail-label">공격력/마법력</div>
-                    <input type="number" value="${h.atk}" oninput="deck[${i}].atk=this.value" placeholder="예: 45000">
-                </div>
-                <div class="detail-item"><div class="detail-label">목표 속공</div>
-                    <input type="number" value="${h.spd}" oninput="deck[${i}].spd=this.value" placeholder="예: 95">
-                </div>
-            </div>
-            <button onclick="closeM()" style="width:100%; margin-top:20px; padding:18px; background:var(--purple); color:#fff; border:none; border-radius:15px; font-weight:900;">저장 및 닫기</button>
-        `;
-        document.getElementById('modal').style.display='flex';
-    }
-
-    function getSlotHTML(name, type) {
+    function getSlotHTML(name, type='hero', sIdx=null) {
         if(!name) return "";
-        let folder = "";
-        let ext = ".png";
-
-        if(type === 'hero') folder = '캐릭터 아이콘 모음';
-        else if(type === 'pet') folder = '펫 아이콘 모음';
-        else if(type === 'item') { folder = '장신구'; ext = ".jpg"; } // 반지는 jpg
-
-        let finalUrl = `${ROOT_PATH}/${encodeURIComponent(folder)}/${encodeURIComponent(name)}${ext}`;
-        return `<img src="${finalUrl}" class="hero-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><div class="no-img-text" style="display:none; font-size:10px; color:#555;">${name}</div>`;
+        let cat = "일반/기타";
+        for(let c in registry.heroData) { if(registry.heroData[c].includes(name)) cat = c; }
+        if(registry.pets.includes(name)) cat = "펫";
+        let sub = type === 'hero' ? '아이콘' : (type === 'skill' ? '스킬' : '');
+        let file = type === 'skill' ? `${name}-${sIdx}` : name;
+        const url = `${HERO_IMG_PATH}/${encodeURIComponent(cat)}/${sub?encodeURIComponent(sub)+'/':''}${encodeURIComponent(file)}.png`;
+        return `<img src="${url}" class="hero-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><div class="no-img-text" style="display:none;">${name}</div>`;
     }
 
     function updateUI() {
-        deck.forEach((h, i) => {
-            const s = document.getElementById('s-' + i);
-            s.innerHTML = h ? getSlotHTML(h.name, 'hero') : "";
-            s.classList.toggle('has-hero', !!h);
-        });
-        document.getElementById('pet-slot-view').innerHTML = pet ? getSlotHTML(pet, 'pet') : "";
+        deck.forEach((h, i) => { document.getElementById('s-' + i).innerHTML = getSlotHTML(h); });
+        document.getElementById('pet-slot-view').innerHTML = getSlotHTML(pet, 'pet');
+        document.getElementById('pet-label').style.display = pet ? 'none' : 'block';
+        document.getElementById('sk-slots-view').innerHTML = skills.map(s => `<div class="sk-mini-box">${getSlotHTML(s.n, 'skill', s.v)}</div>`).join('') + '<div class="sk-mini-box"></div>'.repeat(3 - skills.length);
     }
 
     function setF(n) {
-        formation = n;
-        const POS = { 
-            '기본': [{x:135,y:250},{x:135,y:130},{x:25,y:320},{x:25,y:200},{x:25,y:80}],
-            '밸런스': [{x:135,y:310},{x:135,y:195},{x:135,y:80},{x:25,y:260},{x:25,y:145}],
-            '공격': [{x:135,y:200},{x:25,y:335},{x:25,y:245},{x:25,y:155},{x:25,y:65}],
-            '보호': [{x:135,y:335},{x:135,y:245},{x:135,y:155},{x:135,y:65},{x:25,y:200}]
+        const POS = {
+            '기본': [{x:135,y:250,c:'blue'},{x:135,y:130,c:'blue'},{x:25,y:320,c:'red'},{x:25,y:200,c:'red'},{x:25,y:80,c:'red'}],
+            '밸런스': [{x:135,y:310,c:'blue'},{x:135,y:195,c:'blue'},{x:135,y:80,c:'blue'},{x:25,y:260,c:'red'},{x:25,y:145,c:'red'}],
+            '공격': [{x:135,y:200,c:'blue'},{x:25,y:335,c:'red'},{x:25,y:245,c:'red'},{x:25,y:155,c:'red'},{x:25,y:65,c:'red'}],
+            '보호': [{x:135,y:335,c:'blue'},{x:135,y:245,c:'blue'},{x:135,y:155,c:'blue'},{x:135,y:65,c:'blue'},{x:25,y:200,c:'red'}]
         };
+        formation = n;
+        document.querySelectorAll('.f-btn').forEach(b => b.classList.toggle('active', b.innerText.includes(n)));
         POS[n].forEach((p, i) => {
             const el = document.getElementById(`wrap-${i}`);
             el.style.left = p.x + 'px'; el.style.top = p.y + 'px';
+            document.getElementById(`num-${i}`).className = `slot-num num-${p.c}`;
         });
-        document.querySelectorAll('.f-btn').forEach(b => b.classList.toggle('active', b.innerText.includes(n)));
     }
 
+    function saveToDB() {
+        const name = document.getElementById('d-name').value;
+        if(!name) return alert("덱 이름을 입력하세요.");
+        const data = { id: Date.now(), name, type: document.getElementById('d-type').value, trait: document.getElementById('d-trait').value, speed: document.getElementById('d-speed').value, tip: document.getElementById('d-tip').value, deck: [...deck], specs: JSON.parse(JSON.stringify(heroSpecs)), skills, pet, formation };
+        let dbList = JSON.parse(localStorage.getItem('SENA_DECKS') || '[]');
+        dbList.unshift(data);
+        localStorage.setItem('SENA_DECKS', JSON.stringify(dbList));
+        renderList(); alert("저장 완료!");
+    }
+
+    function renderList() {
+        const dbList = JSON.parse(localStorage.getItem('SENA_DECKS') || '[]');
+        document.getElementById('deck-list').innerHTML = dbList.map(d => `
+            <div class="list-item" style="border-left-color:${d.type==='공격'?'var(--red)':'var(--blue)'}">
+                <div class="type-banner" style="background:${d.type==='공격'?'var(--red)':'var(--blue)'}">${d.type}</div>
+                <div style="font-weight:900; font-size:20px; margin-bottom:10px;">${d.name}</div>
+                <div style="display:flex; gap:10px;">
+                    ${d.deck.filter(h=>h).map(h=>`<div style="width:50px; height:50px; border-radius:10px; overflow:hidden; background:#000;">${getSlotHTML(h)}</div>`).join('')}
+                </div>
+                <button onclick="deleteDeck(${d.id})" style="position:absolute; bottom:20px; right:20px; background:none; border:none; color:var(--red); font-weight:800;">삭제</button>
+            </div>`).join('') || '<div style="text-align:center; padding:50px; color:#444;">데이터가 없습니다.</div>';
+    }
+
+    function deleteDeck(id) { if(confirm("삭제할까요?")) { let dbList = JSON.parse(localStorage.getItem('SENA_DECKS')); dbList = dbList.filter(i=>i.id!==id); localStorage.setItem('SENA_DECKS', JSON.stringify(dbList)); renderList(); } }
     function openPet() {
-        document.getElementById('m-title').innerText = "펫 선택";
-        let grid = petList.map(n => `<div class="slot" style="height:70px; border-radius:50%;" onclick="pet='${n}'; updateUI(); closeM();">${getSlotHTML(n, 'pet')}</div>`).join('');
-        document.getElementById('m-body').innerHTML = `<div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px;">${grid}</div>`;
+        let html = `<div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px;">`;
+        registry.pets.forEach(n => { html += `<div class="slot" style="height:65px; border-radius:50%;" onclick="pet='${n}'; updateUI(); closeM();">${getSlotHTML(n, 'pet')}</div>`; });
+        document.getElementById('m-body').innerHTML = html + "</div>";
         document.getElementById('modal').style.display='flex';
     }
-
-    function closeM() { document.getElementById('modal').style.display = 'none'; }
-    function saveToDB() { alert("전체 가이드 데이터가 상세 능력치와 함께 저장되었습니다."); }
+    function openSkill() {
+        const actives = deck.filter(h=>h);
+        if(!actives.length) return alert("영웅을 먼저 배치하세요.");
+        let html = `<div style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px;">`;
+        actives.forEach(h => { [1,2].forEach(v => { html += `<div class="slot" style="height:80px;" onclick="toggleSkill('${h}',${v})">${getSlotHTML(h,'skill',v)}</div>`; }); });
+        document.getElementById('m-body').innerHTML = html + "</div>";
+        document.getElementById('modal').style.display='flex';
+    }
+    function toggleSkill(n,v) { if(skills.length < 3) skills.push({n,v}); updateUI(); closeM(); }
+    function toggleTheme() { document.body.classList.toggle('light-mode'); }
+    function toggleSpeed() { document.getElementById('speed-wrap').style.display = document.getElementById('d-trait').value === '속공지향' ? 'block' : 'none'; }
+    function closeM() { document.getElementById('modal').style.display='none'; }
+    function closeSpec() { document.getElementById('spec-modal').style.display='none'; }
+    function openAdmin() { if(confirm("초기화하시겠습니까?")) { localStorage.clear(); location.reload(); } }
+    function resetInput() { if(confirm("초기화할까요?")) { deck=["","","","",""]; heroSpecs=[null,null,null,null,null]; skills=[]; pet=""; updateUI(); } }
 
     window.onload = init;
 </script>
