@@ -1,0 +1,393 @@
+.growth-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  background-color: #111;
+  color: white;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dungeon-list {
+  width: 300px;
+  min-width: 250px;
+  height: 100%;
+  background-color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+  border-right: 1px solid #333;
+  flex-shrink: 0;
+  justify-content: space-between;
+  z-index: 100;
+  overflow-y: hidden;
+}
+
+.dungeon-tab {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-size: cover;
+}
+
+.dungeon-tab:hover {
+  transform: scale(1.02);
+}
+
+.dungeon-tab.active {
+  outline: 2px solid #ffd700;
+  box-shadow: 0 0 10px #ffd700;
+  background: linear-gradient(to right, #ffcc00, #ff9900);
+}
+
+.dungeon-label-overlay {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.dungeon-detail {
+  flex: 1;
+  min-width: 0;
+  padding: 1rem;
+  background-color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+}
+
+.dungeon-bg img {
+  width: 100%;
+  height: 30vh;
+  border-radius: 12px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 10px #000;
+}
+
+.dungeon-info {
+  background-color: #222;
+  padding: 1.5rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.dungeon-info .suggestion {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: flex;
+  gap: 10px;
+  button {
+    background: rgba(255, 215, 0, 0.9);
+    border: none;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    color: black;
+    font-weight: bold;
+  }
+}
+
+.dungeon-info h2 {
+  font-size: 1.5rem;
+  color: #ffd700;
+  margin: 0;
+}
+
+.reward-section p {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.rewards img {
+  width: 40px;
+  margin-right: 10px;
+}
+
+.reward-text {
+  margin-top: 0.5rem;
+  background-color: #111;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #ffd700;
+  border: 1px solid #444;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stage-select {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.stage-select button {
+  background: #222;
+  color: white;
+  border: 1px solid #444;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.stage-select button.active {
+  background: #ffd700;
+  color: black;
+  font-weight: bold;
+}
+
+.enter-button {
+  align-self: flex-start;
+  background: gold;
+  color: black;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.boss-stats-box {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.boss-stats-box h3 {
+  font-size: 1.4em;
+  margin-bottom: 8px;
+}
+
+.boss-stat-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  justify-items: center;
+  align-items: center;
+  height: 100%;
+}
+
+.boss-level {
+  font-size: 1.2em;
+  margin-bottom: 12px;
+}
+
+.boss-stat-list div {
+  margin: 4px 0;
+  font-size: 0.95em;
+  text-wrap: nowrap;
+}
+
+.dungeon-top {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.dungeon-image {
+  height: 100%;
+}
+
+.dungeon-image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #000;
+  object-fit: contain;
+}
+
+.dungeon-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.stage-skill-wrapper {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.stage {
+  flex: 1;
+}
+
+.skill-preview {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skill-preview p {
+  margin: 0 0 0.5rem;
+  font-weight: bold;
+  color: #ffd700;
+}
+
+.skill-images {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+}
+
+.skill-images img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  background: #111;
+  border: 1px solid #444;
+  border-radius: 8px;
+}
+
+.skill-tooltip-wrapper {
+  position: relative;
+  display: inline-block;
+  margin: 4px;
+}
+
+.skill-tooltip-wrapper img {
+  width: 64px;
+  height: 64px;
+  cursor: pointer;
+}
+
+.skill-tooltip {
+  display: none;
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 8px;
+  border-radius: 6px;
+  width: 220px;
+  z-index: 10;
+  white-space: normal;
+  font-size: 12px;
+  word-wrap: break-word;
+  max-width: 90vw;
+  box-sizing: border-box;
+  strong {
+    font-size: 1rem;
+  }
+}
+
+.skill-tooltip-wrapper:hover .skill-tooltip {
+  display: block;
+}
+
+@media (max-width: 786px) {
+  .dungeon-top {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .skill-tooltip {
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    min-width: 30vw;
+    max-width: 75vw;
+    font-size: 12px;
+    padding: 4px;
+  }
+}
+
+@media (max-width: 426px) {
+  .growth-container {
+    flex-direction: column;
+  }
+
+  .dungeon-list {
+    position: fixed;
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 1rem 0.5rem;
+    gap: 1rem;
+    border-right: none;
+    border-bottom: 1px solid #333;
+    height: 115px;
+  }
+
+  .dungeon-tab {
+    flex: 0 0 auto;
+    width: 125px;
+    height: 80px;
+    background: linear-gradient(to right, #ffcc00, #ff9900);
+  }
+
+  .dungeon-info {
+    padding: 0.5rem;
+  }
+
+  .dungeon-detail {
+    padding: 1rem;
+    margin-top: 115px;
+  }
+
+  .dungeon-bg img {
+    height: 200px;
+  }
+
+  .stage-select {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+
+  .stage-select button {
+    flex: 0 0 auto;
+    min-width: 40px;
+  }
+
+  .boss-stats-box {
+    padding: 5px;
+  }
+
+  .boss-stat-list div {
+    font-size: 16px;
+  }
+
+  .skill-images img {
+    width: 45px;
+    height: 45px;
+  }
+}

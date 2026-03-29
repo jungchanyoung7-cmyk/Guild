@@ -1,0 +1,509 @@
+.raid-container {
+  display: flex;
+  flex-direction: row;
+  background-color: #111;
+  color: white;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.raid-list {
+  width: 300px;
+  min-width: 250px;
+  background-color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-right: 1px solid #333;
+  flex-shrink: 0;
+  z-index: 100;
+  overflow-y: hidden;
+}
+
+.raid-tab {
+  display: flex;
+  align-items: center;
+  background-color: #222;
+  border-radius: 10px;
+  padding: 5px;
+  gap: 5px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.raid-tab:hover {
+  background-color: #333;
+  transform: scale(1.02);
+}
+
+.raid-tab.active {
+  outline: 2px solid #ffd700;
+  box-shadow: 0 0 8px #ffd700;
+}
+
+.raid-tab-img {
+  width: 100px;
+  height: 150px;
+  object-fit: contain;
+  border-radius: 8px;
+  background-color: #000;
+}
+
+.raid-tab-name {
+  font-size: 1.5rem;
+  width: 100%;
+  text-align: center;
+  text-wrap: nowrap;
+}
+
+.raid-detail {
+  flex: 1;
+  min-width: 0;
+  padding: 1rem;
+  background-color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+}
+
+.raid-top {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.raid-bg img {
+  width: 100%;
+  height: 195px;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #000;
+}
+
+.raid-stats-box {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.raid-stat-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  justify-items: center;
+  align-items: center;
+  height: 100%;
+  text-wrap: nowrap;
+}
+
+.raid-info h2 {
+  font-size: 1.5rem;
+  color: #ffd700;
+}
+
+.raid-info p {
+  background-color: #222;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-top: 0.5rem;
+}
+
+.stage-skill-wrapper {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.stage {
+  width: 50%;
+  background-color: #222;
+  border-radius: 10px;
+}
+
+.stage-select {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.stage-select button {
+  padding: 0.5rem 1rem;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.stage-select button.active {
+  background-color: #ffd700;
+  color: black;
+}
+
+.stage-select button:hover {
+  background-color: #666;
+}
+
+.skill-section {
+  flex: 1;
+  background-color: #222;
+  padding: 1rem;
+  border-radius: 10px;
+  p {
+    margin: 0 0 0.5rem;
+    font-weight: bold;
+    color: #ffd700;
+  }
+}
+
+.raid-skill-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  justify-content: center;
+}
+
+.hero-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hero-popup {
+  background: #1e1e1e;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  color: white;
+  position: relative;
+  h3 {
+    margin-bottom: 10px;
+  }
+}
+.popup-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #666;
+  padding: 3px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.hero-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  justify-items: center;
+}
+.hero-item {
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+.hero-item img {
+  width: 100%;
+  border-radius: 8px;
+}
+.hero-item button {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  background-color: gold;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  padding: 2px 6px;
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+.hero-item button.liked {
+  background-color: #ff9900;
+  color: black;
+}
+
+.team-list {
+  margin-top: 20px;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.team-card {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 10px;
+  background-color: #222;
+}
+
+.team-heroes {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-bottom: 8px;
+  img {
+    width: 100%;
+  }
+}
+
+.team-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  justify-content: flex-end;
+  color: white;
+  button {
+    background-color: #ffd700;
+    border: none;
+    padding: 8px 16px;
+    font-size: 1rem;
+    border-radius: 6px;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  button:hover {
+    background-color: #ffc800;
+  }
+}
+
+.team-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+
+.team-popup {
+  background: #222;
+  color: white;
+  padding: 20px;
+  margin: 100px auto;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.hero-item.selected {
+  outline: 2px solid gold;
+}
+
+.hero-select-list {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  transform: translate(-50%, -50%);
+  background-color: #1c1c1c;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 0 10px black;
+  z-index: 1100;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+  gap: 10px;
+}
+
+.hero-select-list .hero-item {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #2a2a2a;
+  border-radius: 8px;
+  padding: 4px;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.hero-select-list .hero-item:hover {
+  background-color: #333;
+  transform: scale(1.05);
+}
+
+.hero-select-list .hero-item img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.team-selection-area {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.team-add-button-wrap {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.selected-team {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.team-slot {
+  width: 60px;
+  height: 60px;
+  background-color: #333;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.team-slot-empty {
+  width: 100%;
+  height: 100%;
+  background-color: #555;
+  color: white;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.team-slot-empty:hover {
+  background-color: #777;
+}
+
+.submit-team-button {
+  background-color: #ffd700;
+  border: none;
+  padding: 8px 16px;
+  font-size: 1rem;
+  border-radius: 6px;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.submit-team-button:hover {
+  background-color: #ffc800;
+}
+
+@media (max-width: 786px) {
+  .raid-list {
+    justify-content: flex-start;
+  }
+
+  .raid-top {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .stage-skill-wrapper {
+    flex-direction: column;
+  }
+  .stage {
+    width: 100%;
+  }
+  .raid-skill-images img {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 426px) {
+  .raid-container {
+    flex-direction: column;
+  }
+
+  .raid-list {
+    position: fixed;
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 1rem 0.5rem;
+    gap: 1rem;
+    border-right: none;
+    border-bottom: 1px solid #333;
+    height: 115px;
+  }
+
+  .raid-tab {
+    flex: 0 0 auto;
+    width: 125px;
+    height: 80px;
+    padding: 0;
+    background: linear-gradient(to right, #ffcc00, #ff9900);
+  }
+
+  .raid-tab-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .raid-tab-name {
+    display: none;
+  }
+
+  .raid-info {
+    padding: 0.5rem;
+  }
+
+  .raid-detail {
+    padding: 1rem;
+    margin-top: 115px;
+  }
+
+  .raid-bg img {
+    height: 200px;
+  }
+
+  .popup-close {
+    top: 5px;
+    right: 5px;
+  }
+
+  .hero-popup {
+    padding: 0.5rem;
+  }
+
+  .hero-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+  }
+}

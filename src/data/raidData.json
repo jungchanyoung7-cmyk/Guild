@@ -1,0 +1,4073 @@
+[
+  {
+    "id": 1,
+    "name": "파멸의눈동자",
+    "image": "/레이드/선택/파멸의눈동자.png",
+    "bg": "/레이드/배경/파멸의눈동자.png",
+    "skillsByStage": [
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": "마법 공격력의 50%만큼 2회 피해"
+            }
+          ]
+        },
+        {
+          "name": "파멸의 브레스",
+          "skillcooldown": 46,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 70%만큼 2회 피해",
+                "각 공격마다 화상 [25% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "파괴의 지진",
+          "skillcooldown": 54,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 80%만큼 2회 피해",
+                "각 공격마다 화상 [25% 확률] [2턴 지속]",
+                "각 공격마다 기절 [10% 확률] [1턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "멸망의 돌풍",
+          "skillcooldown": 78,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 170%만큼 1회 피해",
+                "대상이 [화상] 상태일 경우 마법 공격력의 150%만큼 추가 피해"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "복수의 눈",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": ["마법 감쇄 [상시]", "누적 공격력 증가 [상시]"]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": "마법 공격력의 50%만큼 2회 피해"
+            }
+          ]
+        },
+        {
+          "name": "파멸의 브레스",
+          "skillcooldown": 46,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 70%만큼 2회 피해",
+                "각 공격마다 화상 [25% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "파괴의 지진",
+          "skillcooldown": 54,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 80%만큼 2회 피해",
+                "각 공격마다 화상 [25% 확률] [2턴 지속]",
+                "각 공격마다 기절 [10% 확률] [1턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "멸망의 돌풍",
+          "skillcooldown": 78,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 170%만큼 1회 피해",
+                "대상이 [화상] 상태일 경우 마법 공격력의 150%만큼 추가 피해"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "복수의 눈",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": ["마법 감쇄 [상시]", "누적 공격력 증가 [상시]"]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": "마법 공격력의 50%만큼 2회 피해"
+            }
+          ]
+        },
+        {
+          "name": "파멸의 브레스",
+          "skillcooldown": 46,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 70%만큼 2회 피해",
+                "각 공격마다 화상 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "파괴의 지진",
+          "skillcooldown": 54,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 80%만큼 2회 피해",
+                "각 공격마다 화상 [40% 확률] [2턴 지속]",
+                "각 공격마다 기절 [25% 확률] [1턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "멸망의 돌풍",
+          "skillcooldown": 78,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 170%만큼 1회 피해",
+                "대상이 [화상] 상태일 경우 마법 공격력의 150%만큼 추가 피해"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "복수의 눈",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": ["마법 감쇄 [상시]", "누적 공격력 증가 [상시]"]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": "마법 공격력의 50%만큼 2회 피해"
+            }
+          ]
+        },
+        {
+          "name": "파멸의 브레스",
+          "skillcooldown": 46,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 70%만큼 2회 피해",
+                "각 공격마다 화상 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "파괴의 지진",
+          "skillcooldown": 54,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 80%만큼 2회 피해",
+                "각 공격마다 화상 [40% 확률] [2턴 지속]",
+                "각 공격마다 기절 [25% 확률] [1턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "멸망의 돌풍",
+          "skillcooldown": 78,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 170%만큼 1회 피해",
+                "대상이 [화상] 상태일 경우 마법 공격력의 150%만큼 추가 피해"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "복수의 눈",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": ["마법 감쇄 [상시]", "누적 공격력 증가 [상시]"]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": "마법 공격력의 50%만큼 2회 피해"
+            }
+          ]
+        },
+        {
+          "name": "파멸의 브레스",
+          "skillcooldown": 46,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 70%만큼 2회 피해",
+                "각 공격마다 화상 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "파괴의 지진",
+          "skillcooldown": 54,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 80%만큼 2회 피해",
+                "각 공격마다 화상 [40% 확률] [2턴 지속]",
+                "각 공격마다 기절 [25% 확률] [1턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "멸망의 돌풍",
+          "skillcooldown": 78,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 170%만큼 1회 피해",
+                "대상이 [화상] 상태일 경우 마법 공격력의 150%만큼 추가 피해"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "복수의 눈",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": ["마법 감쇄 [상시]", "누적 공격력 증가 [상시]"]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": "마법 공격력의 50%만큼 2회 피해"
+            }
+          ]
+        },
+        {
+          "name": "파멸의 브레스",
+          "skillcooldown": 46,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 70%만큼 2회 피해",
+                "각 공격마다 화상 [55% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "파괴의 지진",
+          "skillcooldown": 54,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 80%만큼 2회 피해",
+                "각 공격마다 화상 [55% 확률] [3턴 지속]",
+                "각 공격마다 기절 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "멸망의 돌풍",
+          "skillcooldown": 78,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 170%만큼 1회 피해",
+                "대상이 [화상] 상태일 경우 마법 공격력의 300%만큼 추가 피해"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "복수의 눈",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": ["마법 감쇄 [상시]", "누적 공격력 증가 [상시]"]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": "마법 공격력의 50%만큼 2회 피해"
+            }
+          ]
+        },
+        {
+          "name": "파멸의 브레스",
+          "skillcooldown": 46,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 70%만큼 2회 피해",
+                "각 공격마다 화상 [55% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "파괴의 지진",
+          "skillcooldown": 54,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 80%만큼 2회 피해",
+                "각 공격마다 화상 [55% 확률] [3턴 지속]",
+                "각 공격마다 기절 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "멸망의 돌풍",
+          "skillcooldown": 78,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 170%만큼 1회 피해",
+                "대상이 [화상] 상태일 경우 마법 공격력의 300%만큼 추가 피해"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "복수의 눈",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": ["마법 감쇄 [상시]", "누적 공격력 증가 [상시]"]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": "마법 공격력의 50%만큼 2회 피해"
+            }
+          ]
+        },
+        {
+          "name": "파멸의 브레스",
+          "skillcooldown": 46,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 70%만큼 2회 피해",
+                "각 공격마다 화상 [70% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "파괴의 지진",
+          "skillcooldown": 54,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 80%만큼 2회 피해",
+                "각 공격마다 화상 [70% 확률] [3턴 지속]",
+                "각 공격마다 기절 [55% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "멸망의 돌풍",
+          "skillcooldown": 78,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 170%만큼 1회 피해",
+                "대상이 [화상] 상태일 경우 마법 공격력의 300%만큼 추가 피해"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "복수의 눈",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": ["마법 감쇄 [상시]", "누적 공격력 증가 [상시]"]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": "마법 공격력의 50%만큼 2회 피해"
+            }
+          ]
+        },
+        {
+          "name": "파멸의 브레스",
+          "skillcooldown": 46,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 70%만큼 2회 피해",
+                "각 공격마다 화상 [70% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "파괴의 지진",
+          "skillcooldown": 54,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 80%만큼 2회 피해",
+                "각 공격마다 화상 [70% 확률] [3턴 지속]",
+                "각 공격마다 기절 [55% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "멸망의 돌풍",
+          "skillcooldown": 78,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 170%만큼 1회 피해",
+                "대상이 [화상] 상태일 경우 마법 공격력의 300%만큼 추가 피해"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "복수의 눈",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": ["마법 감쇄 [상시]", "누적 공격력 증가 [상시]"]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": "마법 공격력의 50%만큼 2회 피해"
+            }
+          ]
+        },
+        {
+          "name": "파멸의 브레스",
+          "skillcooldown": 46,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 70%만큼 2회 피해",
+                "각 공격마다 화상 [85% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "파괴의 지진",
+          "skillcooldown": 54,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 80%만큼 2회 피해",
+                "각 공격마다 화상 [85% 확률] [3턴 지속]",
+                "각 공격마다 기절 [70% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "멸망의 돌풍",
+          "skillcooldown": 78,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 170%만큼 1회 피해",
+                "대상이 [화상] 상태일 경우 마법 공격력의 300%만큼 추가 피해"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "복수의 눈",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": ["마법 감쇄 [상시]", "누적 공격력 증가 [상시]"]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": "마법 공격력의 50%만큼 2회 피해"
+            }
+          ]
+        },
+        {
+          "name": "파멸의 브레스",
+          "skillcooldown": 46,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 70%만큼 2회 피해",
+                "각 공격마다 화상 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "파괴의 지진",
+          "skillcooldown": 54,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 2회 피해",
+                "각 공격마다 화상 [100% 확률] [3턴 지속]",
+                "각 공격마다 기절 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "멸망의 돌풍",
+          "skillcooldown": 78,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 170%만큼 1회 피해",
+                "대상이 [화상] 상태일 경우 마법 공격력의 500%만큼 추가 피해"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "복수의 눈",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": ["마법 감쇄 [상시]", "누적 공격력 증가 [상시]"]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": "마법 공격력의 50%만큼 2회 피해"
+            }
+          ]
+        },
+        {
+          "name": "파멸의 브레스",
+          "skillcooldown": 46,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 70%만큼 2회 피해",
+                "각 공격마다 화상 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "파괴의 지진",
+          "skillcooldown": 54,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 2회 피해",
+                "각 공격마다 화상 [100% 확률] [3턴 지속]",
+                "각 공격마다 기절 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "멸망의 돌풍",
+          "skillcooldown": 78,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 170%만큼 1회 피해",
+                "대상이 [화상] 상태일 경우 마법 공격력의 500%만큼 추가 피해"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "복수의 눈",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": ["마법 감쇄 [상시]", "누적 공격력 증가 [상시]"]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": "마법 공격력의 50%만큼 2회 피해"
+            }
+          ]
+        },
+        {
+          "name": "파멸의 브레스",
+          "skillcooldown": 46,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 70%만큼 2회 피해",
+                "각 공격마다 화상 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "파괴의 지진",
+          "skillcooldown": 54,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 2회 피해",
+                "각 공격마다 화상 [100% 확률] [3턴 지속]",
+                "각 공격마다 기절 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "멸망의 돌풍",
+          "skillcooldown": 78,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 170%만큼 1회 피해",
+                "대상이 [화상] 상태일 경우 마법 공격력의 500%만큼 추가 피해"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "복수의 눈",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": ["마법 감쇄 [상시]", "누적 공격력 증가 [상시]"]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": "마법 공격력의 50%만큼 2회 피해"
+            }
+          ]
+        },
+        {
+          "name": "파멸의 브레스",
+          "skillcooldown": 46,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 70%만큼 2회 피해",
+                "각 공격마다 화상 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "파괴의 지진",
+          "skillcooldown": 54,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 2회 피해",
+                "각 공격마다 화상 [100% 확률] [3턴 지속]",
+                "각 공격마다 기절 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "멸망의 돌풍",
+          "skillcooldown": 78,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 170%만큼 1회 피해",
+                "대상이 [화상] 상태일 경우 마법 공격력의 500%만큼 추가 피해"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "복수의 눈",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": ["마법 감쇄 [상시]", "누적 공격력 증가 [상시]"]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": "마법 공격력의 50%만큼 2회 피해"
+            }
+          ]
+        },
+        {
+          "name": "파멸의 브레스",
+          "skillcooldown": 46,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 70%만큼 2회 피해",
+                "각 공격마다 화상 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "파괴의 지진",
+          "skillcooldown": 54,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 2회 피해",
+                "각 공격마다 화상 [100% 확률] [3턴 지속]",
+                "각 공격마다 기절 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "멸망의 돌풍",
+          "skillcooldown": 78,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 170%만큼 1회 피해",
+                "대상이 [화상] 상태일 경우 마법 공격력의 500%만큼 추가 피해"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "복수의 눈",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": ["마법 감쇄 [상시]", "누적 공격력 증가 [상시]"]
+            }
+          ]
+        }
+      ]
+    ],
+    "rewardsByStage": [
+      "EXP: 600, 골드: 1000, 4성 드래곤 장비",
+      "EXP: 700, 골드: 1100, 4성 드래곤 장비",
+      "EXP: 800, 골드: 1200, 4~5성 드래곤 장비",
+      "EXP: 900, 골드: 1300, 4~5성 드래곤 장비",
+      "EXP: 1000, 골드: 1400, 4~5성 드래곤 장비",
+      "EXP: 1100, 골드: 1600, 5성 드래곤 장비",
+      "EXP: 1200, 골드: 1800, 5~6성 드래곤 장비",
+      "EXP: 1300, 골드: 2000, 5~6성 드래곤 장비",
+      "EXP: 1400, 골드: 2200, 5~6성 드래곤 장비",
+      "EXP: 1500, 골드: 2400, 6성 드래곤 장비",
+      "EXP: 3000, 골드: 5200, 6성 드래곤 장비",
+      "EXP: 3000, 골드: 5600, 6성 드래곤 장비",
+      "EXP: 3000, 골드: 6000, 6성 드래곤 장비",
+      "EXP: 3000, 골드: 6400, 6성 드래곤 장비",
+      "EXP: 3000, 골드: 6800, 6성 드래곤 장비"
+    ],
+    "bossStatsByStage": [
+      {
+        "atk": 349,
+        "def": 432,
+        "hp": 10492,
+        "spd": 60,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 0,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 376,
+        "def": 464,
+        "hp": 12100,
+        "spd": 60,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 0,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 411,
+        "def": 508,
+        "hp": 15954,
+        "spd": 60,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 0,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 603,
+        "def": 652,
+        "hp": 24045,
+        "spd": 60,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 0,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 830,
+        "def": 796,
+        "hp": 34438,
+        "spd": 60,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 15,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 1144,
+        "def": 940,
+        "hp": 47569,
+        "spd": 60,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 30,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 1578,
+        "def": 1174,
+        "hp": 70508,
+        "spd": 60,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 60,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 2097,
+        "def": 1462,
+        "hp": 125502,
+        "spd": 60,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 90,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 2798,
+        "def": 1822,
+        "hp": 194679,
+        "spd": 60,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 3729,
+        "def": 2272,
+        "hp": 298381,
+        "spd": 60,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 3990,
+        "def": 2340,
+        "hp": 584826,
+        "spd": 60,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 4251,
+        "def": 2408,
+        "hp": 626599,
+        "spd": 60,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 4512,
+        "def": 2476,
+        "hp": 710746,
+        "spd": 60,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 4773,
+        "def": 2544,
+        "hp": 751919,
+        "spd": 60,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 5034,
+        "def": 2612,
+        "hp": 835466,
+        "spd": 60,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "우마왕",
+    "image": "/레이드/선택/우마왕.png",
+    "bg": "/레이드/배경/우마왕.png",
+    "skillsByStage": [
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "단일 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 1회 피해",
+                "석화 [25% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "분노의 고함",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 80%만큼 1회 피해",
+                "출혈 [25% 확률] [2턴 지속] [2회 부여]"
+              ]
+            },
+            {
+              "target": "모든 아군",
+              "detail": "버프",
+              "effect": "홍담 소환"
+            }
+          ]
+        },
+        {
+          "name": "천지개벽",
+          "skillcooldown": 50,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 130%만큼 1회 피해",
+                "출혈 [25% 확률] [2턴 지속] [3회 부여]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "암산주박",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 160%만큼 1회 피해",
+                "석화 [25% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "폭군의 명령",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "홍담 생존 시 감쇄 [상시]",
+                "홍담 생존시 피해량 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "단일 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 1회 피해",
+                "석화 [25% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "분노의 고함",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 80%만큼 1회 피해",
+                "출혈 [25% 확률] [2턴 지속] [2회 부여]"
+              ]
+            },
+            {
+              "target": "모든 아군",
+              "detail": "버프",
+              "effect": "홍담 소환"
+            }
+          ]
+        },
+        {
+          "name": "천지개벽",
+          "skillcooldown": 50,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 130%만큼 1회 피해",
+                "출혈 [25% 확률] [2턴 지속] [3회 부여]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "암산주박",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 160%만큼 1회 피해",
+                "석화 [25% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "폭군의 명령",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "홍담 생존 시 감쇄 [상시]",
+                "홍담 생존시 피해량 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 1회 피해",
+                "석화 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "분노의 고함",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 80%만큼 1회 피해",
+                "출혈 [40% 확률] [2턴 지속] [2회 부여]"
+              ]
+            },
+            {
+              "target": "모든 아군",
+              "detail": "버프",
+              "effect": "홍담 소환"
+            }
+          ]
+        },
+        {
+          "name": "천지개벽",
+          "skillcooldown": 50,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 130%만큼 1회 피해",
+                "출혈 [40% 확률] [2턴 지속] [3회 부여]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "암산주박",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 160%만큼 1회 피해",
+                "석화 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "폭군의 명령",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "홍담 생존 시 감쇄 [상시]",
+                "홍담 생존시 피해량 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 1회 피해",
+                "석화 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "분노의 고함",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 80%만큼 1회 피해",
+                "출혈 [40% 확률] [2턴 지속] [2회 부여]"
+              ]
+            },
+            {
+              "target": "모든 아군",
+              "detail": "버프",
+              "effect": "홍담 소환"
+            }
+          ]
+        },
+        {
+          "name": "천지개벽",
+          "skillcooldown": 50,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 130%만큼 1회 피해",
+                "출혈 [40% 확률] [2턴 지속] [3회 부여]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "암산주박",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 160%만큼 1회 피해",
+                "석화 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "폭군의 명령",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "홍담 생존 시 감쇄 [상시]",
+                "홍담 생존시 피해량 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 1회 피해",
+                "석화 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "분노의 고함",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 80%만큼 1회 피해",
+                "출혈 [40% 확률] [2턴 지속] [2회 부여]"
+              ]
+            },
+            {
+              "target": "모든 아군",
+              "detail": "버프",
+              "effect": "홍담 소환"
+            }
+          ]
+        },
+        {
+          "name": "천지개벽",
+          "skillcooldown": 50,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 130%만큼 1회 피해",
+                "출혈 [40% 확률] [2턴 지속] [3회 부여]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "암산주박",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 160%만큼 1회 피해",
+                "석화 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "폭군의 명령",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "홍담 생존 시 감쇄 [상시]",
+                "홍담 생존시 피해량 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 1회 피해",
+                "석화 [55% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "분노의 고함",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 80%만큼 1회 피해",
+                "출혈 [55% 확률] [2턴 지속] [2회 부여]"
+              ]
+            },
+            {
+              "target": "모든 아군",
+              "detail": "버프",
+              "effect": "홍담 소환"
+            }
+          ]
+        },
+        {
+          "name": "천지개벽",
+          "skillcooldown": 50,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 130%만큼 1회 피해",
+                "출혈 [55% 확률] [2턴 지속] [3회 부여]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "암산주박",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 160%만큼 1회 피해",
+                "석화 [55% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "폭군의 명령",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "홍담 생존 시 감쇄 [상시]",
+                "홍담 생존시 피해량 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 1회 피해",
+                "석화 [55% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "분노의 고함",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 80%만큼 1회 피해",
+                "출혈 [55% 확률] [2턴 지속] [2회 부여]"
+              ]
+            },
+            {
+              "target": "모든 아군",
+              "detail": "버프",
+              "effect": "홍담 소환"
+            }
+          ]
+        },
+        {
+          "name": "천지개벽",
+          "skillcooldown": 50,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 130%만큼 1회 피해",
+                "출혈 [55% 확률] [2턴 지속] [3회 부여]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "암산주박",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 160%만큼 1회 피해",
+                "석화 [55% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "폭군의 명령",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "홍담 생존 시 감쇄 [상시]",
+                "홍담 생존시 피해량 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 1회 피해",
+                "석화 [70% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "분노의 고함",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 80%만큼 1회 피해",
+                "출혈 [70% 확률] [3턴 지속] [2회 부여]"
+              ]
+            },
+            {
+              "target": "모든 아군",
+              "detail": "버프",
+              "effect": "홍담 소환"
+            }
+          ]
+        },
+        {
+          "name": "천지개벽",
+          "skillcooldown": 50,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 130%만큼 1회 피해",
+                "출혈 [70% 확률] [3턴 지속] [3회 부여]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "암산주박",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 160%만큼 1회 피해",
+                "석화 [70% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "폭군의 명령",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "홍담 생존 시 감쇄 [상시]",
+                "홍담 생존시 피해량 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 2명",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 1회 피해",
+                "석화 [70% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "분노의 고함",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 80%만큼 1회 피해",
+                "출혈 [70% 확률] [3턴 지속] [2회 부여]"
+              ]
+            },
+            {
+              "target": "모든 아군",
+              "detail": "버프",
+              "effect": "홍담 소환"
+            }
+          ]
+        },
+        {
+          "name": "천지개벽",
+          "skillcooldown": 50,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 130%만큼 1회 피해",
+                "출혈 [70% 확률] [3턴 지속] [3회 부여]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "암산주박",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 160%만큼 1회 피해",
+                "석화 [70% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "폭군의 명령",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "홍담 생존 시 감쇄 [상시]",
+                "홍담 생존시 피해량 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 1회 피해",
+                "석화 [85% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "분노의 고함",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 80%만큼 1회 피해",
+                "출혈 [85% 확률] [3턴 지속] [2회 부여]"
+              ]
+            },
+            {
+              "target": "모든 아군",
+              "detail": "버프",
+              "effect": "홍담 소환"
+            }
+          ]
+        },
+        {
+          "name": "천지개벽",
+          "skillcooldown": 50,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 130%만큼 1회 피해",
+                "출혈 [85% 확률] [3턴 지속] [3회 부여]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "암산주박",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 160%만큼 1회 피해",
+                "석화 [85% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "폭군의 명령",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "홍담 생존 시 감쇄 [상시]",
+                "홍담 생존시 피해량 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 1회 피해",
+                "석화 [100% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "분노의 고함",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 1회 피해",
+                "출혈 [100% 확률] [3턴 지속] [2회 부여]"
+              ]
+            },
+            {
+              "target": "모든 아군",
+              "detail": "버프",
+              "effect": "홍담 소환"
+            }
+          ]
+        },
+        {
+          "name": "천지개벽",
+          "skillcooldown": 50,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 130%만큼 1회 피해",
+                "출혈 [100% 확률] [3턴 지속] [3회 부여]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "암산주박",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 160%만큼 1회 피해",
+                "석화 [100% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "폭군의 명령",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "홍담 생존 시 감쇄 [상시]",
+                "홍담 생존시 피해량 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 1회 피해",
+                "석화 [100% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "분노의 고함",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 1회 피해",
+                "출혈 [100% 확률] [3턴 지속] [2회 부여]"
+              ]
+            },
+            {
+              "target": "모든 아군",
+              "detail": "버프",
+              "effect": "홍담 소환"
+            }
+          ]
+        },
+        {
+          "name": "천지개벽",
+          "skillcooldown": 50,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 130%만큼 1회 피해",
+                "출혈 [100% 확률] [3턴 지속] [3회 부여]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "암산주박",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 160%만큼 1회 피해",
+                "석화 [100% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "폭군의 명령",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "홍담 생존 시 감쇄 [상시]",
+                "홍담 생존시 피해량 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 1회 피해",
+                "석화 [100% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "분노의 고함",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 1회 피해",
+                "출혈 [100% 확률] [3턴 지속] [2회 부여]"
+              ]
+            },
+            {
+              "target": "모든 아군",
+              "detail": "버프",
+              "effect": "홍담 소환"
+            }
+          ]
+        },
+        {
+          "name": "천지개벽",
+          "skillcooldown": 50,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 130%만큼 1회 피해",
+                "출혈 [100% 확률] [3턴 지속] [3회 부여]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "암산주박",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 160%만큼 1회 피해",
+                "석화 [100% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "폭군의 명령",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "홍담 생존 시 감쇄 [상시]",
+                "홍담 생존시 피해량 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 1회 피해",
+                "석화 [100% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "분노의 고함",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 1회 피해",
+                "출혈 [100% 확률] [3턴 지속] [2회 부여]"
+              ]
+            },
+            {
+              "target": "모든 아군",
+              "detail": "버프",
+              "effect": "홍담 소환"
+            }
+          ]
+        },
+        {
+          "name": "천지개벽",
+          "skillcooldown": 50,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 130%만큼 1회 피해",
+                "출혈 [100% 확률] [3턴 지속] [3회 부여]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "암산주박",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 160%만큼 1회 피해",
+                "석화 [100% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "폭군의 명령",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "홍담 생존 시 감쇄 [상시]",
+                "홍담 생존시 피해량 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 1회 피해",
+                "석화 [100% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "분노의 고함",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 100%만큼 1회 피해",
+                "출혈 [100% 확률] [3턴 지속] [2회 부여]"
+              ]
+            },
+            {
+              "target": "모든 아군",
+              "detail": "버프",
+              "effect": "홍담 소환"
+            }
+          ]
+        },
+        {
+          "name": "천지개벽",
+          "skillcooldown": 50,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 130%만큼 1회 피해",
+                "출혈 [100% 확률] [3턴 지속] [3회 부여]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "암산주박",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "마법 공격력의 160%만큼 1회 피해",
+                "석화 [100% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "폭군의 명령",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "홍담 생존 시 감쇄 [상시]",
+                "홍담 생존시 피해량 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            }
+          ]
+        }
+      ]
+    ],
+    "rewardsByStage": [
+      "EXP: 600, 골드: 1000, 4성 우마왕 장비",
+      "EXP: 700, 골드: 1100, 4성 우마왕 장비",
+      "EXP: 800, 골드: 1200, 4~5성 우마왕 장비",
+      "EXP: 900, 골드: 1300, 4~5성 우마왕 장비",
+      "EXP: 1000, 골드: 1400, 4~5성 우마왕 장비",
+      "EXP: 1100, 골드: 1600, 5성 우마왕 장비",
+      "EXP: 1200, 골드: 1800, 5~6성 우마왕 장비",
+      "EXP: 1300, 골드: 2000, 5~6성 우마왕 장비",
+      "EXP: 1400, 골드: 2200, 5~6성 우마왕 장비",
+      "EXP: 1500, 골드: 2400, 6성 우마왕 장비",
+      "EXP: 3000, 골드: 5200, 6성 우마왕 장비",
+      "EXP: 3000, 골드: 5600, 6성 우마왕 장비",
+      "EXP: 3000, 골드: 6000, 6성 우마왕 장비",
+      "EXP: 3000, 골드: 6400, 6성 우마왕 장비",
+      "EXP: 1500, 골드: 6800, 6성 우마왕 장비"
+    ],
+    "bossStatsByStage": [
+      {
+        "atk": 366,
+        "def": 0,
+        "hp": 14276,
+        "spd": 200,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 0,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 403,
+        "def": 0,
+        "hp": 26712,
+        "spd": 200,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 0,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 449,
+        "def": 0,
+        "hp": 42486,
+        "spd": 200,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 0,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 657,
+        "def": 0,
+        "hp": 69037,
+        "spd": 200,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 0,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 906,
+        "def": 0,
+        "hp": 111940,
+        "spd": 200,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 15,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 1206,
+        "def": 0,
+        "hp": 170011,
+        "spd": 200,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 30,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 1606,
+        "def": 0,
+        "hp": 253638,
+        "spd": 200,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 60,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 2090,
+        "def": 0,
+        "hp": 457526,
+        "spd": 200,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 90,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 2723,
+        "def": 0,
+        "hp": 700618,
+        "spd": 200,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 3538,
+        "def": 0,
+        "hp": 1087311,
+        "spd": 200,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 3715,
+        "def": 0,
+        "hp": 4208750,
+        "spd": 200,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 3892,
+        "def": 0,
+        "hp": 4509375,
+        "spd": 200,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 4069,
+        "def": 0,
+        "hp": 5110625,
+        "spd": 200,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 4246,
+        "def": 0,
+        "hp": 5411250,
+        "spd": 200,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 4423,
+        "def": 0,
+        "hp": 6012500,
+        "spd": 200,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "강철의포식자",
+    "image": "/레이드/선택/강철의포식자.png",
+    "bg": "/레이드/배경/강철의포식자.png",
+    "skillsByStage": [
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "단일 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 70%, 방어력의 60%만큼 1회 피해",
+                "마비 [25% 확률] [1턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "포식하기",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 80%, 방어력의 70%만큼 1회 피해",
+                "방어력 감소 [25% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "바다의 맹독",
+          "skillcooldown": 45,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 52%, 방어력의 42%만큼 2회 피해",
+                "각 행동마다 맹독 [25% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "숨통조르기",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 100%,방어력의 90%만큼 1회 피해",
+                "마비 [25% 확률] [1턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "세개의 머리",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "물리 감쇄 [상시]",
+                "생명력 30% 이하에서 방어력 증가 [상시]",
+                "생명력 30% 이하에서 물리 공격력 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            },
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "자신의 기본공격 3회 발동시 물리 공격력의 180%만큼 1회 피해",
+                "자신의 기본공격 3회 발동시 맹독 [25% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "단일 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 70%, 방어력의 60%만큼 1회 피해",
+                "마비 [25% 확률] [1턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "포식하기",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 80%, 방어력의 70%만큼 1회 피해",
+                "방어력 감소 [25% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "바다의 맹독",
+          "skillcooldown": 45,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 52%, 방어력의 42%만큼 2회 피해",
+                "각 행동마다 맹독 [25% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "숨통조르기",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 100%,방어력의 90%만큼 1회 피해",
+                "마비 [25% 확률] [1턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "세개의 머리",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "물리 감쇄 [상시]",
+                "생명력 30% 이하에서 방어력 증가 [상시]",
+                "생명력 30% 이하에서 물리 공격력 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            },
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "자신의 기본공격 3회 발동시 물리 공격력의 180%만큼 1회 피해",
+                "자신의 기본공격 3회 발동시 맹독 [25% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "단일 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 70%, 방어력의 60%만큼 1회 피해",
+                "마비 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "포식하기",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 80%, 방어력의 70%만큼 1회 피해",
+                "방어력 감소 [40% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "바다의 맹독",
+          "skillcooldown": 45,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 52%, 방어력의 42%만큼 2회 피해",
+                "각 행동마다 맹독 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "숨통조르기",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 100%,방어력의 90%만큼 1회 피해",
+                "마비 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "세개의 머리",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "물리 감쇄 [상시]",
+                "생명력 30% 이하에서 방어력 증가 [상시]",
+                "생명력 30% 이하에서 물리 공격력 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            },
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "자신의 기본공격 3회 발동시 물리 공격력의 180%만큼 1회 피해",
+                "자신의 기본공격 3회 발동시 맹독 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "단일 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 70%, 방어력의 60%만큼 1회 피해",
+                "마비 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "포식하기",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 80%, 방어력의 70%만큼 1회 피해",
+                "방어력 감소 [40% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "바다의 맹독",
+          "skillcooldown": 45,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 52%, 방어력의 42%만큼 2회 피해",
+                "각 행동마다 맹독 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "숨통조르기",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 100%,방어력의 90%만큼 1회 피해",
+                "마비 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "세개의 머리",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "물리 감쇄 [상시]",
+                "생명력 30% 이하에서 방어력 증가 [상시]",
+                "생명력 30% 이하에서 물리 공격력 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            },
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "자신의 기본공격 3회 발동시 물리 공격력의 180%만큼 1회 피해",
+                "자신의 기본공격 3회 발동시 맹독 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "단일 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 70%, 방어력의 60%만큼 1회 피해",
+                "마비 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "포식하기",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 80%, 방어력의 70%만큼 1회 피해",
+                "방어력 감소 [40% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "바다의 맹독",
+          "skillcooldown": 45,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 52%, 방어력의 42%만큼 2회 피해",
+                "각 행동마다 맹독 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "숨통조르기",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 100%,방어력의 90%만큼 1회 피해",
+                "마비 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "세개의 머리",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "물리 감쇄 [상시]",
+                "생명력 30% 이하에서 방어력 증가 [상시]",
+                "생명력 30% 이하에서 물리 공격력 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            },
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "자신의 기본공격 3회 발동시 물리 공격력의 180%만큼 1회 피해",
+                "자신의 기본공격 3회 발동시 맹독 [40% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "단일 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 70%, 방어력의 60%만큼 1회 피해",
+                "마비 [55% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "포식하기",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 80%, 방어력의 70%만큼 1회 피해",
+                "방어력 감소 [55% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "바다의 맹독",
+          "skillcooldown": 45,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 52%, 방어력의 42%만큼 2회 피해",
+                "각 행동마다 맹독 [55% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "숨통조르기",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 100%,방어력의 90%만큼 1회 피해",
+                "마비 [55% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "세개의 머리",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "물리 감쇄 [상시]",
+                "생명력 30% 이하에서 방어력 증가 [상시]",
+                "생명력 30% 이하에서 물리 공격력 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            },
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "자신의 기본공격 3회 발동시 물리 공격력의 180%만큼 1회 피해",
+                "자신의 기본공격 3회 발동시 맹독 [55% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "단일 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 70%, 방어력의 60%만큼 1회 피해",
+                "마비 [55% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "포식하기",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 80%, 방어력의 70%만큼 1회 피해",
+                "방어력 감소 [55% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "바다의 맹독",
+          "skillcooldown": 45,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 52%, 방어력의 42%만큼 2회 피해",
+                "각 행동마다 맹독 [55% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "숨통조르기",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 100%,방어력의 90%만큼 1회 피해",
+                "마비 [55% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "세개의 머리",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "물리 감쇄 [상시]",
+                "생명력 30% 이하에서 방어력 증가 [상시]",
+                "생명력 30% 이하에서 물리 공격력 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            },
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "자신의 기본공격 3회 발동시 물리 공격력의 180%만큼 1회 피해",
+                "자신의 기본공격 3회 발동시 맹독 [55% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "단일 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 70%, 방어력의 60%만큼 1회 피해",
+                "마비 [70% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "포식하기",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 80%, 방어력의 70%만큼 1회 피해",
+                "방어력 감소 [70% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "바다의 맹독",
+          "skillcooldown": 45,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 52%, 방어력의 42%만큼 2회 피해",
+                "각 행동마다 맹독 [70% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "숨통조르기",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 100%,방어력의 90%만큼 1회 피해",
+                "마비 [70% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "세개의 머리",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "물리 감쇄 [상시]",
+                "생명력 30% 이하에서 방어력 증가 [상시]",
+                "생명력 30% 이하에서 물리 공격력 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            },
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "자신의 기본공격 3회 발동시 물리 공격력의 180%만큼 1회 피해",
+                "자신의 기본공격 3회 발동시 맹독 [70% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "단일 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 70%, 방어력의 60%만큼 1회 피해",
+                "마비 [70% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "포식하기",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 80%, 방어력의 70%만큼 1회 피해",
+                "방어력 감소 [70% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "바다의 맹독",
+          "skillcooldown": 45,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 52%, 방어력의 42%만큼 2회 피해",
+                "각 행동마다 맹독 [70% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "숨통조르기",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 100%,방어력의 90%만큼 1회 피해",
+                "마비 [70% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "세개의 머리",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "물리 감쇄 [상시]",
+                "생명력 30% 이하에서 방어력 증가 [상시]",
+                "생명력 30% 이하에서 물리 공격력 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            },
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "자신의 기본공격 3회 발동시 물리 공격력의 180%만큼 1회 피해",
+                "자신의 기본공격 3회 발동시 맹독 [70% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "단일 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 70%, 방어력의 60%만큼 1회 피해",
+                "마비 [85% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "포식하기",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 80%, 방어력의 70%만큼 1회 피해",
+                "방어력 감소 [85% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "바다의 맹독",
+          "skillcooldown": 45,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 52%, 방어력의 42%만큼 2회 피해",
+                "각 행동마다 맹독 [85% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "숨통조르기",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 100%,방어력의 90%만큼 1회 피해",
+                "마비 [85% 확률] [2턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "세개의 머리",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "물리 감쇄 [상시]",
+                "생명력 30% 이하에서 방어력 증가 [상시]",
+                "생명력 30% 이하에서 물리 공격력 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            },
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "자신의 기본공격 3회 발동시 물리 공격력의 180%만큼 1회 피해",
+                "자신의 기본공격 3회 발동시 맹독 [85% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "단일 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 70%, 방어력의 60%만큼 1회 피해",
+                "마비 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "포식하기",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 80%, 방어력의 70%만큼 1회 피해",
+                "방어력 감소 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "바다의 맹독",
+          "skillcooldown": 45,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 52%, 방어력의 42%만큼 2회 피해",
+                "각 행동마다 맹독 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "숨통조르기",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 100%,방어력의 90%만큼 1회 피해",
+                "마비 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "세개의 머리",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "물리 감쇄 [상시]",
+                "생명력 30% 이하에서 방어력 증가 [상시]",
+                "생명력 30% 이하에서 물리 공격력 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            },
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "자신의 기본공격 3회 발동시 물리 공격력의 180%만큼 1회 피해",
+                "자신의 기본공격 3회 발동시 맹독 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "단일 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 70%, 방어력의 60%만큼 1회 피해",
+                "마비 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "포식하기",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 80%, 방어력의 70%만큼 1회 피해",
+                "방어력 감소 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "바다의 맹독",
+          "skillcooldown": 45,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 52%, 방어력의 42%만큼 2회 피해",
+                "각 행동마다 맹독 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "숨통조르기",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 100%,방어력의 90%만큼 1회 피해",
+                "마비 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "세개의 머리",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "물리 감쇄 [상시]",
+                "생명력 30% 이하에서 방어력 증가 [상시]",
+                "생명력 30% 이하에서 물리 공격력 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            },
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "자신의 기본공격 3회 발동시 물리 공격력의 180%만큼 1회 피해",
+                "자신의 기본공격 3회 발동시 맹독 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "단일 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 70%, 방어력의 60%만큼 1회 피해",
+                "마비 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "포식하기",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 80%, 방어력의 70%만큼 1회 피해",
+                "방어력 감소 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "바다의 맹독",
+          "skillcooldown": 45,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 52%, 방어력의 42%만큼 2회 피해",
+                "각 행동마다 맹독 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "숨통조르기",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 100%,방어력의 90%만큼 1회 피해",
+                "마비 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "세개의 머리",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "물리 감쇄 [상시]",
+                "생명력 30% 이하에서 방어력 증가 [상시]",
+                "생명력 30% 이하에서 물리 공격력 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            },
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "자신의 기본공격 3회 발동시 물리 공격력의 180%만큼 1회 피해",
+                "자신의 기본공격 3회 발동시 맹독 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "단일 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 70%, 방어력의 60%만큼 1회 피해",
+                "마비 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "포식하기",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 80%, 방어력의 70%만큼 1회 피해",
+                "방어력 감소 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "바다의 맹독",
+          "skillcooldown": 45,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 52%, 방어력의 42%만큼 2회 피해",
+                "각 행동마다 맹독 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "숨통조르기",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 100%,방어력의 90%만큼 1회 피해",
+                "마비 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "세개의 머리",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "물리 감쇄 [상시]",
+                "생명력 30% 이하에서 방어력 증가 [상시]",
+                "생명력 30% 이하에서 물리 공격력 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            },
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "자신의 기본공격 3회 발동시 물리 공격력의 180%만큼 1회 피해",
+                "자신의 기본공격 3회 발동시 맹독 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        }
+      ],
+      [
+        {
+          "name": "기본 공격",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "단일 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 70%, 방어력의 60%만큼 1회 피해",
+                "마비 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "포식하기",
+          "skillcooldown": 90,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 80%, 방어력의 70%만큼 1회 피해",
+                "방어력 감소 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "바다의 맹독",
+          "skillcooldown": 45,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 52%, 방어력의 42%만큼 2회 피해",
+                "각 행동마다 맹독 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "숨통조르기",
+          "skillcooldown": 100,
+          "effects": [
+            {
+              "target": "모든 적군",
+              "detail": "공격",
+              "effect": [
+                "물리 공격력의 100%,방어력의 90%만큼 1회 피해",
+                "마비 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "세개의 머리",
+          "skillcooldown": 0,
+          "effects": [
+            {
+              "target": "자신",
+              "detail": "버프",
+              "effect": [
+                "물리 감쇄 [상시]",
+                "생명력 30% 이하에서 방어력 증가 [상시]",
+                "생명력 30% 이하에서 물리 공격력 증가 [상시]",
+                "누적 공격력 증가 [상시]"
+              ]
+            },
+            {
+              "target": "적군 3명",
+              "detail": "공격",
+              "effect": [
+                "자신의 기본공격 3회 발동시 물리 공격력의 180%만큼 1회 피해",
+                "자신의 기본공격 3회 발동시 맹독 [100% 확률] [3턴 지속]"
+              ]
+            }
+          ]
+        }
+      ]
+    ],
+    "rewardsByStage": [
+      "EXP: 600, 골드: 1000, 4성 히드라 장비",
+      "EXP: 700, 골드: 1100, 4성 히드라 장비",
+      "EXP: 800, 골드: 1200, 4~5성 히드라 장비",
+      "EXP: 900, 골드: 1300, 4~5성 히드라 장비",
+      "EXP: 1000, 골드: 1400, 4~5성 히드라 장비",
+      "EXP: 1100, 골드: 1600, 5성 히드라 장비",
+      "EXP: 1200, 골드: 1800, 5~6성 히드라 장비",
+      "EXP: 1300, 골드: 2000, 5~6성 히드라 장비",
+      "EXP: 1400, 골드: 2200, 5~6성 히드라 장비",
+      "EXP: 1500, 골드: 2400, 6성 히드라 장비",
+      "EXP: 3000, 골드: 5200, 6성 히드라 장비",
+      "EXP: 3000, 골드: 5600, 6성 히드라 장비",
+      "EXP: 3000, 골드: 6000, 6성 히드라 장비",
+      "EXP: 3000, 골드: 6400, 6성 히드라 장비",
+      "EXP: 3000, 골드: 6800, 6성 히드라 장비"
+    ],
+    "bossStatsByStage": [
+      {
+        "atk": 322,
+        "def": 486,
+        "hp": 4881,
+        "spd": 30,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 0,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 348,
+        "def": 606,
+        "hp": 8327,
+        "spd": 30,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 0,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 374,
+        "def": 846,
+        "hp": 11919,
+        "spd": 60,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 0,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 548,
+        "def": 1086,
+        "hp": 17888,
+        "spd": 30,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 0,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 755,
+        "def": 1326,
+        "hp": 25586,
+        "spd": 30,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 15,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 1040,
+        "def": 1566,
+        "hp": 35207,
+        "spd": 30,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 30,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 1435,
+        "def": 1956,
+        "hp": 52260,
+        "spd": 30,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 60,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 1906,
+        "def": 2421,
+        "hp": 77270,
+        "spd": 30,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 90,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 2544,
+        "def": 2736,
+        "hp": 114090,
+        "spd": 30,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 3390,
+        "def": 3126,
+        "hp": 168899,
+        "spd": 30,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 3661,
+        "def": 3282,
+        "hp": 266016,
+        "spd": 30,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 3932,
+        "def": 3438,
+        "hp": 285018,
+        "spd": 30,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 4203,
+        "def": 3594,
+        "hp": 323020,
+        "spd": 30,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 4474,
+        "def": 3750,
+        "hp": 342021,
+        "spd": 30,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      },
+      {
+        "atk": 4745,
+        "def": 3906,
+        "hp": 380024,
+        "spd": 30,
+        "critRate": 0,
+        "critDmg": 0,
+        "acc": 100,
+        "weakHit": 0,
+        "block": 0,
+        "dmgReduction": 0,
+        "res": 0
+      }
+    ]
+  }
+]
