@@ -44,9 +44,7 @@
         .flex-row { display: flex; gap: 12px; }
         input, select, textarea { width: 100%; padding: 15px; background: var(--input); color: var(--text); border: 1px solid var(--border); border-radius: 14px; font-size: 15px; outline: none; }
         
-        /* 덱 리스트 스타일 */
         .list-item { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 20px; margin-bottom: 18px; position: relative; border-left: 12px solid var(--border); cursor: pointer; transition: 0.2s; }
-        .list-item:active { transform: scale(0.98); }
         .type-banner { position: absolute; top: 0; right: 0; padding: 7px 20px; font-size: 12px; font-weight: 900; color: #fff; border-bottom-left-radius: 18px; }
 
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(12px); }
@@ -105,13 +103,13 @@
         </div>
     </div>
 
-    <h3 style="margin: 20px 0 10px 10px; font-size: 18px; color: var(--purple);">저장된 덱 가이드</h3>
     <div id="deck-list"></div>
 
     <div id="modal" class="modal" onclick="closeM()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3 id="m-title" style="margin-bottom:20px;">선택</h3>
             <div id="m-body"></div>
+            <button onclick="closeM()" style="width:100%; margin-top:20px; padding:15px; background:var(--input); border:none; border-radius:15px; color:var(--text); font-weight:bold;">닫기</button>
         </div>
     </div>
 
@@ -120,33 +118,21 @@
 
 <script>
     const USER_ID = "jungchanyoung7-cmyk"; 
-    const BASE_PATH = `https://raw.githubusercontent.com/${USER_ID}/Guild/main/public`;
-    const ROOT_PATH = `${BASE_PATH}/${encodeURIComponent('도감')}`;
+    const BASE_URL = `https://raw.githubusercontent.com/${USER_ID}/Guild/main/public/%EB%8F%84%EA%B0%90`;
 
     const heroData = {
         "스페셜": ["루디", "아일린", "레이첼", "델론즈", "스파이크", "제이브", "크리스", "바네사"],
-        "(구)세나": ["파이", "로지", "쥬리", "밀리아", "겔리두스", "항우", "우치"],
-        "다크나이츠": ["팔라누스", "플라튼", "콜트", "브란즈&브란셀", "실베스타", "멜키르"],
-        "사황/구사황": ["에이스", "여포", "손오공", "린", "카르마", "태오", "연희", "카일"],
-        "나이트크로우": ["오를리", "타카", "칼 헤론", "아킬라"],
-        "천상/심연": ["트루드", "프레이야", "미스트", "레긴레이프", "라드그리드", "이브", "바토리", "앤티", "쥬다스"],
-        "아이사": ["리나", "풍연", "소이", "백각", "비담", "권호", "조운", "관우", "초선", "강재", "나타"],
-        "일반/기타": ["세인", "밍", "루리", "니아", "에스파다", "지크", "룩", "챈슬러", "에반", "카린", "유리", "리"]
+        "세나/기타": ["파이", "로지", "쥬리", "밀리아", "겔리두스", "항우", "우치", "에이스", "여포", "손오공", "린", "카르마", "태오", "연희", "카일"],
+        "기타영웅": ["리나", "풍연", "소이", "백각", "비담", "권호", "조운", "관우", "초선", "강재", "나타", "세인", "밍", "루리", "니아", "에스파다", "지크", "룩", "챈슬러", "에반", "카린", "유리", "리", "데이지", "라니아", "레오", "레이", "루시", "노호", "녹스"]
     };
 
     const petList = ["루", "이린", "리첼", "델로", "파이크", "맬패로", "유", "크리", "연지", "카람"];
-
-    const itemData = {
-        "장비": ["선봉장", "성기사", "추적자", "암살자", "수문장", "수호자", "복수자", "조율자", "주술사"],
-        "장신구": ["가시반지", "공포의반지", "권능의반지", "기회의반지", "꿈의반지", "독사반지", "마법의반지", "메두사의반지", "번뜩이는반지", "보호의반지", "복수의반지", "부활의반지", "불사의반지", "샐러맨더의반지", "설원의반지", "수호의반지", "시간의반지", "자연의반지", "재앙의반지", "저주의반지", "저항의반지", "적중의반지", "죽음의반지", "집중의반지", "행운의반지"]
-    };
-
+    
     let deck = [null, null, null, null, null];
     let skills = [];
     let pet = "";
     let formation = '기본';
     let curSlot = 0;
-    let pressTimer = null;
 
     function init() {
         const area = document.getElementById('slots-area');
@@ -155,10 +141,7 @@
             area.innerHTML += `
                 <div class="slot-container" id="wrap-${i}">
                     <div class="slot-num" id="num-${i}">${i+1}</div>
-                    <div class="slot" id="s-${i}" 
-                         onmousedown="startPress(${i})" onmouseup="endPress(${i})" 
-                         ontouchstart="startPress(${i})" ontouchend="endPress(${i})"
-                         oncontextmenu="return false;"></div>
+                    <div class="slot" id="s-${i}" onclick="handleSlotClick(${i})" oncontextmenu="return false;"></div>
                 </div>`;
         }
         setF('기본');
@@ -166,42 +149,11 @@
         updateUI();
     }
 
-    function startPress(i) { pressTimer = setTimeout(() => { if(deck[i]) openDetail(i); }, 700); }
-    function endPress(i) {
-        clearTimeout(pressTimer);
+    function handleSlotClick(i) {
         if(!deck[i]) { curSlot = i; openHero(); }
-        else if(event.type === 'mouseup' || event.type === 'touchend') {
+        else {
             if(confirm(`${deck[i].name}을(를) 해제할까요?`)) { deck[i] = null; updateUI(); }
         }
-    }
-
-    function openDetail(i) {
-        if(!deck[i]) return;
-        curSlot = i;
-        const h = deck[i];
-        document.getElementById('m-title').innerText = `${h.name} 상세 정보`;
-        document.getElementById('m-body').innerHTML = `
-            <div style="display:flex; justify-content:center; margin-bottom:20px;">
-                <div class="slot" style="width:100px; height:100px; border-radius:20px;">${getSlotHTML(h.name, 'hero')}</div>
-            </div>
-            <div style="display:grid; grid-template-columns: 1fr; gap:15px;">
-                <div style="background:var(--input); padding:15px; border-radius:15px;">
-                    <div style="font-size:12px; color:#888; margin-bottom:8px;">무기/방어구 세트</div>
-                    <select onchange="deck[${i}].gear=this.value">
-                        <option value="선택안함">선택안함</option>
-                        ${itemData.장비.map(g=>`<option value="${g}" ${h.gear===g?'selected':''}>${g}</option>`).join('')}
-                    </select>
-                </div>
-                <div style="background:var(--input); padding:15px; border-radius:15px;">
-                    <div style="font-size:12px; color:#888; margin-bottom:8px;">장신구(반지)</div>
-                    <select onchange="deck[${i}].ring=this.value">
-                        <option value="선택안함">선택안함</option>
-                        ${itemData.장신구.map(r=>`<option value="${r}" ${h.ring===r?'selected':''}>${r}</option>`).join('')}
-                    </select>
-                </div>
-            </div>
-            <button onclick="closeM()" style="width:100%; margin-top:20px; padding:15px; background:var(--purple); border:none; border-radius:15px; color:#fff; font-weight:bold;">설정 완료</button>`;
-        document.getElementById('modal').style.display = 'flex';
     }
 
     function openHero() {
@@ -220,17 +172,26 @@
         document.getElementById('hero-tab-content').innerHTML = heroData[cat].map(n => `<div class="slot" style="height:75px;" onclick="selectHero('${n}')">${getSlotHTML(n)}</div>`).join('');
     }
 
-    function selectHero(name) { deck[curSlot] = { name: name, gear: "선택안함", ring: "선택안함" }; updateUI(); closeM(); }
+    function selectHero(name) { deck[curSlot] = { name: name }; updateUI(); closeM(); }
 
+    // 다중 확장자(png, jpg)를 지원하는 이미지 처리 로직
     function getSlotHTML(name, type='hero', sIdx=null) {
         if(!name) return "";
-        let cat = "일반/기타";
-        for(let c in heroData) { if(heroData[c].includes(name)) cat = c; }
-        if(petList.includes(name)) cat = "펫";
-        let sub = type === 'hero' ? '아이콘' : (type === 'skill' ? '스킬' : '');
-        let file = type === 'skill' ? `${name}-${sIdx}` : name;
-        const url = `${ROOT_PATH}/${encodeURIComponent(cat)}/${sub?encodeURIComponent(sub)+'/':''}${encodeURIComponent(file)}.png`;
-        return `<img src="${url}" class="hero-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><div class="no-img-text" style="display:none;">${name}</div>`;
+        let folder = "";
+        let fileName = name;
+
+        if (type === 'hero') folder = "캐릭터%20아이콘%20모음";
+        else if (type === 'pet') folder = "펫%20아이콘%20모음";
+        else if (type === 'skill') { folder = "캐릭터%20스킬%20모음"; fileName = `${name}-${sIdx}`; }
+
+        const pngUrl = `${BASE_URL}/${folder}/${encodeURIComponent(fileName)}.png`;
+        const jpgUrl = `${BASE_URL}/${folder}/${encodeURIComponent(fileName)}.jpg`;
+
+        // png 시도 -> 실패시 jpg 시도 -> 실패시 이름 텍스트 표시
+        return `
+            <img src="${pngUrl}" class="hero-img" 
+                 onerror="this.onerror=function(){this.style.display='none'; this.nextElementSibling.style.display='block';}; this.src='${jpgUrl}';">
+            <div class="no-img-text" style="display:none;">${name}</div>`;
     }
 
     function updateUI() {
@@ -256,23 +217,19 @@
         });
     }
 
-    // 덱 저장 로직 (카운터 타입 포함)
     function saveToDB() {
         const name = document.getElementById('d-name').value;
         if(!name) return alert("덱 이름을 입력하세요.");
-        const type = document.getElementById('d-type').value;
-        const data = { id: Date.now(), name, type, tip: document.getElementById('d-tip').value, deck: JSON.parse(JSON.stringify(deck)), skills: [...skills], pet, formation };
+        const data = { id: Date.now(), name, type: document.getElementById('d-type').value, tip: document.getElementById('d-tip').value, deck: JSON.parse(JSON.stringify(deck)), skills: [...skills], pet, formation };
         let dbList = JSON.parse(localStorage.getItem('SENA_DECKS') || '[]');
         dbList.unshift(data);
         localStorage.setItem('SENA_DECKS', JSON.stringify(dbList));
-        renderList(); alert(`${type} 덱 저장 완료!`);
+        renderList(); alert("저장 완료!");
     }
 
-    // 덱 리스트 렌더링 및 카운터 설정 기능 (복구)
     function renderList() {
         const dbList = JSON.parse(localStorage.getItem('SENA_DECKS') || '[]');
-        const listArea = document.getElementById('deck-list');
-        listArea.innerHTML = dbList.map(d => {
+        document.getElementById('deck-list').innerHTML = dbList.map(d => {
             const typeColor = d.type === '공격' ? 'var(--red)' : (d.type === '카운터' ? 'var(--gold)' : 'var(--blue)');
             return `
             <div class="list-item" onclick="loadDeck(${d.id})" style="border-left-color:${typeColor}">
@@ -281,13 +238,12 @@
                 <div style="display:flex; gap:8px; margin-bottom:10px;">
                     ${d.deck.filter(h=>h).map(h=>`<div style="width:40px; height:40px; border-radius:8px; overflow:hidden; background:#000;">${getSlotHTML(h.name)}</div>`).join('')}
                 </div>
-                <div style="font-size:12px; color:#888; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${d.tip || '팁 없음'}</div>
-                <button onclick="event.stopPropagation(); deleteDeck(${d.id})" style="position:absolute; bottom:15px; right:15px; background:none; border:none; color:var(--red); font-size:12px; font-weight:bold;">삭제</button>
+                <div style="font-size:12px; color:#888;">${d.tip || '설명 없음'}</div>
+                <button onclick="event.stopPropagation(); deleteDeck(${d.id})" style="position:absolute; bottom:15px; right:15px; background:none; border:none; color:var(--red); font-weight:bold;">삭제</button>
             </div>`;
-        }).join('') || '<div style="text-align:center; padding:50px; color:#444;">저장된 데이터가 없습니다.</div>';
+        }).join('') || '<div style="text-align:center; padding:50px; color:#444;">데이터가 없습니다.</div>';
     }
 
-    // 저장된 덱 불러오기
     function loadDeck(id) {
         const dbList = JSON.parse(localStorage.getItem('SENA_DECKS'));
         const target = dbList.find(i => i.id === id);
