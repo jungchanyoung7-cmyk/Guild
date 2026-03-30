@@ -1,412 +1,1264 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>이옌 길드전 가이드용 앱</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <style>
-        :root { --bg: #0f0f0f; --card: #1a1a1a; --red: #ff4d4d; --blue: #3b82f6; --yellow: #ffcc00; --green: #4ade80; }
-        body { background-color: var(--bg); color: #e0e0e0; font-family: 'Pretendard', sans-serif; overflow-x: hidden; touch-action: manipulation; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>이옌 길드전 가이드용 앱</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4efe6;
+      --bg-strong: linear-gradient(180deg, #fff8ea 0%, #f2e4c8 100%);
+      --panel: rgba(255, 251, 244, 0.92);
+      --panel-strong: #fff7ec;
+      --text: #24170b;
+      --muted: #6c5843;
+      --line: rgba(80, 52, 24, 0.14);
+      --accent: #b1401b;
+      --accent-2: #f0b85d;
+      --accent-soft: rgba(177, 64, 27, 0.12);
+      --good: #287950;
+      --warn: #d39a14;
+      --danger: #b7232a;
+      --shadow: 0 18px 40px rgba(64, 33, 8, 0.16);
+      --slot-bg: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(246,233,214,0.94));
+      --skill-bg: linear-gradient(180deg, rgba(255,246,227,0.98), rgba(242,221,181,0.9));
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+      --header-h: 76px;
+    }
 
-        /* 진형 좌표 (왼쪽 3,4,5 / 오른쪽 1,2) */
-        .slot { position: absolute; width: 75px; height: 110px; transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); cursor: pointer; }
-        .slot-img { width: 64px; height: 64px; background: #222; border: 2px solid #444; border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
-        .x-mark { background: rgba(0,0,0,0.8); border: 2px dashed #333; color: #444; pointer-events: none; }
+    body.dark {
+      color-scheme: dark;
+      --bg: #11161d;
+      --bg-strong: linear-gradient(180deg, #1d2733 0%, #0f131a 100%);
+      --panel: rgba(22, 29, 38, 0.92);
+      --panel-strong: #17202b;
+      --text: #eef3fa;
+      --muted: #a3b1c2;
+      --line: rgba(193, 209, 230, 0.16);
+      --accent: #f28d3b;
+      --accent-2: #ffd37a;
+      --accent-soft: rgba(242, 141, 59, 0.16);
+      --good: #5cc98f;
+      --warn: #f4c45a;
+      --danger: #ff6e76;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.34);
+      --slot-bg: linear-gradient(180deg, rgba(31,42,54,0.98), rgba(22,29,38,0.94));
+      --skill-bg: linear-gradient(180deg, rgba(33,44,55,0.98), rgba(25,34,43,0.94));
+    }
 
-        .f-basic .s1 { top: 40px; right: 25px; } .f-basic .s2 { top: 140px; right: 25px; }
-        .f-basic .s3 { top: 10px; left: 25px; } .f-basic .s4 { top: 90px; left: 25px; } .f-basic .s5 { top: 170px; left: 25px; }
-        .f-balance .s1 { top: 10px; right: 25px; } .f-balance .s2 { top: 90px; right: 25px; } .f-balance .s3 { top: 170px; right: 25px; }
-        .f-balance .s4 { top: 40px; left: 25px; } .f-balance .s5 { top: 140px; left: 25px; }
-        .f-attack .s1 { top: 90px; right: 40px; } .f-attack .s2 { top: 0px; left: 25px; } .f-attack .s3 { top: 60px; left: 25px; } .f-attack .s4 { top: 120px; left: 25px; } .f-attack .s5 { top: 180px; left: 25px; }
-        .f-protect .s1 { top: 0px; right: 25px; } .f-protect .s2 { top: 60px; right: 25px; } .f-protect .s3 { top: 120px; right: 25px; } .f-protect .s4 { top: 180px; right: 25px; } .f-protect .s5 { top: 90px; left: 40px; }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg-strong);
+      color: var(--text);
+      font-family: "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    }
+    body { display: flex; justify-content: center; }
+    button, input, textarea, select { font: inherit; }
+    button { border: 0; cursor: pointer; color: inherit; background: none; }
+    img { max-width: 100%; display: block; }
+    .app-shell { width: min(1600px, 100%); padding: 20px clamp(14px, 2vw, 28px) 40px; }
+    .topbar {
+      position: sticky; top: 0; z-index: 20; height: var(--header-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 18px; margin-bottom: 18px; border: 1px solid var(--line);
+      border-radius: 24px; background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(20px); box-shadow: var(--shadow);
+    }
+    .topbar h1 { margin: 0; font-size: clamp(1.1rem, 2.6vw, 1.7rem); line-height: 1.2; letter-spacing: -0.02em; }
+    .topbar small { display: block; color: var(--muted); font-size: 0.78rem; margin-top: 4px; }
+    .header-actions { display: flex; align-items: center; gap: 10px; }
+    .pill-btn, .menu-btn, .command-btn, .save-btn, .ghost-btn {
+      min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line);
+      background: var(--panel); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .menu-btn { width: 48px; padding: 0; font-size: 1.25rem; font-weight: 700; }
+    .command-btn.active, .save-btn { color: #fff; background: linear-gradient(135deg, var(--accent), #cf6c34); border-color: transparent; }
+    .ghost-btn { background: transparent; }
+    .page-grid { display: grid; grid-template-columns: minmax(320px, 860px) minmax(280px, 1fr); gap: 22px; align-items: start; }
+    .stack { display: grid; gap: 18px; }
+    .panel {
+      padding: 18px; border: 1px solid var(--line); border-radius: var(--radius-xl);
+      background: var(--panel); box-shadow: var(--shadow); backdrop-filter: blur(10px);
+    }
+    .panel-title { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .panel-title h2, .panel-title h3 { margin: 0; font-size: 1rem; }
+    .panel-title span { color: var(--muted); font-size: 0.88rem; }
+    .formation-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
+    .arena {
+      position: relative; min-height: 560px; border-radius: 30px; overflow: hidden;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 50% 15%, rgba(255,255,255,0.16), transparent 34%),
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.06)),
+        linear-gradient(180deg, rgba(115, 78, 44, 0.16) 0%, rgba(40, 27, 18, 0.14) 100%);
+    }
+    .arena::before, .arena::after {
+      content: ""; position: absolute; inset: 22px; border-radius: 24px;
+      border: 1px dashed rgba(255,255,255,0.16); pointer-events: none;
+    }
+    .arena::after {
+      inset: auto 18px 18px; height: 120px; border: 0;
+      background: linear-gradient(180deg, transparent, rgba(0,0,0,0.14));
+    }
+    .slot-layer { position: absolute; inset: 0; }
+    .hero-slot, .pet-slot {
+      position: absolute; width: min(32vw, 162px); max-width: 162px; min-width: 118px;
+      padding: 10px; border-radius: 24px; background: var(--slot-bg); border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      transition: left .45s cubic-bezier(.22, 1, .36, 1), top .45s cubic-bezier(.22, 1, .36, 1), transform .25s ease, border-color .25s ease;
+    }
+    .hero-slot:hover, .pet-slot:hover { transform: translateY(-2px); }
+    .slot-head {
+      display: flex; justify-content: space-between; align-items: center; gap: 8px;
+      margin-bottom: 8px; font-size: 0.78rem; color: var(--muted);
+    }
+    .slot-head strong { color: var(--text); font-size: 0.85rem; }
+    .portrait {
+      aspect-ratio: 1 / 1; border-radius: 18px; border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.12), rgba(0,0,0,0.08)),
+        linear-gradient(135deg, rgba(240,184,93,0.32), rgba(177,64,27,0.16));
+      display: grid; place-items: center; overflow: hidden; font-weight: 700;
+      text-align: center; padding: 8px;
+    }
+    .portrait img { width: 100%; height: 100%; object-fit: cover; }
+    .name-label { margin-top: 8px; font-weight: 700; font-size: 0.92rem; text-align: center; line-height: 1.3; min-height: 2.5em; }
+    .skill-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 10px; }
+    .mini-slot {
+      border-radius: 12px; padding: 6px 4px; min-height: 62px; border: 1px solid var(--line);
+      background: var(--skill-bg); display: grid; place-items: center; text-align: center;
+      font-size: 0.68rem; line-height: 1.25; overflow: hidden;
+    }
+    .mini-slot img { width: 100%; height: 38px; object-fit: contain; }
+    .pet-slot { width: min(28vw, 144px); max-width: 144px; min-width: 108px; }
+    .hint-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; color: var(--muted); font-size: 0.85rem; }
+    .hint-chip { padding: 8px 12px; border-radius: 999px; background: var(--accent-soft); border: 1px solid var(--line); }
+    .deck-form { display: grid; gap: 12px; }
+    .field { display: grid; gap: 6px; }
+    .field label { font-size: 0.84rem; color: var(--muted); }
+    .field input, .field textarea, .field select {
+      width: 100%; min-height: 48px; padding: 12px 14px; color: var(--text);
+      border-radius: 14px; border: 1px solid var(--line); background: var(--panel-strong);
+    }
+    .field textarea { min-height: 104px; resize: vertical; }
+    .inline-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .type-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .tag {
+      display: inline-flex; align-items: center; justify-content: center; min-height: 38px;
+      padding: 0 12px; border-radius: 999px; background: var(--panel-strong); border: 1px solid var(--line);
+    }
+    .tag.red { background: rgba(183, 35, 42, 0.12); color: var(--danger); }
+    .tag.yellow { background: rgba(211, 154, 20, 0.14); color: #a27000; }
+    .tag.green { background: rgba(40, 121, 80, 0.14); color: var(--good); }
+    .deck-list { display: grid; gap: 12px; max-height: 820px; overflow: auto; padding-right: 4px; }
+    .deck-card { border: 1px solid var(--line); border-radius: 22px; padding: 14px; background: var(--panel-strong); display: grid; gap: 12px; }
+    .deck-card-header { display: flex; justify-content: space-between; gap: 12px; align-items: start; }
+    .deck-card h4 { margin: 0 0 4px; font-size: 1rem; }
+    .deck-meta { color: var(--muted); font-size: 0.84rem; line-height: 1.45; }
+    .banner-strip { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+    .banner-portrait {
+      aspect-ratio: 1 / 1; border-radius: 14px; overflow: hidden; border: 1px solid var(--line);
+      background: var(--slot-bg); display: grid; place-items: center; font-size: 0.68rem; text-align: center; padding: 4px;
+    }
+    .banner-portrait img { width: 100%; height: 100%; object-fit: cover; }
+    .deck-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .status-line { font-size: 0.82rem; color: var(--muted); }
+    .drawer, .modal-backdrop {
+      position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: 0; transition: opacity .2s ease;
+    }
+    .drawer.open, .modal-backdrop.open { opacity: 1; pointer-events: auto; }
+    .drawer::before, .modal-backdrop::before {
+      content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.38); backdrop-filter: blur(4px);
+    }
+    .drawer-panel {
+      position: absolute; right: 16px; top: 80px; width: min(320px, calc(100vw - 32px));
+      padding: 16px; border-radius: 24px; background: var(--panel); border: 1px solid var(--line);
+      box-shadow: var(--shadow); display: grid; gap: 10px; transform: translateY(-10px); transition: transform .22s ease;
+    }
+    .drawer.open .drawer-panel { transform: translateY(0); }
+    .drawer-item {
+      display: flex; justify-content: space-between; gap: 10px; align-items: center;
+      min-height: 48px; padding: 12px 14px; border-radius: 16px;
+      background: var(--panel-strong); border: 1px solid var(--line);
+    }
+    .modal-card {
+      position: absolute; inset: 50% auto auto 50%; width: min(900px, calc(100vw - 24px));
+      max-height: min(86vh, 980px); overflow: auto; transform: translate(-50%, -46%);
+      padding: 18px; border-radius: 28px; background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow);
+    }
+    .modal-card.compact { width: min(760px, calc(100vw - 24px)); }
+    .modal-header {
+      position: sticky; top: -18px; z-index: 3; display: flex; justify-content: space-between;
+      gap: 12px; align-items: center; padding: 2px 0 12px; background: var(--panel);
+    }
+    .modal-header h3 { margin: 0; font-size: 1.05rem; }
+    .selector-toolbar { display: grid; grid-template-columns: 1.3fr .8fr .8fr; gap: 10px; margin-bottom: 14px; }
+    .selector-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
+    .select-card { padding: 10px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel-strong); display: grid; gap: 8px; }
+    .select-card .portrait { aspect-ratio: 1/1; min-height: 98px; }
+    .select-card-name { font-size: 0.85rem; text-align: center; min-height: 2.4em; display: grid; place-items: center; }
+    .favorite-btn { min-height: 36px; border-radius: 12px; border: 1px solid var(--line); background: transparent; }
+    .favorite-btn.active { background: rgba(242, 196, 90, 0.16); color: #b68000; }
+    .stats-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
+    .equip-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+    .detail-slot {
+      min-height: 82px; padding: 10px; border-radius: 16px; border: 1px solid var(--line);
+      background: var(--panel-strong); display: grid; gap: 6px; justify-items: center; text-align: center;
+    }
+    .accessory-wrap { margin-top: 12px; }
+    .admin-grid, .deck-compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .preview-board { padding: 14px; border: 1px solid var(--line); border-radius: 20px; background: var(--panel-strong); display: grid; gap: 12px; }
+    .preview-slots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+    .preview-slots .banner-portrait:nth-child(6) { grid-column: 3; }
+    .empty-state { padding: 16px; border: 1px dashed var(--line); border-radius: 18px; color: var(--muted); text-align: center; }
 
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; backdrop-filter: blur(8px); }
-        .modal-content { position: absolute; bottom: 0; width: 100%; max-height: 90vh; background: var(--card); border-radius: 24px 24px 0 0; padding: 20px; overflow-y: auto; border-top: 1px solid rgba(255,255,255,0.1); }
-        .active-form { border: 2px solid var(--red); background: #331111; color: var(--red); font-weight: bold; }
-        .item-selected { border-color: var(--blue) !important; color: var(--blue) !important; background: #0a1a3a !important; font-weight: bold; }
-        .deck-banner { background: linear-gradient(90deg, #1a1a1a, #262626); transition: transform 0.2s; }
-        .deck-banner:active { transform: scale(0.97); }
-    </style>
+    @media (max-width: 1080px) {
+      .page-grid { grid-template-columns: 1fr; }
+      .panel.desktop-only { display: none; }
+    }
+
+    @media (min-width: 1081px) {
+      .panel.mobile-only { display: none; }
+      .arena { min-height: 640px; }
+      .hero-slot, .pet-slot { width: 156px; }
+    }
+
+    @media (max-width: 780px) {
+      .app-shell { padding: 14px 12px 32px; }
+      .topbar { padding: 10px 12px; border-radius: 20px; }
+      .header-actions .pill-btn { display: none; }
+      .formation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .arena { min-height: 650px; }
+      .selector-toolbar, .admin-grid, .deck-compare, .inline-grid, .stats-grid { grid-template-columns: 1fr; }
+      .modal-card { padding: 16px; border-radius: 22px; }
+      .banner-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+  </style>
 </head>
-<body class="f-basic">
-
-    <header class="p-4 flex justify-between items-center bg-black/50 sticky top-0 z-50 border-b border-white/5">
-        <h1 class="font-bold text-lg tracking-tight">이옌 길드전 가이드</h1>
-        <span class="material-icons cursor-pointer" onclick="location.reload()">refresh</span>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <h1>이옌 길드전 가이드용 앱</h1>
+        <small>세븐나이츠 리버스 길드전 덱 설계 · 모바일 원핸드 대응 · 데스크탑 분리 UI</small>
+      </div>
+      <div class="header-actions">
+        <button class="pill-btn" id="githubLinkBtn">깃허브 열기</button>
+        <button class="menu-btn" id="menuToggleBtn" aria-label="메뉴 열기">☰</button>
+      </div>
     </header>
 
-    <main class="max-w-md mx-auto p-4 space-y-6">
-        <div class="grid grid-cols-4 gap-1">
-            <button class="form-btn active-form p-2 text-[10px] rounded-lg bg-zinc-800" onclick="setForm('basic', this)">기본진형</button>
-            <button class="form-btn p-2 text-[10px] rounded-lg bg-zinc-800" onclick="setForm('balance', this)">밸런스진형</button>
-            <button class="form-btn p-2 text-[10px] rounded-lg bg-zinc-800" onclick="setForm('attack', this)">공격진형</button>
-            <button class="form-btn p-2 text-[10px] rounded-lg bg-zinc-800" onclick="setForm('protect', this)">보호진형</button>
-        </div>
+    <main class="page-grid">
+      <section class="stack">
+        <article class="panel">
+          <div class="panel-title">
+            <div>
+              <h2>진형 및 슬롯 배치</h2>
+              <span>영웅 슬롯을 탭하면 선택 팝업, 길게 누르면 상세 설정이 열립니다.</span>
+            </div>
+            <div class="status-line" id="saveStateLabel">저장 상태: 로컬 대기중</div>
+          </div>
 
-        <div class="relative w-full h-[300px] bg-zinc-900 rounded-3xl border border-white/10 overflow-hidden shadow-2xl">
-            <div id="slot-wrap">
-                <div class="slot s1" onclick="handleHeroSlotClick(1)"><div class="slot-img" id="img-1"></div><div class="text-[8px] text-center mt-1" id="name-1">1번 슬롯</div></div>
-                <div class="slot s2" onclick="handleHeroSlotClick(2)"><div class="slot-img" id="img-2"></div><div class="text-[8px] text-center mt-1" id="name-2">2번 슬롯</div></div>
-                <div class="slot s3" onclick="handleHeroSlotClick(3)"><div class="slot-img" id="img-3"></div><div class="text-[8px] text-center mt-1" id="name-3">3번 슬롯</div></div>
-                <div class="slot s4" onclick="handleHeroSlotClick(4)"><div class="slot-img" id="img-4"></div><div class="text-[8px] text-center mt-1" id="name-4">4번 슬롯</div></div>
-                <div class="slot s5" onclick="handleHeroSlotClick(5)"><div class="slot-img" id="img-5"></div><div class="text-[8px] text-center mt-1" id="name-5">5번 슬롯</div></div>
-            </div>
-            
-            <div class="absolute bottom-4 left-4 flex gap-1" onclick="openSkillModal()">
-                <div id="skill-0" class="w-9 h-9 bg-black/60 border border-white/20 rounded-lg overflow-hidden"></div>
-                <div id="skill-1" class="w-9 h-9 bg-black/60 border border-white/20 rounded-lg overflow-hidden"></div>
-                <div id="skill-2" class="w-9 h-9 bg-black/60 border border-white/20 rounded-lg overflow-hidden"></div>
-            </div>
+          <div class="formation-grid" id="formationButtons"></div>
 
-            <div class="absolute bottom-4 right-4 flex flex-col items-center" onclick="openSelect('pet')">
-                <div id="pet-slot" class="w-12 h-12 rounded-full border-2 border-yellow-500 bg-black flex items-center justify-center overflow-hidden">
-                    <span class="material-icons text-yellow-500">pets</span>
-                </div>
-                <span class="text-[8px] text-yellow-500 font-bold mt-1">PET</span>
-            </div>
-        </div>
+          <div class="arena" id="arena">
+            <div class="slot-layer" id="slotLayer"></div>
+          </div>
 
-        <div class="bg-zinc-800/40 p-5 rounded-2xl space-y-4 border border-white/5">
-            <input type="text" id="deck-title" placeholder="덱 명칭 입력" class="w-full bg-zinc-900 border border-zinc-700 p-3 rounded-xl text-sm focus:outline-none">
-            <div class="grid grid-cols-2 gap-3">
-                <select id="deck-type" class="bg-zinc-900 p-3 rounded-xl border border-zinc-700 text-xs text-white">
-                    <option value="공격덱">공격덱</option><option value="방어덱">방어덱</option><option value="카운터덱">카운터덱</option>
-                </select>
-                <input type="number" id="speed-val" placeholder="속공 수치" class="bg-zinc-900 p-3 rounded-xl border border-zinc-700 text-xs">
-            </div>
-            <textarea id="deck-tip" placeholder="공략 팁 입력" class="w-full bg-zinc-900 border border-zinc-700 p-3 rounded-xl h-24 text-xs focus:outline-none"></textarea>
-            
-            <div class="space-y-1">
-                <label class="text-[10px] text-zinc-500 ml-1 font-bold">카운터 지정 (저장된 덱 중 선택)</label>
-                <select id="counter-link" class="w-full bg-zinc-900 p-3 rounded-xl border border-zinc-700 text-xs text-white">
-                    <option value="">지정 안 함</option>
-                </select>
-            </div>
-            
-            <button onclick="saveDeck()" class="w-full bg-red-600 p-4 rounded-xl font-bold shadow-lg active:bg-red-700 transition">가이드 저장</button>
-        </div>
+          <div class="hint-row">
+            <div class="hint-chip">탭: 영웅/펫/스킬 선택</div>
+            <div class="hint-chip">길게 누르기: 상세 스탯/장비/장신구</div>
+            <div class="hint-chip">이미지 실패 시 이름 표시</div>
+            <div class="hint-chip">PNG/JPG/JPEG/WEBP 자동 탐색</div>
+          </div>
+        </article>
 
-        <div class="space-y-4 pb-24">
-            <div class="flex gap-2 overflow-x-auto no-scrollbar py-2">
-                <button onclick="renderDeckList('전체')" class="px-4 py-2 bg-zinc-800 rounded-full text-xs font-bold shrink-0 border border-white/10">전체</button>
-                <button onclick="renderDeckList('공격덱')" class="px-4 py-2 bg-red-900/30 text-red-400 rounded-full text-xs font-bold shrink-0 border border-red-900/50">공격덱</button>
-                <button onclick="renderDeckList('방어덱')" class="px-4 py-2 bg-yellow-900/30 text-yellow-400 rounded-full text-xs font-bold shrink-0 border border-yellow-900/50">방어덱</button>
-                <button onclick="renderDeckList('카운터덱')" class="px-4 py-2 bg-green-900/30 text-green-400 rounded-full text-xs font-bold shrink-0 border border-green-900/50">카운터덱</button>
+        <article class="panel mobile-only">
+          <div class="panel-title">
+            <div>
+              <h2>모바일 빠른 저장</h2>
+              <span>한손으로 입력하기 쉽게 세로형 폼으로 배치했습니다.</span>
             </div>
-            <div id="deck-list" class="space-y-3"></div>
-        </div>
+          </div>
+          <div class="deck-form" id="mobileDeckForm"></div>
+        </article>
+      </section>
+
+      <aside class="stack">
+        <article class="panel desktop-only">
+          <div class="panel-title">
+            <div>
+              <h2>가이드덱 저장</h2>
+              <span>공격덱 / 방어덱 / 카운터덱 분류와 카운터 연결을 지원합니다.</span>
+            </div>
+          </div>
+          <div class="deck-form" id="desktopDeckForm"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-title">
+            <div>
+              <h2>저장된 가이드덱</h2>
+              <span>배너에서 전체 구성과 카운터덱을 함께 비교할 수 있습니다.</span>
+            </div>
+          </div>
+          <div class="type-filter" id="deckFilters"></div>
+          <div class="deck-list" id="deckList"></div>
+        </article>
+      </aside>
     </main>
+  </div>
 
-    <div id="selectModal" class="modal" onclick="closeModal('selectModal')">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="flex justify-between items-center mb-4">
-                <h2 id="modal-title" class="font-bold">선택</h2>
-                <span class="material-icons cursor-pointer" onclick="closeModal('selectModal')">close</span>
-            </div>
-            <div id="modal-grid" class="grid grid-cols-4 gap-3"></div>
-        </div>
+  <div class="drawer" id="menuDrawer">
+    <div class="drawer-panel">
+      <button class="drawer-item" id="themeToggleBtn">
+        <span>화이트모드 / 다크모드</span>
+        <strong id="themeLabel">라이트</strong>
+      </button>
+      <button class="drawer-item" id="adminOpenBtn">
+        <span>관리자 메뉴</span>
+        <strong>추가 / 수정</strong>
+      </button>
+      <button class="drawer-item" id="firebaseSaveBtn">
+        <span>Firebase 수동 저장</span>
+        <strong>동기화</strong>
+      </button>
     </div>
+  </div>
 
-    <div id="detailModal" class="modal" onclick="closeModal('detailModal')">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <h2 class="font-bold text-lg mb-6 flex items-center"><span id="detail-hero-name" class="text-red-500 mr-2"></span> 상세 설정</h2>
-            <div class="flex gap-4 mb-6">
-                <div class="grid grid-cols-2 gap-2 w-32 h-32">
-                    <div id="slot-w1" class="bg-zinc-900 border border-white/10 rounded flex items-center justify-center text-[9px] text-center p-1" onclick="openSelect('item', 'w1')">무기1</div>
-                    <div id="slot-w2" class="bg-zinc-900 border border-white/10 rounded flex items-center justify-center text-[9px] text-center p-1" onclick="openSelect('item', 'w2')">무기2</div>
-                    <div id="slot-a1" class="bg-zinc-900 border border-white/10 rounded flex items-center justify-center text-[9px] text-center p-1" onclick="openSelect('item', 'a1')">방어1</div>
-                    <div id="slot-a2" class="bg-zinc-900 border border-white/10 rounded flex items-center justify-center text-[9px] text-center p-1" onclick="openSelect('item', 'a2')">방어2</div>
-                </div>
-                <div id="slot-acc" class="flex-1 bg-zinc-900 border border-blue-900/30 rounded-xl flex flex-col items-center justify-center" onclick="openSelect('acc')">
-                    <span class="material-icons text-blue-400 text-3xl">diamond</span>
-                    <span class="text-[10px] font-bold mt-1">장신구</span>
-                </div>
-            </div>
-            <div id="stat-area" class="grid grid-cols-2 gap-3 text-[10px]"></div>
-            <button onclick="closeModal('detailModal')" class="w-full mt-6 bg-zinc-700 p-4 rounded-xl font-bold">상세 설정 완료</button>
+  <div class="modal-backdrop" id="selectionModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h3 id="selectionModalTitle">선택</h3>
+          <div class="status-line" id="selectionModalHint">검색, 필터, 즐겨찾기를 사용할 수 있습니다.</div>
         </div>
+        <button class="menu-btn" data-close-modal="selectionModal">✕</button>
+      </div>
+      <div class="selector-toolbar">
+        <input id="selectorSearch" type="search" placeholder="이름 검색" />
+        <select id="selectorCategory"></select>
+        <select id="selectorFavoriteFilter">
+          <option value="all">전체</option>
+          <option value="favorites">즐겨찾기</option>
+        </select>
+      </div>
+      <div class="selector-grid" id="selectorGrid"></div>
     </div>
+  </div>
 
-    <div id="skillModal" class="modal" onclick="closeModal('skillModal')">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <h2 class="font-bold mb-4">장착 스킬 선택 (최대 3개)</h2>
-            <div id="skill-grid" class="grid grid-cols-2 gap-3"></div>
-            <button onclick="closeModal('skillModal')" class="w-full mt-6 bg-red-600 p-4 rounded-xl font-bold">선택 완료</button>
+  <div class="modal-backdrop" id="detailModal">
+    <div class="modal-card compact">
+      <div class="modal-header">
+        <div>
+          <h3 id="detailModalTitle">영웅 상세 설정</h3>
+          <div class="status-line">상세 스탯, 장비 2x2, 장신구 1칸을 설정할 수 있습니다.</div>
         </div>
-    </div>
-
-    <div id="viewModal" class="modal" onclick="closeModal('viewModal')">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <h2 id="view-title" class="font-bold text-xl mb-1"></h2>
-            <div id="view-meta" class="text-[10px] text-zinc-500 mb-6"></div>
-            <div id="view-heroes" class="flex gap-2 mb-6"></div>
-            <div id="view-skills" class="flex gap-2 mb-6"></div>
-            <div class="bg-zinc-900 p-4 rounded-2xl border border-white/5 mb-4">
-                <p id="view-tip" class="text-sm leading-relaxed"></p>
-            </div>
-            <div id="view-counter" class="p-4 bg-zinc-900 rounded-2xl border border-red-900/30"></div>
-            <button onclick="closeModal('viewModal')" class="w-full mt-6 bg-zinc-700 p-4 rounded-xl font-bold">닫기</button>
+        <button class="menu-btn" data-close-modal="detailModal">✕</button>
+      </div>
+      <div class="stats-grid" id="statsGrid"></div>
+      <div class="panel-title">
+        <h3>장비 설정</h3>
+      </div>
+      <div class="equip-grid" id="equipGrid"></div>
+      <div class="accessory-wrap">
+        <div class="panel-title">
+          <h3>장신구 설정</h3>
         </div>
+        <div id="accessorySlot"></div>
+      </div>
+      <div style="margin-top:16px; display:flex; justify-content:flex-end; gap:10px;">
+        <button class="ghost-btn" data-close-modal="detailModal">닫기</button>
+        <button class="save-btn" id="detailSaveBtn">상세 저장</button>
+      </div>
     </div>
+  </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, push, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+  <div class="modal-backdrop" id="adminModal">
+    <div class="modal-card compact">
+      <div class="modal-header">
+        <div>
+          <h3>관리자 메뉴</h3>
+          <div class="status-line">영웅, 펫, 장비, 장신구를 추가/수정하면 앱 상태와 저장 데이터에 반영됩니다.</div>
+        </div>
+        <button class="menu-btn" data-close-modal="adminModal">✕</button>
+      </div>
+      <div class="admin-grid">
+        <div class="field">
+          <label>대상 종류</label>
+          <select id="adminType">
+            <option value="hero">영웅</option>
+            <option value="pet">펫</option>
+            <option value="equipment">장비</option>
+            <option value="accessory">장신구</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>카테고리</label>
+          <input id="adminCategory" type="text" placeholder="예: 스페셜" />
+        </div>
+        <div class="field">
+          <label>이름</label>
+          <input id="adminName" type="text" placeholder="예: 루디" />
+        </div>
+        <div class="field">
+          <label>이미지 파일명(선택)</label>
+          <input id="adminAssetName" type="text" placeholder="비우면 이름으로 탐색" />
+        </div>
+        <div class="field" style="grid-column:1 / -1;">
+          <label>영웅 스킬명(쉼표 구분, 영웅일 때만)</label>
+          <input id="adminSkills" type="text" placeholder="기본, 루디-2, 루디-3" />
+        </div>
+      </div>
+      <div style="margin-top:16px; display:flex; justify-content:flex-end; gap:10px;">
+        <button class="ghost-btn" data-close-modal="adminModal">닫기</button>
+        <button class="save-btn" id="adminSaveBtn">추가/수정 저장</button>
+      </div>
+    </div>
+  </div>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBObWW-nQdRW7B_HB9O5lmCJFoVRUm-Ijs",
-            authDomain: "guid-3755d.firebaseapp.com",
-            databaseURL: "https://guid-3755d-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "guid-3755d",
-            storageBucket: "guid-3755d.firebasestorage.app",
-            messagingSenderId: "397986674872",
-            appId: "1:397986674872:web:71ec328badbbedc6d4dc4d"
-        };
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
+  <div class="modal-backdrop" id="deckPreviewModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h3 id="deckPreviewTitle">덱 전체 보기</h3>
+          <div class="status-line">저장한 덱과 카운터덱을 한 화면에서 비교합니다.</div>
+        </div>
+        <button class="menu-btn" data-close-modal="deckPreviewModal">✕</button>
+      </div>
+      <div class="deck-compare" id="deckPreviewCompare"></div>
+    </div>
+  </div>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { getAnalytics, isSupported as analyticsSupported } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
+    import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
 
-        // --- 기초 데이터 ---
-        const heroData = {
-            "스페셜": ["루디", "아일린", "레이첼", "델론즈", "스파이크", "제이브", "크리스", "바네사"],
-            "(구)세나": ["파이", "로지", "쥬리", "밀리아", "겔리두스", "항우", "우치"],
-            "다크나이츠": ["팔라누스", "플라튼", "콜트", "브란즈&브란셀", "실베스타", "멜키르"],
-            "사황/구사황": ["에이스", "여포", "손오공", "린", "카르마", "태오", "연희", "카일"],
-            "나이트크로우": ["오를리", "타카", "칼 헤론", "아킬라"],
-            "천상/심연": ["트루드", "프레이야", "미스트", "레긴레이프", "라드그리드", "이브", "바토리", "앤티", "쥬다스"],
-            "아이사": ["리나", "풍연", "소이", "백각", "비담", "권호", "조운", "관우", "초선", "강재", "나타"],
-            "일반/기타": ["세인", "밍", "루리", "니아", "에스파다", "지크", "룩", "챈슬러", "에반", "카린", "유리", "리"]
-        };
-        const petList = ["루", "이린", "리첼", "델로", "파이크", "맬패로", "유", "크리", "연지", "카람"];
-        const itemData = {
-            "장비": ["선봉장", "성기사", "추적자", "암살자", "수문장", "수호자", "복수자", "조율자", "주술사"],
-            "장신구": ["가시반지", "공포의반지", "권능의반지", "기회의반지", "꿈의반지", "독사반지", "마법의반지", "메두사의반지", "번뜩이는반지", "보호의반지", "복수의반지", "부활의반지", "불사의반지", "샐러맨더의반지", "설원의반지", "수호의반지", "시간의반지", "자연의반지", "재앙의반지", "저주의반지", "저항의반지", "적중의반지", "죽음의반지", "집중의반지", "행운의반지"]
-        };
-        const stats = ["공격력", "방어력", "생명력", "속공", "치명확률", "치명피해", "약공확률", "막기확률", "피해감소", "효과적중", "효과저항"];
+    const firebaseConfig = {
+      apiKey: "AIzaSyBObWW-nQdRW7B_HB9O5lmCJFoVRUm-Ijs",
+      authDomain: "guid-3755d.firebaseapp.com",
+      databaseURL: "https://guid-3755d-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "guid-3755d",
+      storageBucket: "guid-3755d.firebasestorage.app",
+      messagingSenderId: "397986674872",
+      appId: "1:397986674872:web:71ec328badbbedc6d4dc4d",
+      measurementId: "G-1BFM3PXK0P"
+    };
 
-        let currentDeck = { formation: 'basic', heroes: [], pet: null, skills: [] };
-        let activeSlotIdx = null; // 1~5
-        let activeItemPart = null; // w1, w2, a1, a2, acc
-        let allDecks = {};
+    const heroData = {
+      "스페셜": ["루디", "아일린", "레이첼", "델론즈", "스파이크", "제이브", "크리스", "바네사"],
+      "(구)세나": ["파이", "로지", "쥬리", "밀리아", "겔리두스", "항우", "우치"],
+      "다크나이츠": ["팔라누스", "플라튼", "콜트", "브란즈&브란셀", "실베스타", "멜키르"],
+      "사황/구사황": ["에이스", "여포", "손오공", "린", "카르마", "태오", "연희", "카일"],
+      "나이트크로우": ["오를리", "타카", "칼 헤론", "아킬라"],
+      "천상/심연": ["트루드", "프레이야", "미스트", "레긴레이프", "라드그리드", "이브", "바토리", "앤티", "쥬다스"],
+      "아이사": ["리나", "풍연", "소이", "백각", "비담", "권호", "조운", "관우", "초선", "강재", "나타"],
+      "일반/기타": ["세인", "밍", "루리", "니아", "에스파다", "지크", "룩", "챈슬러", "에반", "카린", "유리", "리"]
+    };
 
-        // --- 초기화 ---
-        window.onload = () => {
-            const statBox = document.getElementById('stat-area');
-            stats.forEach(s => statBox.innerHTML += `<div><label class="opacity-40">${s}</label><input type="number" class="w-full bg-black border border-white/5 p-1.5 rounded mt-1"></div>`);
-            
-            // 롱탭(상세 설정) 감지
-            for(let i=1; i<=5; i++){
-                let timer;
-                const el = document.querySelector(`.s${i}`);
-                el.onmousedown = el.ontouchstart = () => timer = setTimeout(() => openHeroDetail(i), 700);
-                el.onmouseup = el.ontouchend = () => clearTimeout(timer);
-            }
-            renderDeckList('전체');
-        };
+    const petList = ["루", "이린", "리첼", "델로", "파이크", "맬패로", "유", "크리", "연지", "카람"];
 
-        // --- 영웅 선택 로직 (중복 불가, 3인 제한) ---
-        window.handleHeroSlotClick = (idx) => {
-            if(currentDeck.heroes.length >= 3 && !currentDeck.heroes.find(h => h.slot === idx)) return alert("최대 3명까지만 배치할 수 있습니다.");
-            openSelect('hero', idx);
-        };
+    const itemData = {
+      "장비": ["선봉장", "성기사", "추적자", "암살자", "수문장", "수호자", "복수자", "조율자", "주술사"],
+      "장신구": ["가시반지", "공포의반지", "권능의반지", "기회의반지", "꿈의반지", "독사반지", "마법의반지", "메두사의반지", "번뜩이는반지", "보호의반지", "복수의반지", "부활의반지", "불사의반지", "샐러맨더의반지", "설원의반지", "수호의반지", "시간의반지", "자연의반지", "재앙의반지", "저주의반지", "저항의반지", "적중의반지", "죽음의반지", "집중의반지", "행운의반지"]
+    };
 
-        window.openSelect = (type, sub = null) => {
-            activeSlotIdx = sub;
-            const grid = document.getElementById('modal-grid');
-            grid.innerHTML = '';
-            document.getElementById('selectModal').style.display = 'block';
-            
-            let list = [];
-            let folder = "";
-            if(type === 'hero') { list = Object.values(heroData).flat(); folder = "캐릭터 아이콘 모음"; }
-            else if(type === 'pet') { list = petList; folder = "펫 아이콘 모음"; }
-            else if(type === 'item') { list = itemData["장비"]; folder = "장비"; activeItemPart = sub; }
-            else if(type === 'acc') { list = itemData["장신구"]; folder = "장비"; }
+    const statFields = [
+      "공격력(물리)", "공격력(마력)", "방어력", "생명력", "속공", "치명타확률",
+      "치명타피해", "약점 공격 확률", "막기 확률", "받는 피해 감소", "효과 적중", "효과 저항"
+    ];
 
-            list.forEach(name => {
-                // 영웅 중복 방지
-                if(type === 'hero' && currentDeck.heroes.some(h => h.name === name)) return;
+    const formationMeta = [
+      { key: "basic", label: "기본 진형" },
+      { key: "balance", label: "밸런스 진형" },
+      { key: "attack", label: "공격 진형" },
+      { key: "guard", label: "보호 진형" }
+    ];
 
-                const div = document.createElement('div');
-                div.className = "text-center";
-                div.innerHTML = `<div class="aspect-square bg-zinc-800 rounded-lg flex items-center justify-center border border-white/10 overflow-hidden">
-                    <img src="public/도감/${folder}/${name}.png" onerror="this.parentElement.innerText='${name}'" class="w-full h-full object-cover">
-                </div><div class="text-[8px] mt-1 truncate">${name}</div>`;
-                div.onclick = () => {
-                    if(type === 'hero') {
-                        currentDeck.heroes = currentDeck.heroes.filter(h => h.slot !== activeSlotIdx);
-                        currentDeck.heroes.push({ slot: activeSlotIdx, name, items: {} });
-                        updateBattleBoard();
-                    } else if(type === 'pet') {
-                        currentDeck.pet = name;
-                        document.getElementById('pet-slot').innerHTML = `<img src="public/도감/펫 아이콘 모음/${name}.png" class="w-full h-full object-cover">`;
-                    } else if(type === 'item') {
-                        const hero = currentDeck.heroes.find(h => h.slot === activeSlotIdx);
-                        hero.items[activeItemPart] = name;
-                        const el = document.getElementById(`slot-${activeItemPart}`);
-                        el.innerText = name; el.classList.add('item-selected');
-                    } else if(type === 'acc') {
-                        const hero = currentDeck.heroes.find(h => h.slot === activeSlotIdx);
-                        hero.items.acc = name;
-                        const el = document.getElementById(`slot-acc`);
-                        el.querySelector('span:last-child').innerText = name; el.classList.add('item-selected');
-                    }
-                    closeModal('selectModal');
-                };
-                grid.appendChild(div);
-            });
-        };
+    const formationLayouts = {
+      mobile: {
+        basic: [{ left: 10, top: 8 }, { left: 56, top: 8 }, { left: 33, top: 31 }, { left: 10, top: 56 }, { left: 56, top: 56 }],
+        balance: [{ left: 7, top: 12 }, { left: 58, top: 12 }, { left: 32, top: 33 }, { left: 18, top: 58 }, { left: 46, top: 58 }],
+        attack: [{ left: 4, top: 12 }, { left: 30, top: 12 }, { left: 56, top: 12 }, { left: 18, top: 48 }, { left: 44, top: 48 }],
+        guard: [{ left: 14, top: 12 }, { left: 48, top: 12 }, { left: 31, top: 36 }, { left: 10, top: 60 }, { left: 53, top: 60 }],
+        pet: { left: 4, top: 78 }
+      },
+      desktop: {
+        basic: [{ left: 8, top: 10 }, { left: 41, top: 10 }, { left: 74, top: 10 }, { left: 25, top: 46 }, { left: 58, top: 46 }],
+        balance: [{ left: 14, top: 14 }, { left: 46, top: 10 }, { left: 74, top: 18 }, { left: 22, top: 48 }, { left: 54, top: 44 }],
+        attack: [{ left: 18, top: 8 }, { left: 50, top: 8 }, { left: 74, top: 30 }, { left: 12, top: 36 }, { left: 44, top: 46 }],
+        guard: [{ left: 8, top: 20 }, { left: 42, top: 16 }, { left: 74, top: 20 }, { left: 22, top: 50 }, { left: 56, top: 50 }],
+        pet: { left: 76, top: 66 }
+      }
+    };
 
-        // --- 배치판 UI 동기화 (3인 완료 후 X 표기) ---
-        function updateBattleBoard() {
-            for(let i=1; i<=5; i++) {
-                const img = document.getElementById(`img-${i}`);
-                const nameTxt = document.getElementById(`name-${i}`);
-                const hero = currentDeck.heroes.find(h => h.slot === i);
+    const repoConfig = {
+      repoUrl: "https://github.com/jungchanyoung7-cmyk/Guild",
+      rawBase: "https://raw.githubusercontent.com/jungchanyoung7-cmyk/Guild/main",
+      paths: {
+        hero: ["public", "도감", "캐릭터 아이콘 모음"],
+        skill: ["public", "도감", "캐릭터 스킬 모음"],
+        pet: ["public", "도감", "펫 아이콘 모음"],
+        equipment: ["public", "도감", "장비"],
+        accessory: ["public", "도감", "장신구"]
+      }
+    };
 
-                if(hero) {
-                    img.innerHTML = `<img src="public/도감/캐릭터 아이콘 모음/${hero.name}.png" class="w-full h-full object-cover">`;
-                    img.classList.remove('x-mark');
-                    nameTxt.innerText = hero.name;
-                } else if(currentDeck.heroes.length >= 3) {
-                    img.innerHTML = `<span class="material-icons text-zinc-800">close</span>`;
-                    img.classList.add('x-mark');
-                    nameTxt.innerText = "비활성";
-                } else {
-                    img.innerHTML = ''; img.classList.remove('x-mark'); nameTxt.innerText = `${i}번 슬롯`;
-                }
-            }
+    const defaultSkillsForHero = (hero) => [`${hero}`, `${hero}-2`, `${hero}-3`];
+
+    const makeHeroCatalog = () => {
+      const catalog = [];
+      Object.entries(heroData).forEach(([category, names]) => {
+        names.forEach((name) => {
+          catalog.push({ name, category, assetName: name, skills: defaultSkillsForHero(name) });
+        });
+      });
+      return catalog;
+    };
+
+    const createEmptyHeroSlot = (id) => ({
+      id,
+      heroName: "",
+      category: "",
+      assetName: "",
+      skills: ["기본", "스킬-2", "스킬-3"],
+      skillAssetNames: [],
+      stats: Object.fromEntries(statFields.map((field) => [field, ""])),
+      equipment: ["", "", "", ""],
+      accessory: ""
+    });
+
+    const defaultState = {
+      version: 1,
+      theme: "light",
+      currentFormation: "basic",
+      activeDeckFilter: "전체",
+      favorites: { hero: [], pet: [], equipment: [], accessory: [], skill: [] },
+      customData: { heroes: [], pets: [], equipment: [], accessory: [] },
+      board: {
+        heroes: Array.from({ length: 5 }, (_, index) => createEmptyHeroSlot(index + 1)),
+        pet: { name: "", assetName: "", category: "펫" }
+      },
+      decks: []
+    };
+
+    let appState = structuredClone(defaultState);
+    let database = null;
+    let selectorContext = null;
+    let detailContext = null;
+    let assetCache = new Map();
+    let longPressTimer = null;
+
+    const els = {
+      body: document.body,
+      formationButtons: document.getElementById("formationButtons"),
+      slotLayer: document.getElementById("slotLayer"),
+      saveStateLabel: document.getElementById("saveStateLabel"),
+      deckList: document.getElementById("deckList"),
+      deckFilters: document.getElementById("deckFilters"),
+      menuDrawer: document.getElementById("menuDrawer"),
+      themeLabel: document.getElementById("themeLabel"),
+      mobileDeckForm: document.getElementById("mobileDeckForm"),
+      desktopDeckForm: document.getElementById("desktopDeckForm"),
+      selectionModal: document.getElementById("selectionModal"),
+      detailModal: document.getElementById("detailModal"),
+      adminModal: document.getElementById("adminModal"),
+      deckPreviewModal: document.getElementById("deckPreviewModal"),
+      selectorSearch: document.getElementById("selectorSearch"),
+      selectorCategory: document.getElementById("selectorCategory"),
+      selectorFavoriteFilter: document.getElementById("selectorFavoriteFilter"),
+      selectorGrid: document.getElementById("selectorGrid"),
+      selectionModalTitle: document.getElementById("selectionModalTitle"),
+      selectionModalHint: document.getElementById("selectionModalHint"),
+      statsGrid: document.getElementById("statsGrid"),
+      equipGrid: document.getElementById("equipGrid"),
+      accessorySlot: document.getElementById("accessorySlot"),
+      detailModalTitle: document.getElementById("detailModalTitle"),
+      deckPreviewCompare: document.getElementById("deckPreviewCompare"),
+      deckPreviewTitle: document.getElementById("deckPreviewTitle"),
+      adminType: document.getElementById("adminType"),
+      adminCategory: document.getElementById("adminCategory"),
+      adminName: document.getElementById("adminName"),
+      adminAssetName: document.getElementById("adminAssetName"),
+      adminSkills: document.getElementById("adminSkills")
+    };
+
+    const clone = (data) => structuredClone(data);
+    const normalizeName = (name) => (name || "").trim();
+    const encodePath = (parts) => parts.map((part) => encodeURIComponent(part)).join("/");
+    const isMobileLayout = () => window.matchMedia("(max-width: 1080px)").matches;
+    const updateSaveState = (text) => { els.saveStateLabel.textContent = `저장 상태: ${text}`; };
+    const getFavoritesBucket = (type) => appState.favorites[type] || [];
+
+    function buildAssetCandidates(type, name, explicitAssetName = "") {
+      const baseName = normalizeName(explicitAssetName || name);
+      if (!baseName) return [];
+      const prefix = `${repoConfig.rawBase}/${encodePath(repoConfig.paths[type])}`;
+      return [".png", ".jpg", ".jpeg", ".webp"].map((ext) => `${prefix}/${encodeURIComponent(baseName)}${ext}`);
+    }
+
+    function getHeroCatalog() { return [...makeHeroCatalog(), ...appState.customData.heroes]; }
+    function getPetCatalog() { return [...petList.map((name) => ({ name, category: "펫", assetName: name })), ...appState.customData.pets]; }
+    function getEquipmentCatalog() { return [...itemData["장비"].map((name) => ({ name, category: "장비", assetName: name })), ...appState.customData.equipment]; }
+    function getAccessoryCatalog() { return [...itemData["장신구"].map((name) => ({ name, category: "장신구", assetName: name })), ...appState.customData.accessory]; }
+    function getSkillCatalog(heroName = "", skillNames = []) {
+      const list = skillNames.length ? skillNames : defaultSkillsForHero(heroName);
+      return list.map((name) => ({ name, category: heroName || "스킬", assetName: name }));
+    }
+
+    async function resolveAsset(type, name, explicitAssetName = "") {
+      const key = `${type}:${explicitAssetName || name}`;
+      if (assetCache.has(key)) return assetCache.get(key);
+      const candidates = buildAssetCandidates(type, name, explicitAssetName);
+      if (!candidates.length) return "";
+      const result = await new Promise((resolve) => {
+        let settled = false;
+        let remaining = candidates.length;
+        candidates.forEach((url) => {
+          const img = new Image();
+          img.onload = () => { if (!settled) { settled = true; resolve(url); } };
+          img.onerror = () => { remaining -= 1; if (!remaining && !settled) resolve(""); };
+          img.src = url;
+        });
+      });
+      assetCache.set(key, result);
+      return result;
+    }
+
+    function setTheme(theme) {
+      appState.theme = theme;
+      els.body.classList.toggle("dark", theme === "dark");
+      els.themeLabel.textContent = theme === "dark" ? "다크" : "라이트";
+      localStorage.setItem("guild-guide-theme", theme);
+    }
+
+    function persistLocalState() {
+      localStorage.setItem("guild-guide-state", JSON.stringify(appState));
+      updateSaveState("로컬 저장 완료");
+    }
+
+    async function persistFirebaseState() {
+      if (!database) {
+        updateSaveState("Firebase 미연결, 로컬 저장만 완료");
+        return false;
+      }
+      try {
+        await set(ref(database, "guildGuide/appState"), appState);
+        updateSaveState("Firebase 동기화 완료");
+        return true;
+      } catch (error) {
+        console.error(error);
+        updateSaveState("Firebase 저장 실패, 로컬만 유지");
+        return false;
+      }
+    }
+
+    async function saveAll({ syncFirebase = false } = {}) {
+      persistLocalState();
+      if (syncFirebase) await persistFirebaseState();
+      renderAll();
+    }
+
+    async function initializeFirebase() {
+      try {
+        const firebaseApp = initializeApp(firebaseConfig);
+        database = getDatabase(firebaseApp);
+        if (await analyticsSupported()) getAnalytics(firebaseApp);
+      } catch (error) {
+        console.warn("Firebase 초기화 실패", error);
+        database = null;
+      }
+    }
+
+    async function loadState() {
+      const local = localStorage.getItem("guild-guide-state");
+      if (local) {
+        try { appState = Object.assign(clone(defaultState), JSON.parse(local)); }
+        catch (error) { console.warn("로컬 상태 복구 실패", error); }
+      }
+      const savedTheme = localStorage.getItem("guild-guide-theme");
+      if (savedTheme) appState.theme = savedTheme;
+      if (database) {
+        try {
+          const snapshot = await get(child(ref(database), "guildGuide/appState"));
+          if (snapshot.exists()) {
+            appState = Object.assign(clone(defaultState), snapshot.val());
+            updateSaveState("Firebase 데이터 불러옴");
+          }
+        } catch (error) {
+          console.warn("Firebase 로드 실패", error);
+        }
+      }
+    }
+
+    function renderFormationButtons() {
+      els.formationButtons.innerHTML = "";
+      formationMeta.forEach((formation) => {
+        const button = document.createElement("button");
+        button.className = `command-btn ${formation.key === appState.currentFormation ? "active" : ""}`;
+        button.textContent = formation.label;
+        button.addEventListener("click", () => {
+          appState.currentFormation = formation.key;
+          saveAll();
+        });
+        els.formationButtons.appendChild(button);
+      });
+    }
+
+    function buildMiniSlot(content, assetType, assetName) {
+      const wrap = document.createElement("button");
+      wrap.className = "mini-slot";
+      wrap.type = "button";
+      const fallback = document.createElement("span");
+      fallback.textContent = content;
+      wrap.appendChild(fallback);
+      if (assetName) {
+        resolveAsset(assetType, assetName).then((url) => {
+          if (!url) return;
+          wrap.innerHTML = "";
+          const img = document.createElement("img");
+          img.src = url;
+          img.alt = content;
+          const label = document.createElement("span");
+          label.textContent = content;
+          wrap.append(img, label);
+        });
+      }
+      return wrap;
+    }
+
+    function attachLongPress(element, onTap, onLongPress) {
+      const start = (event) => {
+        if (event.pointerType === "mouse" && event.button !== 0) return;
+        longPressTimer = window.setTimeout(() => {
+          longPressTimer = null;
+          onLongPress();
+        }, 500);
+      };
+      const clear = () => {
+        if (longPressTimer) {
+          clearTimeout(longPressTimer);
+          longPressTimer = null;
+        }
+      };
+      element.addEventListener("pointerdown", start);
+      element.addEventListener("pointerup", () => {
+        if (longPressTimer) {
+          clear();
+          onTap();
+        }
+      });
+      element.addEventListener("pointerleave", clear);
+      element.addEventListener("pointercancel", clear);
+    }
+
+    function renderSlots() {
+      els.slotLayer.innerHTML = "";
+      const mode = isMobileLayout() ? "mobile" : "desktop";
+      const layout = formationLayouts[mode][appState.currentFormation];
+
+      appState.board.heroes.forEach((hero, index) => {
+        const slot = document.createElement("article");
+        slot.className = "hero-slot";
+        slot.style.left = `${layout[index].left}%`;
+        slot.style.top = `${layout[index].top}%`;
+        slot.dataset.slotId = String(hero.id);
+
+        const head = document.createElement("div");
+        head.className = "slot-head";
+        head.innerHTML = `<strong>영웅 슬롯 ${hero.id}</strong><span>${hero.category || "미선택"}</span>`;
+
+        const portrait = document.createElement("div");
+        portrait.className = "portrait";
+        portrait.textContent = hero.heroName || "영웅 선택";
+        if (hero.heroName) {
+          resolveAsset("hero", hero.heroName, hero.assetName).then((url) => {
+            if (!url) return;
+            portrait.innerHTML = "";
+            const img = document.createElement("img");
+            img.src = url;
+            img.alt = hero.heroName;
+            portrait.appendChild(img);
+          });
         }
 
-        // --- 영웅 상세 설정 & 스킬 ---
-        window.openHeroDetail = (idx) => {
-            const hero = currentDeck.heroes.find(h => h.slot === idx);
-            if(!hero) return alert("영웅을 먼저 선택해야 합니다.");
-            activeSlotIdx = idx;
-            document.getElementById('detail-hero-name').innerText = hero.name;
-            
-            ['w1', 'w2', 'a1', 'a2'].forEach(p => {
-                const el = document.getElementById(`slot-${p}`);
-                if(hero.items[p]) { el.innerText = hero.items[p]; el.classList.add('item-selected'); }
-                else { el.innerText = p.startsWith('w')?'무기':'방어구'; el.classList.remove('item-selected'); }
+        const label = document.createElement("div");
+        label.className = "name-label";
+        label.textContent = hero.heroName || "슬롯을 눌러 영웅 지정";
+
+        const skillRow = document.createElement("div");
+        skillRow.className = "skill-row";
+        const skillNames = hero.heroName ? hero.skills : ["기본", "스킬-2", "스킬-3"];
+        skillNames.forEach((skillName) => {
+          const mini = buildMiniSlot(skillName, "skill", skillName);
+          mini.addEventListener("click", (event) => {
+            event.stopPropagation();
+            openSelectionModal({
+              type: "skill",
+              heroId: hero.id,
+              title: `${hero.heroName || "영웅"} 스킬 선택`,
+              heroName: hero.heroName,
+              currentSkills: hero.skills
             });
-            const accEl = document.getElementById('slot-acc');
-            if(hero.items.acc) { accEl.querySelector('span:last-child').innerText = hero.items.acc; accEl.classList.add('item-selected'); }
-            else { accEl.querySelector('span:last-child').innerText = "장신구 선택"; accEl.classList.remove('item-selected'); }
+          });
+          skillRow.appendChild(mini);
+        });
 
-            document.getElementById('detailModal').style.display = 'block';
+        slot.append(head, portrait, label, skillRow);
+        attachLongPress(
+          slot,
+          () => openSelectionModal({ type: "hero", heroId: hero.id, title: `영웅 슬롯 ${hero.id} 선택` }),
+          () => openDetailModal(hero.id)
+        );
+        els.slotLayer.appendChild(slot);
+      });
+
+      const pet = appState.board.pet;
+      const petSlot = document.createElement("article");
+      petSlot.className = "pet-slot";
+      petSlot.style.left = `${formationLayouts[mode].pet.left}%`;
+      petSlot.style.top = `${formationLayouts[mode].pet.top}%`;
+      petSlot.innerHTML = `
+        <div class="slot-head"><strong>펫 슬롯</strong><span>${pet.category || "펫"}</span></div>
+        <div class="portrait">${pet.name || "펫 선택"}</div>
+        <div class="name-label">${pet.name || "슬롯을 눌러 펫 지정"}</div>
+      `;
+      if (pet.name) {
+        const petPortrait = petSlot.querySelector(".portrait");
+        resolveAsset("pet", pet.name, pet.assetName).then((url) => {
+          if (!url || !petPortrait) return;
+          petPortrait.innerHTML = `<img src="${url}" alt="${pet.name}" />`;
+        });
+      }
+      petSlot.addEventListener("click", () => openSelectionModal({ type: "pet", title: "펫 선택" }));
+      els.slotLayer.appendChild(petSlot);
+    }
+
+    function buildDeckForm(target) {
+      target.innerHTML = `
+        <div class="field">
+          <label>덱명칭입력</label>
+          <input id="${target.id}-deckName" type="text" placeholder="예: 속공 루디 카운터" />
+        </div>
+        <div class="field">
+          <label>덱속성</label>
+          <select id="${target.id}-deckType">
+            <option value="공격덱">공격덱</option>
+            <option value="방어덱">방어덱</option>
+            <option value="카운터덱">카운터덱</option>
+          </select>
+        </div>
+        <div class="inline-grid">
+          <div class="field">
+            <label>덱성격</label>
+            <select id="${target.id}-deckTempo">
+              <option value="속공">속공</option>
+              <option value="내실설정">내실설정</option>
+              <option value="밸런스">밸런스</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>속공 수치입력</label>
+            <input id="${target.id}-speedValue" type="number" min="0" step="1" placeholder="예: 215" />
+          </div>
+        </div>
+        <div class="field">
+          <label>공략팁</label>
+          <textarea id="${target.id}-deckTip" placeholder="상대 조합 대응법, 배치 이유, 주의할 카운터 등을 적어주세요."></textarea>
+        </div>
+        <div class="field">
+          <label>카운터덱 설정</label>
+          <select id="${target.id}-counterDeck"></select>
+        </div>
+        <button class="save-btn" id="${target.id}-saveDeckBtn">현재 보드로 가이드덱 저장</button>
+      `;
+
+      const counterSelect = target.querySelector(`#${target.id}-counterDeck`);
+      counterSelect.innerHTML = `<option value="">선택 안함</option>`;
+      appState.decks.forEach((deck) => {
+        const opt = document.createElement("option");
+        opt.value = deck.id;
+        opt.textContent = deck.name;
+        counterSelect.appendChild(opt);
+      });
+
+      target.querySelector(`#${target.id}-saveDeckBtn`).addEventListener("click", async () => {
+        const deck = {
+          id: crypto.randomUUID(),
+          name: target.querySelector(`#${target.id}-deckName`).value.trim() || `가이드덱 ${appState.decks.length + 1}`,
+          type: target.querySelector(`#${target.id}-deckType`).value,
+          tempo: target.querySelector(`#${target.id}-deckTempo`).value,
+          speedValue: target.querySelector(`#${target.id}-speedValue`).value.trim(),
+          tip: target.querySelector(`#${target.id}-deckTip`).value.trim(),
+          counterDeckId: target.querySelector(`#${target.id}-counterDeck`).value,
+          formation: appState.currentFormation,
+          board: clone(appState.board),
+          createdAt: new Date().toISOString()
         };
+        appState.decks.unshift(deck);
+        await saveAll({ syncFirebase: true });
+        buildDeckForm(els.mobileDeckForm);
+        buildDeckForm(els.desktopDeckForm);
+      });
+    }
 
-        window.openSkillModal = () => {
-            if(currentDeck.heroes.length === 0) return alert("영웅을 먼저 배치하세요.");
-            const grid = document.getElementById('skill-grid');
-            grid.innerHTML = '';
-            document.getElementById('skillModal').style.display = 'block';
+    function renderDeckFilters() {
+      const filters = ["전체", "공격덱", "방어덱", "카운터덱"];
+      els.deckFilters.innerHTML = "";
+      filters.forEach((filter) => {
+        const btn = document.createElement("button");
+        btn.className = `tag ${filter === "공격덱" ? "red" : filter === "방어덱" ? "yellow" : filter === "카운터덱" ? "green" : ""}`;
+        btn.textContent = filter;
+        if (appState.activeDeckFilter === filter) btn.style.outline = `2px solid var(--accent)`;
+        btn.addEventListener("click", () => {
+          appState.activeDeckFilter = filter;
+          renderDeckFilters();
+          renderDeckList();
+        });
+        els.deckFilters.appendChild(btn);
+      });
+    }
 
-            currentDeck.heroes.forEach(h => {
-                [2, 3].forEach(num => {
-                    const sName = `${h.name}-${num}`;
-                    const isSel = currentDeck.skills.includes(sName);
-                    const div = document.createElement('div');
-                    div.className = `p-2 bg-zinc-900 rounded-xl flex items-center gap-2 border-2 ${isSel?'border-red-500':'border-transparent'}`;
-                    div.innerHTML = `
-                        <div class="w-9 h-9 bg-black rounded overflow-hidden flex items-center justify-center shrink-0">
-                            <img src="public/도감/캐릭터 스킬 모음/${sName}.png" onerror="this.parentElement.innerText='${num==2?'위':'아래'}'" class="w-full h-full object-cover">
-                        </div>
-                        <div class="text-[10px] truncate">${h.name} ${num==2?'스킬1':'스킬2'}</div>`;
-                    div.onclick = () => {
-                        if(currentDeck.skills.includes(sName)) currentDeck.skills = currentDeck.skills.filter(s => s !== sName);
-                        else if(currentDeck.skills.length < 3) currentDeck.skills.push(sName);
-                        openSkillModal(); updateSkillSlots();
-                    };
-                    grid.appendChild(div);
-                });
-            });
-        };
-
-        function updateSkillSlots() {
-            for(let i=0; i<3; i++) {
-                const slot = document.getElementById(`skill-${i}`);
-                if(currentDeck.skills[i]) slot.innerHTML = `<img src="public/도감/캐릭터 스킬 모음/${currentDeck.skills[i]}.png" class="w-full h-full object-cover">`;
-                else slot.innerHTML = '';
-            }
+    function renderDeckCardImages(board, container) {
+      const allSlots = [...board.heroes.map((hero) => ({ type: "hero", name: hero.heroName, assetName: hero.assetName })), { type: "pet", name: board.pet.name, assetName: board.pet.assetName }];
+      allSlots.forEach((item) => {
+        const box = document.createElement("div");
+        box.className = "banner-portrait";
+        box.textContent = item.name || (item.type === "pet" ? "펫" : "미선택");
+        if (item.name) {
+          resolveAsset(item.type === "pet" ? "pet" : "hero", item.name, item.assetName).then((url) => {
+            if (!url) return;
+            box.innerHTML = `<img src="${url}" alt="${item.name}" />`;
+          });
         }
+        container.appendChild(box);
+      });
+    }
 
-        // --- 덱 저장 및 리스트 렌더링 ---
-        window.saveDeck = async () => {
-            const title = document.getElementById('deck-title').value;
-            if(!title || currentDeck.heroes.length < 3) return alert("덱 이름과 3인 배치는 필수입니다.");
-            const data = { ...currentDeck, title, type: document.getElementById('deck-type').value, speed: document.getElementById('speed-val').value, tip: document.getElementById('deck-tip').value, counterId: document.getElementById('counter-link').value, date: Date.now() };
-            await push(ref(db, 'decks'), data);
-            alert("가이드 저장 완료!");
-            location.reload();
-        };
+    function renderDeckList() {
+      els.deckList.innerHTML = "";
+      const list = appState.decks.filter((deck) => appState.activeDeckFilter === "전체" || deck.type === appState.activeDeckFilter);
+      if (!list.length) {
+        els.deckList.innerHTML = `<div class="empty-state">저장된 가이드덱이 없습니다. 현재 보드를 먼저 저장해 주세요.</div>`;
+        return;
+      }
+      list.forEach((deck) => {
+        const card = document.createElement("article");
+        card.className = "deck-card";
+        const colorClass = deck.type === "공격덱" ? "red" : deck.type === "방어덱" ? "yellow" : "green";
+        const counterName = appState.decks.find((item) => item.id === deck.counterDeckId)?.name || "없음";
+        card.innerHTML = `
+          <div class="deck-card-header">
+            <div>
+              <h4>${deck.name}</h4>
+              <div class="deck-meta">${deck.tempo}${deck.speedValue ? ` · 속공 ${deck.speedValue}` : ""}<br />진형: ${formationMeta.find((item) => item.key === deck.formation)?.label || deck.formation}<br />카운터덱: ${counterName}</div>
+            </div>
+            <div class="tag ${colorClass}">${deck.type}</div>
+          </div>
+          <div class="banner-strip"></div>
+          <div class="deck-meta">${deck.tip || "공략팁이 없습니다."}</div>
+          <div class="deck-actions">
+            <button class="command-btn active">상세설정</button>
+            <button class="ghost-btn">현재 보드로 불러오기</button>
+          </div>
+        `;
+        renderDeckCardImages(deck.board, card.querySelector(".banner-strip"));
+        card.querySelector(".command-btn").addEventListener("click", () => openDeckPreview(deck.id));
+        card.querySelector(".ghost-btn").addEventListener("click", async () => {
+          appState.board = clone(deck.board);
+          appState.currentFormation = deck.formation;
+          await saveAll();
+        });
+        els.deckList.appendChild(card);
+      });
+    }
 
-        window.renderDeckList = (filter) => {
-            onValue(ref(db, 'decks'), (snap) => {
-                const container = document.getElementById('deck-list');
-                const counterSel = document.getElementById('counter-link');
-                container.innerHTML = '';
-                if(!snap.exists()) return;
-                allDecks = snap.val();
+    function toggleDrawer(force) {
+      els.menuDrawer.classList.toggle("open", force ?? !els.menuDrawer.classList.contains("open"));
+    }
 
-                Object.entries(allDecks).reverse().forEach(([id, d]) => {
-                    // 카운터 선택지용
-                    const opt = document.createElement('option'); opt.value = id; opt.text = d.title; counterSel.appendChild(opt);
+    function openModal(id) { document.getElementById(id).classList.add("open"); }
+    function closeModal(id) { document.getElementById(id).classList.remove("open"); }
 
-                    if(filter !== '전체' && d.type !== filter) return;
+    function toggleFavorite(type, name) {
+      const bucket = getFavoritesBucket(type);
+      const idx = bucket.indexOf(name);
+      if (idx >= 0) bucket.splice(idx, 1);
+      else bucket.push(name);
+      saveAll();
+    }
 
-                    const color = d.type === '공격덱' ? 'red-500' : (d.type === '방어덱' ? 'yellow-500' : 'green-500');
-                    const banner = document.createElement('div');
-                    banner.className = `deck-banner p-4 rounded-2xl border-l-4 border-${color} flex justify-between items-center shadow-lg`;
-                    banner.innerHTML = `
-                        <div class="flex items-center gap-3">
-                            <div class="flex -space-x-3">
-                                ${d.heroes.map(h => `<img src="public/도감/캐릭터 아이콘 모음/${h.name}.png" class="w-10 h-10 rounded-full border-2 border-zinc-900">`).join('')}
-                            </div>
-                            <div>
-                                <div class="font-bold text-sm">${d.title}</div>
-                                <div class="text-[9px] opacity-40">${d.type} | 속공 ${d.speed || 0}</div>
-                            </div>
-                        </div>
-                        <span class="material-icons text-zinc-700">chevron_right</span>
-                    `;
-                    banner.onclick = () => viewDeck(id);
-                    container.appendChild(banner);
-                });
-            });
-        };
+    function getSelectorData(context) {
+      switch (context.type) {
+        case "hero": return getHeroCatalog();
+        case "pet": return getPetCatalog();
+        case "equipment": return getEquipmentCatalog();
+        case "accessory": return getAccessoryCatalog();
+        case "skill": return getSkillCatalog(context.heroName, context.currentSkills);
+        default: return [];
+      }
+    }
 
-        window.viewDeck = (id) => {
-            const d = allDecks[id];
-            if(!confirm(`'${d.title}' 가이드를 확인하시겠습니까?`)) return;
+    function openSelectionModal(context) {
+      selectorContext = context;
+      els.selectionModalTitle.textContent = context.title || "선택";
+      els.selectionModalHint.textContent = context.type === "skill" ? "선택 즉시 3칸 스킬 슬롯이 갱신됩니다." : "검색, 필터, 즐겨찾기로 빠르게 찾을 수 있습니다.";
+      els.selectorSearch.value = "";
+      els.selectorFavoriteFilter.value = "all";
+      const data = getSelectorData(selectorContext);
+      const categories = ["전체", ...new Set(data.map((item) => item.category || "기타"))];
+      els.selectorCategory.innerHTML = categories.map((category) => `<option value="${category}">${category}</option>`).join("");
+      renderSelectionGrid();
+      openModal("selectionModal");
+    }
 
-            document.getElementById('view-title').innerText = d.title;
-            document.getElementById('view-meta').innerText = `${d.type} | 속공 수치: ${d.speed || 0}`;
-            document.getElementById('view-tip').innerText = d.tip || "작성된 공략 팁이 없습니다.";
-            
-            const hDiv = document.getElementById('view-heroes');
-            hDiv.innerHTML = d.heroes.map(h => `<div class="text-center"><img src="public/도감/캐릭터 아이콘 모음/${h.name}.png" class="w-12 h-12 rounded-lg border border-white/10 mb-1"><div class="text-[8px]">${h.name}</div></div>`).join('');
-            
-            const sDiv = document.getElementById('view-skills');
-            sDiv.innerHTML = d.skills.map(s => `<img src="public/도감/캐릭터 스킬 모음/${s}.png" class="w-10 h-10 rounded-lg border border-white/20">`).join('');
-            
-            const cDiv = document.getElementById('view-counter');
-            if(d.counterId && allDecks[d.counterId]) {
-                cDiv.innerHTML = `<div class="text-[10px] text-red-500 font-bold mb-1 uppercase tracking-tighter">카운터 가이드</div><div class="font-bold text-sm">${allDecks[d.counterId].title}</div>`;
-            } else { cDiv.innerHTML = `<div class="text-xs text-zinc-600">등록된 카운터덱 정보 없음</div>`; }
+    function selectItem(context, item) {
+      if (context.type === "hero") {
+        const target = appState.board.heroes.find((hero) => hero.id === context.heroId);
+        target.heroName = item.name;
+        target.category = item.category;
+        target.assetName = item.assetName || item.name;
+        target.skills = item.skills?.length ? item.skills : defaultSkillsForHero(item.name);
+        target.skillAssetNames = [...target.skills];
+      }
+      if (context.type === "pet") appState.board.pet = { name: item.name, assetName: item.assetName || item.name, category: item.category || "펫" };
+      if (context.type === "skill") {
+        const target = appState.board.heroes.find((hero) => hero.id === context.heroId);
+        target.skills = [target.heroName || "영웅", `${item.name}-2`, `${item.name}-3`];
+        target.skillAssetNames = [...target.skills];
+      }
+      if (context.type === "equipment" && detailContext) detailContext.hero.equipment[context.slotIndex] = item.name;
+      if (context.type === "accessory" && detailContext) detailContext.hero.accessory = item.name;
+      saveAll();
+      if (context.type === "equipment" || context.type === "accessory") renderDetailModalContents();
+      else closeModal("selectionModal");
+    }
 
-            document.getElementById('viewModal').style.display = 'block';
-        };
+    function renderSelectionGrid() {
+      if (!selectorContext) return;
+      const search = els.selectorSearch.value.trim();
+      const selectedCategory = els.selectorCategory.value || "전체";
+      const favoriteMode = els.selectorFavoriteFilter.value;
+      let data = getSelectorData(selectorContext);
+      if (selectedCategory !== "전체") data = data.filter((item) => (item.category || "기타") === selectedCategory);
+      if (search) data = data.filter((item) => item.name.includes(search));
+      if (favoriteMode === "favorites") data = data.filter((item) => getFavoritesBucket(selectorContext.type).includes(item.name));
 
-        window.setForm = (f, btn) => {
-            document.body.className = `f-${f}`;
-            document.querySelectorAll('.form-btn').forEach(b => b.classList.remove('active-form'));
-            btn.classList.add('active-form'); currentDeck.formation = f;
-        };
-        window.closeModal = (id) => document.getElementById(id).style.display = 'none';
-    </script>
+      els.selectorGrid.innerHTML = "";
+      if (!data.length) {
+        els.selectorGrid.innerHTML = `<div class="empty-state">검색 결과가 없습니다.</div>`;
+        return;
+      }
+
+      data.forEach((item) => {
+        const card = document.createElement("div");
+        card.className = "select-card";
+        const isFav = getFavoritesBucket(selectorContext.type).includes(item.name);
+        card.innerHTML = `
+          <button class="portrait" type="button">${item.name}</button>
+          <div class="select-card-name">${item.name}</div>
+          <button class="favorite-btn ${isFav ? "active" : ""}" type="button">${isFav ? "즐겨찾기 해제" : "즐겨찾기 추가"}</button>
+          <button class="command-btn active" type="button">선택</button>
+        `;
+        const portrait = card.querySelector(".portrait");
+        const assetType = selectorContext.type === "accessory" ? "accessory" : selectorContext.type === "equipment" ? "equipment" : selectorContext.type;
+        resolveAsset(assetType, item.name, item.assetName).then((url) => {
+          if (!url) return;
+          portrait.innerHTML = `<img src="${url}" alt="${item.name}" />`;
+        });
+        card.querySelector(".favorite-btn").addEventListener("click", () => {
+          toggleFavorite(selectorContext.type, item.name);
+          renderSelectionGrid();
+        });
+        card.querySelector(".command-btn").addEventListener("click", () => selectItem(selectorContext, item));
+        els.selectorGrid.appendChild(card);
+      });
+    }
+
+    function openDetailModal(heroId) {
+      const hero = appState.board.heroes.find((slot) => slot.id === heroId);
+      detailContext = { heroId, hero };
+      els.detailModalTitle.textContent = `${hero.heroName || `영웅 슬롯 ${heroId}`} 상세 설정`;
+      renderDetailModalContents();
+      openModal("detailModal");
+    }
+
+    function renderDetailModalContents() {
+      if (!detailContext) return;
+      const { hero } = detailContext;
+      els.statsGrid.innerHTML = "";
+      statFields.forEach((field) => {
+        const wrap = document.createElement("div");
+        wrap.className = "field";
+        wrap.innerHTML = `<label>${field}</label><input type="number" step="0.1" value="${hero.stats[field] || ""}" data-stat-field="${field}" placeholder="수치 입력" />`;
+        els.statsGrid.appendChild(wrap);
+      });
+
+      els.equipGrid.innerHTML = "";
+      hero.equipment.forEach((item, index) => {
+        const button = document.createElement("button");
+        button.className = "detail-slot";
+        button.innerHTML = `<strong>장비 ${index + 1}</strong><span>${item || "선택"}</span>`;
+        if (item) {
+          resolveAsset("equipment", item, item).then((url) => {
+            if (!url) return;
+            button.innerHTML = `<strong>장비 ${index + 1}</strong><img src="${url}" alt="${item}" /><span>${item}</span>`;
+          });
+        }
+        button.addEventListener("click", () => openSelectionModal({ type: "equipment", title: `장비 ${index + 1} 선택`, slotIndex: index }));
+        els.equipGrid.appendChild(button);
+      });
+
+      const accessory = document.createElement("button");
+      accessory.className = "detail-slot";
+      accessory.innerHTML = `<strong>장신구</strong><span>${hero.accessory || "선택"}</span>`;
+      if (hero.accessory) {
+        resolveAsset("accessory", hero.accessory, hero.accessory).then((url) => {
+          if (!url) return;
+          accessory.innerHTML = `<strong>장신구</strong><img src="${url}" alt="${hero.accessory}" /><span>${hero.accessory}</span>`;
+        });
+      }
+      accessory.addEventListener("click", () => openSelectionModal({ type: "accessory", title: "장신구 선택" }));
+      els.accessorySlot.innerHTML = "";
+      els.accessorySlot.appendChild(accessory);
+    }
+
+    function openDeckPreview(deckId) {
+      const deck = appState.decks.find((item) => item.id === deckId);
+      const counter = appState.decks.find((item) => item.id === deck?.counterDeckId);
+      els.deckPreviewTitle.textContent = deck ? `${deck.name} 전체 보기` : "덱 전체 보기";
+      els.deckPreviewCompare.innerHTML = "";
+      [deck, counter].forEach((entry, index) => {
+        const boardWrap = document.createElement("section");
+        boardWrap.className = "preview-board";
+        if (!entry) {
+          boardWrap.innerHTML = `<div class="empty-state">${index === 0 ? "덱 정보가 없습니다." : "연결된 카운터덱이 없습니다."}</div>`;
+          els.deckPreviewCompare.appendChild(boardWrap);
+          return;
+        }
+        boardWrap.innerHTML = `
+          <div>
+            <h3 style="margin:0 0 6px;">${index === 0 ? entry.name : `${entry.name} (카운터덱)`}</h3>
+            <div class="deck-meta">${entry.type} · ${entry.tempo}${entry.speedValue ? ` · 속공 ${entry.speedValue}` : ""}<br />${formationMeta.find((item) => item.key === entry.formation)?.label || entry.formation}</div>
+          </div>
+          <div class="preview-slots"></div>
+          <div class="deck-meta">${entry.tip || "공략팁이 없습니다."}</div>
+        `;
+        renderDeckCardImages(entry.board, boardWrap.querySelector(".preview-slots"));
+        els.deckPreviewCompare.appendChild(boardWrap);
+      });
+      openModal("deckPreviewModal");
+    }
+
+    function renderAdminDefaults() {
+      els.adminCategory.value = "스페셜";
+      els.adminName.value = "";
+      els.adminAssetName.value = "";
+      els.adminSkills.value = "";
+    }
+
+    async function handleAdminSave() {
+      const type = els.adminType.value;
+      const category = els.adminCategory.value.trim() || "기타";
+      const name = els.adminName.value.trim();
+      const assetName = els.adminAssetName.value.trim() || name;
+      const skills = els.adminSkills.value.split(",").map((item) => item.trim()).filter(Boolean);
+      if (!name) return;
+
+      if (type === "hero") {
+        const existing = appState.customData.heroes.find((item) => item.name === name);
+        const payload = { name, category, assetName, skills: skills.length ? skills : defaultSkillsForHero(name) };
+        if (existing) Object.assign(existing, payload);
+        else appState.customData.heroes.push(payload);
+      }
+      if (type === "pet") {
+        const existing = appState.customData.pets.find((item) => item.name === name);
+        const payload = { name, category: "펫", assetName };
+        if (existing) Object.assign(existing, payload);
+        else appState.customData.pets.push(payload);
+      }
+      if (type === "equipment") {
+        const existing = appState.customData.equipment.find((item) => item.name === name);
+        const payload = { name, category: "장비", assetName };
+        if (existing) Object.assign(existing, payload);
+        else appState.customData.equipment.push(payload);
+      }
+      if (type === "accessory") {
+        const existing = appState.customData.accessory.find((item) => item.name === name);
+        const payload = { name, category: "장신구", assetName };
+        if (existing) Object.assign(existing, payload);
+        else appState.customData.accessory.push(payload);
+      }
+      await saveAll({ syncFirebase: true });
+      renderAdminDefaults();
+      closeModal("adminModal");
+    }
+
+    function renderAll() {
+      setTheme(appState.theme);
+      renderFormationButtons();
+      renderSlots();
+      renderDeckFilters();
+      renderDeckList();
+    }
+
+    function bindEvents() {
+      document.getElementById("menuToggleBtn").addEventListener("click", () => toggleDrawer());
+      document.getElementById("themeToggleBtn").addEventListener("click", async () => {
+        setTheme(appState.theme === "dark" ? "light" : "dark");
+        await saveAll();
+      });
+      document.getElementById("firebaseSaveBtn").addEventListener("click", async () => {
+        await saveAll({ syncFirebase: true });
+        toggleDrawer(false);
+      });
+      document.getElementById("adminOpenBtn").addEventListener("click", () => {
+        toggleDrawer(false);
+        renderAdminDefaults();
+        openModal("adminModal");
+      });
+      document.getElementById("githubLinkBtn").addEventListener("click", () => {
+        window.open(repoConfig.repoUrl, "_blank", "noopener,noreferrer");
+      });
+      document.querySelectorAll("[data-close-modal]").forEach((button) => {
+        button.addEventListener("click", () => closeModal(button.dataset.closeModal));
+      });
+      [els.menuDrawer, els.selectionModal, els.detailModal, els.adminModal, els.deckPreviewModal].forEach((backdrop) => {
+        backdrop.addEventListener("click", (event) => {
+          if (event.target === backdrop) backdrop.classList.remove("open");
+        });
+      });
+      els.selectorSearch.addEventListener("input", renderSelectionGrid);
+      els.selectorCategory.addEventListener("change", renderSelectionGrid);
+      els.selectorFavoriteFilter.addEventListener("change", renderSelectionGrid);
+      document.getElementById("detailSaveBtn").addEventListener("click", async () => {
+        document.querySelectorAll("[data-stat-field]").forEach((input) => {
+          detailContext.hero.stats[input.dataset.statField] = input.value;
+        });
+        await saveAll({ syncFirebase: true });
+        closeModal("detailModal");
+      });
+      document.getElementById("adminSaveBtn").addEventListener("click", handleAdminSave);
+      window.addEventListener("resize", renderSlots);
+    }
+
+    async function bootstrap() {
+      await initializeFirebase();
+      await loadState();
+      buildDeckForm(els.mobileDeckForm);
+      buildDeckForm(els.desktopDeckForm);
+      bindEvents();
+      renderAll();
+    }
+
+    bootstrap();
+  </script>
 </body>
 </html>
