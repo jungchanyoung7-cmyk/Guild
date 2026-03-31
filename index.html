@@ -152,17 +152,17 @@
     }
     .skill-tray-header h3 { margin: 0; font-size: 0.98rem; }
     .skill-selected-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-    .skill-popup-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .skill-popup-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
     .skill-hero-group {
-      display: grid; gap: 10px; padding: 10px; border-radius: 18px;
+      display: grid; gap: 6px; padding: 8px; border-radius: 18px;
       border: 1px solid var(--line); background: rgba(255,255,255,0.08);
     }
     .skill-hero-name {
-      text-align: center; font-weight: 700; font-size: 0.86rem;
+      text-align: center; font-weight: 700; font-size: 0.74rem;
     }
     .skill-candidate {
-      min-height: 78px; border-radius: 14px; border: 1px solid var(--line); background: var(--skill-bg);
-      padding: 8px; display: grid; gap: 6px; justify-items: center; text-align: center;
+      min-height: 62px; border-radius: 14px; border: 1px solid var(--line); background: var(--skill-bg);
+      padding: 6px; display: grid; gap: 4px; justify-items: center; text-align: center;
     }
     .skill-candidate.active {
       outline: 2px solid var(--accent);
@@ -340,7 +340,10 @@
         width: 64px;
       }
       .skill-selected-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .skill-popup-grid { grid-template-columns: 1fr; }
+      .skill-popup-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+      .skill-hero-group { gap: 5px; padding: 6px; }
+      .skill-hero-name { font-size: 0.66rem; }
+      .skill-candidate { min-height: 56px; padding: 5px; }
       .head { align-items: start; }
     }
   </style>
@@ -626,11 +629,11 @@
     const formationLayouts = {
       mobile: {
         basic: [
-          { left: 30, top: 34 },
-          { left: 30, top: 14 },
-          { left: 4, top: 52 },
-          { left: 4, top: 34 },
-          { left: 4, top: 16 }
+          { left: 30, top: 44 },
+          { left: 30, top: 20 },
+          { left: 6, top: 60 },
+          { left: 6, top: 40 },
+          { left: 6, top: 20 }
         ],
         balance: [
           { left: 30, top: 50 },
@@ -640,28 +643,28 @@
           { left: 4, top: 24 }
         ],
         attack: [
-          { left: 30, top: 30 },
-          { left: 4, top: 66 },
-          { left: 4, top: 50 },
-          { left: 4, top: 34 },
-          { left: 4, top: 18 }
+          { left: 30, top: 42 },
+          { left: 6, top: 68 },
+          { left: 6, top: 50 },
+          { left: 6, top: 32 },
+          { left: 6, top: 14 }
         ],
         guard: [
-          { left: 30, top: 66 },
+          { left: 30, top: 68 },
           { left: 30, top: 50 },
-          { left: 30, top: 34 },
-          { left: 30, top: 18 },
-          { left: 4, top: 42 }
+          { left: 30, top: 32 },
+          { left: 30, top: 14 },
+          { left: 6, top: 42 }
         ],
         pet: { left: 72, top: 34 }
       },
       desktop: {
         basic: [
-          { left: 32, top: 32 },
-          { left: 32, top: 14 },
-          { left: 6, top: 50 },
-          { left: 6, top: 32 },
-          { left: 6, top: 14 }
+          { left: 32, top: 42 },
+          { left: 32, top: 18 },
+          { left: 8, top: 58 },
+          { left: 8, top: 38 },
+          { left: 8, top: 18 }
         ],
         balance: [
           { left: 32, top: 46 },
@@ -671,18 +674,18 @@
           { left: 6, top: 22 }
         ],
         attack: [
-          { left: 32, top: 28 },
-          { left: 6, top: 60 },
-          { left: 6, top: 46 },
-          { left: 6, top: 32 },
-          { left: 6, top: 18 }
+          { left: 32, top: 40 },
+          { left: 8, top: 66 },
+          { left: 8, top: 48 },
+          { left: 8, top: 30 },
+          { left: 8, top: 12 }
         ],
         guard: [
-          { left: 32, top: 60 },
-          { left: 32, top: 46 },
-          { left: 32, top: 32 },
-          { left: 32, top: 18 },
-          { left: 6, top: 38 }
+          { left: 32, top: 66 },
+          { left: 32, top: 48 },
+          { left: 32, top: 30 },
+          { left: 32, top: 12 },
+          { left: 8, top: 40 }
         ],
         pet: { left: 66, top: 30 }
       }
