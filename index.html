@@ -82,6 +82,7 @@
     .command-btn.active, .save-btn { color: #fff; background: linear-gradient(135deg, var(--accent), #cf6c34); border-color: transparent; }
     .ghost-btn { background: transparent; }
     .page-grid { display: grid; grid-template-columns: minmax(320px, 860px) minmax(280px, 1fr); gap: 22px; align-items: start; }
+    .page-grid.hidden, .sub-page.hidden { display: none; }
     .stack { display: grid; gap: 18px; }
     .panel {
       padding: 18px; border: 1px solid var(--line); border-radius: var(--radius-xl);
@@ -150,17 +151,8 @@
       display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px;
     }
     .skill-tray-header h3 { margin: 0; font-size: 0.98rem; }
-    .skill-selected-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
-    .skill-candidate-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-    .skill-hero-card {
-      padding: 12px; border-radius: 18px; border: 1px solid var(--line);
-      background: rgba(255,255,255,0.1); display: grid; gap: 10px;
-    }
-    .skill-hero-select {
-      min-height: 42px; border-radius: 14px; border: 1px solid var(--line); background: var(--panel-strong);
-      font-weight: 700;
-    }
-    .skill-hero-skills { display: grid; grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .skill-selected-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .skill-popup-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
     .skill-candidate {
       min-height: 78px; border-radius: 14px; border: 1px solid var(--line); background: var(--skill-bg);
       padding: 8px; display: grid; gap: 6px; justify-items: center; text-align: center;
@@ -169,7 +161,6 @@
       outline: 2px solid var(--accent);
       background: linear-gradient(180deg, rgba(240,184,93,0.26), rgba(177,64,27,0.16));
     }
-    .skill-candidate img { width: 100%; height: 40px; object-fit: contain; }
     .hint-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; color: var(--muted); font-size: 0.85rem; }
     .hint-chip { padding: 8px 12px; border-radius: 999px; background: var(--accent-soft); border: 1px solid var(--line); }
     .deck-form { display: grid; gap: 12px; }
@@ -214,6 +205,21 @@
       padding: 16px; border-radius: 24px; background: var(--panel); border: 1px solid var(--line);
       box-shadow: var(--shadow); display: grid; gap: 10px; transform: translateY(-10px); transition: transform .22s ease;
     }
+    .drawer-section {
+      display: grid;
+      gap: 8px;
+      padding-top: 4px;
+    }
+    .drawer-section + .drawer-section {
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      margin-top: 2px;
+    }
+    .drawer-label {
+      font-size: .8rem;
+      color: var(--muted);
+      padding: 0 4px;
+    }
     .drawer.open .drawer-panel { transform: translateY(0); }
     .drawer-item {
       display: flex; justify-content: space-between; gap: 10px; align-items: center;
@@ -256,6 +262,10 @@
     .preview-slots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
     .preview-slots .banner-portrait:nth-child(6) { grid-column: 3; }
     .empty-state { padding: 16px; border: 1px dashed var(--line); border-radius: 18px; color: var(--muted); text-align: center; }
+    .sub-page {
+      display: grid;
+      gap: 18px;
+    }
 
     @media (max-width: 1080px) {
       .page-grid { grid-template-columns: 1fr; }
@@ -281,7 +291,7 @@
       .modal-card { padding: 16px; border-radius: 22px; }
       .banner-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .skill-selected-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .skill-candidate-grid { grid-template-columns: 1fr; }
+      .skill-popup-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -321,7 +331,9 @@
               <span class="status-line" id="skillTrayHint">선택한 영웅 3명의 2스킬씩 총 6개 후보 중 3개를 선택합니다.</span>
             </div>
             <div class="skill-selected-grid" id="selectedSkillSlots"></div>
-            <div class="skill-candidate-grid" id="skillCandidateGrid"></div>
+            <div style="margin-top:12px; display:flex; justify-content:flex-end;">
+              <button class="command-btn active" id="openSkillPickerBtn" type="button">스킬 선택</button>
+            </div>
           </div>
 
           <div class="hint-row">
@@ -357,31 +369,54 @@
         <article class="panel">
           <div class="panel-title">
             <div>
-              <h2>저장된 가이드덱</h2>
-              <span>배너에서 전체 구성과 카운터덱을 함께 비교할 수 있습니다.</span>
+              <h2>가이드덱 보기</h2>
+              <span>삼선 메뉴의 일반 메뉴에서 저장된 가이드덱 리스트를 볼 수 있습니다.</span>
             </div>
           </div>
-          <div class="type-filter" id="deckFilters"></div>
-          <div class="deck-list" id="deckList"></div>
+          <div class="empty-state">`가이드덱 보기`를 눌러 별도 페이지에서 저장 리스트를 확인하세요.</div>
         </article>
       </aside>
     </main>
+
+    <section class="sub-page hidden" id="deckLibraryPage">
+      <article class="panel">
+        <div class="head">
+          <div>
+            <h2>가이드덱 저장 리스트</h2>
+            <span>저장한 덱을 배너 형식으로 보고, 전체 모습과 카운터덱을 비교할 수 있습니다.</span>
+          </div>
+          <button class="ghost-btn" id="backToMainBtn" type="button">메인으로</button>
+        </div>
+        <div class="type-filter" id="deckFilters"></div>
+        <div class="deck-list" id="deckList"></div>
+      </article>
+    </section>
   </div>
 
   <div class="drawer" id="menuDrawer">
     <div class="drawer-panel">
-      <button class="drawer-item" id="themeToggleBtn">
-        <span>화이트모드 / 다크모드</span>
-        <strong id="themeLabel">라이트</strong>
-      </button>
-      <button class="drawer-item" id="adminOpenBtn">
-        <span>관리자 메뉴</span>
-        <strong>추가 / 수정</strong>
-      </button>
-      <button class="drawer-item" id="firebaseSaveBtn">
-        <span>Firebase 수동 저장</span>
-        <strong>동기화</strong>
-      </button>
+      <div class="drawer-section">
+        <div class="drawer-label">일반 메뉴</div>
+        <button class="drawer-item" id="guideDeckPageBtn">
+          <span>가이드덱 보기</span>
+          <strong>리스트</strong>
+        </button>
+        <button class="drawer-item" id="themeToggleBtn">
+          <span>화이트모드 / 다크모드</span>
+          <strong id="themeLabel">라이트</strong>
+        </button>
+        <button class="drawer-item" id="firebaseSaveBtn">
+          <span>Firebase 수동 저장</span>
+          <strong>동기화</strong>
+        </button>
+      </div>
+      <div class="drawer-section">
+        <div class="drawer-label">관리자 메뉴</div>
+        <button class="drawer-item" id="adminOpenBtn">
+          <span>관리자 메뉴</span>
+          <strong>추가 / 수정</strong>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -488,6 +523,19 @@
         <button class="menu-btn" data-close-modal="deckPreviewModal">✕</button>
       </div>
       <div class="deck-compare" id="deckPreviewCompare"></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="skillPickerModal">
+    <div class="modal-card compact">
+      <div class="modal-header">
+        <div>
+          <h3>스킬 선택 팝업</h3>
+          <div class="status-line">선택 영웅 3명의 위/아래 스킬 6개 중 3개를 고릅니다.</div>
+        </div>
+        <button class="menu-btn" data-close-modal="skillPickerModal">✕</button>
+      </div>
+      <div class="skill-popup-grid" id="skillPickerGrid"></div>
     </div>
   </div>
   <script type="module">
@@ -665,6 +713,8 @@
       formationButtons: document.getElementById("formationButtons"),
       slotLayer: document.getElementById("slotLayer"),
       saveStateLabel: document.getElementById("saveStateLabel"),
+      pageGrid: document.querySelector(".page-grid"),
+      deckLibraryPage: document.getElementById("deckLibraryPage"),
       deckList: document.getElementById("deckList"),
       deckFilters: document.getElementById("deckFilters"),
       menuDrawer: document.getElementById("menuDrawer"),
@@ -675,6 +725,7 @@
       detailModal: document.getElementById("detailModal"),
       adminModal: document.getElementById("adminModal"),
       deckPreviewModal: document.getElementById("deckPreviewModal"),
+      skillPickerModal: document.getElementById("skillPickerModal"),
       selectorSearch: document.getElementById("selectorSearch"),
       selectorCategory: document.getElementById("selectorCategory"),
       selectorFavoriteFilter: document.getElementById("selectorFavoriteFilter"),
@@ -688,7 +739,7 @@
       deckPreviewCompare: document.getElementById("deckPreviewCompare"),
       deckPreviewTitle: document.getElementById("deckPreviewTitle"),
       selectedSkillSlots: document.getElementById("selectedSkillSlots"),
-      skillCandidateGrid: document.getElementById("skillCandidateGrid"),
+      skillPickerGrid: document.getElementById("skillPickerGrid"),
       skillTrayTitle: document.getElementById("skillTrayTitle"),
       skillTrayHint: document.getElementById("skillTrayHint"),
       adminType: document.getElementById("adminType"),
@@ -1008,8 +1059,11 @@
         }
         els.selectedSkillSlots.appendChild(slot);
       }
+    }
 
-      els.skillCandidateGrid.innerHTML = "";
+    function renderSkillPickerModal() {
+      syncSkillSelections();
+      els.skillPickerGrid.innerHTML = "";
       const candidates = [];
       [0, 1].forEach((skillIndex) => {
         appState.skillHeroIds.forEach((heroId, columnIndex) => {
@@ -1026,18 +1080,8 @@
           <strong>${hero?.heroName || `영웅 슬롯 ${columnIndex + 1}`}</strong>
           <span>${skillIndex === 0 ? `${candidate.heroName}(위)` : `${candidate.heroName}(아래)`}</span>
         `;
-        if (candidate.assetName) {
-          resolveAsset("skill", candidate.assetName, candidate.assetName).then((url) => {
-            if (!url) return;
-            button.innerHTML = `
-              <strong>${hero?.heroName || `영웅 슬롯 ${columnIndex + 1}`}</strong>
-              <img src="${url}" alt="${candidate.label}" />
-              <span>${skillIndex === 0 ? `${candidate.heroName}(위)` : `${candidate.heroName}(아래)`}</span>
-            `;
-          });
-        }
         button.addEventListener("click", () => toggleSelectedSkill(candidate));
-        els.skillCandidateGrid.appendChild(button);
+        els.skillPickerGrid.appendChild(button);
       });
     }
 
@@ -1182,6 +1226,12 @@
 
     function toggleDrawer(force) {
       els.menuDrawer.classList.toggle("open", force ?? !els.menuDrawer.classList.contains("open"));
+    }
+
+    function openPage(page) {
+      const showDeck = page === "deckLibrary";
+      els.pageGrid.classList.toggle("hidden", showDeck);
+      els.deckLibraryPage.classList.toggle("hidden", !showDeck);
     }
 
     function openModal(id) { document.getElementById(id).classList.add("open"); }
@@ -1438,12 +1488,18 @@
       renderFormationButtons();
       renderSlots();
       renderSkillSelectionArea();
+      renderSkillPickerModal();
       renderDeckFilters();
       renderDeckList();
     }
 
     function bindEvents() {
       document.getElementById("menuToggleBtn").addEventListener("click", () => toggleDrawer());
+      document.getElementById("guideDeckPageBtn").addEventListener("click", () => {
+        toggleDrawer(false);
+        openPage("deckLibrary");
+      });
+      document.getElementById("backToMainBtn").addEventListener("click", () => openPage("main"));
       document.getElementById("themeToggleBtn").addEventListener("click", async () => {
         setTheme(appState.theme === "dark" ? "light" : "dark");
         await saveAll();
@@ -1457,13 +1513,17 @@
         renderAdminDefaults();
         openModal("adminModal");
       });
+      document.getElementById("openSkillPickerBtn").addEventListener("click", () => {
+        renderSkillPickerModal();
+        openModal("skillPickerModal");
+      });
       document.getElementById("githubLinkBtn").addEventListener("click", () => {
         window.open(repoConfig.repoUrl, "_blank", "noopener,noreferrer");
       });
       document.querySelectorAll("[data-close-modal]").forEach((button) => {
         button.addEventListener("click", () => closeModal(button.dataset.closeModal));
       });
-      [els.menuDrawer, els.selectionModal, els.detailModal, els.adminModal, els.deckPreviewModal].forEach((backdrop) => {
+      [els.menuDrawer, els.selectionModal, els.detailModal, els.adminModal, els.deckPreviewModal, els.skillPickerModal].forEach((backdrop) => {
         backdrop.addEventListener("click", (event) => {
           if (event.target === backdrop) {
             if (backdrop.id) closeModal(backdrop.id);
@@ -1500,6 +1560,7 @@
       buildDeckForm(els.mobileDeckForm);
       buildDeckForm(els.desktopDeckForm);
       bindEvents();
+      openPage("main");
       renderAll();
     }
 
