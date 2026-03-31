@@ -28,6 +28,9 @@
       --radius-md: 16px;
       --radius-sm: 12px;
       --header-h: 76px;
+      --slot-zoom: 1;
+      --board-zoom: 1;
+      --banner-zoom: 1;
     }
 
     body.dark {
@@ -93,22 +96,27 @@
     .panel-title span { color: var(--muted); font-size: 0.88rem; }
     .formation-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
     .arena {
-      position: relative; min-height: 460px; border-radius: 30px; overflow: hidden;
+      position: relative; min-height: 390px; border-radius: 26px; overflow: hidden;
       border: 1px solid var(--line);
-      background:
-        radial-gradient(circle at 50% 15%, rgba(255,255,255,0.16), transparent 34%),
-        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.06)),
-        linear-gradient(180deg, rgba(115, 78, 44, 0.16) 0%, rgba(40, 27, 18, 0.14) 100%);
+      background: rgba(255, 255, 255, 0.06);
+      transform: scale(var(--board-zoom));
+      transform-origin: top center;
+      transition: transform .25s ease;
     }
     .arena::before, .arena::after {
-      content: ""; position: absolute; inset: 22px; border-radius: 24px;
+      content: ""; position: absolute; inset: 14px; border-radius: 18px;
       border: 1px dashed rgba(255,255,255,0.16); pointer-events: none;
     }
     .arena::after {
-      inset: auto 18px 18px; height: 120px; border: 0;
-      background: linear-gradient(180deg, transparent, rgba(0,0,0,0.14));
+      inset: auto 12px 12px; height: 72px; border: 0;
+      background: transparent;
     }
-    .slot-layer { position: absolute; inset: 0; }
+    .slot-layer {
+      position: absolute; inset: 0;
+      transform: scale(var(--slot-zoom));
+      transform-origin: top left;
+      transition: transform .25s ease;
+    }
     .hero-slot, .pet-slot {
       position: absolute; width: 68px;
       padding: 4px; border-radius: 14px; background: var(--slot-bg); border: 1px solid var(--line);
@@ -147,6 +155,17 @@
     .skill-tray {
       margin-top: 16px; padding: 14px; border-radius: 24px; border: 1px solid var(--line);
       background: rgba(255,255,255,0.08);
+    }
+    .arena-zoom-btn {
+      position: absolute; right: 12px; top: 12px; z-index: 3;
+      width: 42px; min-height: 42px; border-radius: 999px;
+      border: 1px solid var(--line); background: var(--panel);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+    .arena-zoom-btn.active {
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent), #cf6c34);
+      border-color: transparent;
     }
     .skill-tray-header {
       display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px;
@@ -195,26 +214,40 @@
     .deck-meta { color: var(--muted); font-size: 0.84rem; line-height: 1.45; }
     .banner-groups { display: grid; gap: 10px; }
     .banner-group { display: grid; gap: 8px; }
-    .banner-group-title { font-size: 0.78rem; color: var(--muted); font-weight: 700; }
+    .banner-group-title { font-size: calc(0.78rem * var(--banner-zoom)); color: var(--muted); font-weight: 700; }
     .banner-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
     .banner-strip.hero-pet-strip {
       display: flex; flex-wrap: nowrap; gap: 6px; overflow-x: auto;
     }
     .banner-portrait {
       border-radius: 14px; overflow: hidden; border: 1px solid var(--line);
-      background: var(--slot-bg); display: grid; gap: 4px; justify-items: center; font-size: 0.62rem; text-align: center; padding: 5px;
+      background: var(--slot-bg); display: grid; gap: calc(4px * var(--banner-zoom)); justify-items: center;
+      font-size: calc(0.62rem * var(--banner-zoom)); text-align: center; padding: calc(5px * var(--banner-zoom));
     }
     .hero-pet-strip .banner-portrait {
-      flex: 0 0 78px;
-      width: 78px;
-      padding: 4px;
-      gap: 3px;
+      flex: 0 0 calc(78px * var(--banner-zoom));
+      width: calc(78px * var(--banner-zoom));
+      padding: calc(4px * var(--banner-zoom));
+      gap: calc(3px * var(--banner-zoom));
     }
     .banner-thumb {
       width: 100%; aspect-ratio: 1 / 1; border-radius: 12px; overflow: hidden;
-      border: 1px solid var(--line); display: grid; place-items: center; padding: 2px;
+      border: 1px solid var(--line); display: grid; place-items: center; padding: calc(2px * var(--banner-zoom));
       background: rgba(255,255,255,0.2);
     }
+    body.zoomed .banner-group-title { font-size: 0.92rem; }
+    body.zoomed .banner-portrait {
+      font-size: 0.78rem;
+      padding: 7px;
+      gap: 6px;
+    }
+    body.zoomed .hero-pet-strip .banner-portrait {
+      flex-basis: 92px;
+      width: 92px;
+      padding: 6px;
+      gap: 5px;
+    }
+    body.zoomed .banner-thumb { padding: 3px; }
     .banner-portrait img { width: 100%; height: 100%; object-fit: cover; }
     .banner-name { line-height: 1.25; word-break: break-word; }
     .deck-actions { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -269,6 +302,11 @@
       min-height: 48px; padding: 12px 14px; border-radius: 16px;
       background: var(--panel-strong); border: 1px solid var(--line);
     }
+    .drawer-item.active {
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent), #cf6c34);
+      border-color: transparent;
+    }
     .modal-card {
       position: absolute; inset: 50% auto auto 50%; width: min(900px, calc(100vw - 24px));
       max-height: min(86vh, 980px); overflow: auto; transform: translate(-50%, -46%);
@@ -320,7 +358,7 @@
 
     @media (min-width: 1081px) {
       .panel.mobile-only { display: none; }
-      .arena { min-height: 480px; }
+      .arena { min-height: 410px; }
       .hero-slot { width: 64px; padding: 4px; }
       .pet-slot { width: 58px; padding: 4px; }
     }
@@ -330,7 +368,7 @@
       .topbar { padding: 10px 12px; border-radius: 20px; }
       .header-actions .pill-btn { display: none; }
       .formation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .arena { min-height: 420px; }
+      .arena { min-height: 350px; }
       .hero-slot { width: 52px; padding: 3px; }
       .pet-slot { width: 48px; padding: 3px; }
       .portrait { font-size: 0.4rem; line-height: 1; }
@@ -339,8 +377,8 @@
       .modal-card { padding: 16px; border-radius: 22px; }
       .banner-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .hero-pet-strip .banner-portrait {
-        flex-basis: 64px;
-        width: 64px;
+        flex-basis: calc(64px * var(--banner-zoom));
+        width: calc(64px * var(--banner-zoom));
       }
       .skill-selected-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .skill-popup-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
@@ -377,6 +415,7 @@
           <div class="formation-grid" id="formationButtons"></div>
 
           <div class="arena" id="arena">
+            <button class="arena-zoom-btn" id="arenaZoomBtn" type="button" aria-label="돋보기 모드">🔍</button>
             <div class="slot-layer" id="slotLayer"></div>
           </div>
 
@@ -659,7 +698,7 @@
           { left: 30, top: 14 },
           { left: 6, top: 42 }
         ],
-        pet: { left: 72, top: 34 }
+        pet: { left: 64, top: 34 }
       },
       desktop: {
         basic: [
@@ -690,7 +729,7 @@
           { left: 32, top: 12 },
           { left: 8, top: 40 }
         ],
-        pet: { left: 66, top: 30 }
+        pet: { left: 58, top: 30 }
       }
     };
 
@@ -734,6 +773,7 @@
     const defaultState = {
       version: 1,
       theme: "light",
+      zoomMode: false,
       currentFormation: "basic",
       activeDeckFilter: "전체",
       editingDeckId: "",
@@ -850,6 +890,16 @@
       els.body.classList.toggle("dark", theme === "dark");
       els.themeLabel.textContent = theme === "dark" ? "다크" : "라이트";
       localStorage.setItem("guild-guide-theme", theme);
+    }
+
+    function setZoomMode(enabled) {
+      appState.zoomMode = enabled;
+      document.documentElement.style.setProperty("--slot-zoom", enabled ? "1.28" : "1");
+      document.documentElement.style.setProperty("--board-zoom", enabled ? "1.12" : "1");
+      document.documentElement.style.setProperty("--banner-zoom", enabled ? "1.18" : "1");
+      els.body.classList.toggle("zoomed", enabled);
+      const zoomBtn = document.getElementById("arenaZoomBtn");
+      if (zoomBtn) zoomBtn.classList.toggle("active", enabled);
     }
 
     function persistLocalState() {
@@ -1775,6 +1825,7 @@
 
     function renderAll() {
       setTheme(appState.theme);
+      setZoomMode(Boolean(appState.zoomMode));
       renderFormationButtons();
       renderSlots();
       renderSkillSelectionArea();
@@ -1792,6 +1843,10 @@
       document.getElementById("backToMainBtn").addEventListener("click", () => openPage("main"));
       document.getElementById("themeToggleBtn").addEventListener("click", async () => {
         setTheme(appState.theme === "dark" ? "light" : "dark");
+        await saveAll();
+      });
+      document.getElementById("arenaZoomBtn").addEventListener("click", async () => {
+        setZoomMode(!appState.zoomMode);
         await saveAll();
       });
       document.getElementById("firebaseSaveBtn").addEventListener("click", async () => {
