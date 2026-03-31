@@ -110,7 +110,7 @@
     }
     .slot-layer { position: absolute; inset: 0; }
     .hero-slot, .pet-slot {
-      position: absolute; width: 104px;
+      position: absolute; width: 92px;
       padding: 6px; border-radius: 18px; background: var(--slot-bg); border: 1px solid var(--line);
       box-shadow: var(--shadow);
       transition: left .45s cubic-bezier(.22, 1, .36, 1), top .45s cubic-bezier(.22, 1, .36, 1), transform .25s ease, border-color .25s ease;
@@ -142,7 +142,7 @@
       font-size: 0.68rem; line-height: 1.25; overflow: hidden;
     }
     .mini-slot img { width: 100%; height: 40px; object-fit: contain; }
-    .pet-slot { width: 94px; }
+    .pet-slot { width: 84px; }
     .skill-tray {
       margin-top: 16px; padding: 14px; border-radius: 24px; border: 1px solid var(--line);
       background: rgba(255,255,255,0.08);
@@ -153,6 +153,13 @@
     .skill-tray-header h3 { margin: 0; font-size: 0.98rem; }
     .skill-selected-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
     .skill-popup-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .skill-hero-group {
+      display: grid; gap: 10px; padding: 10px; border-radius: 18px;
+      border: 1px solid var(--line); background: rgba(255,255,255,0.08);
+    }
+    .skill-hero-name {
+      text-align: center; font-weight: 700; font-size: 0.86rem;
+    }
     .skill-candidate {
       min-height: 78px; border-radius: 14px; border: 1px solid var(--line); background: var(--skill-bg);
       padding: 8px; display: grid; gap: 6px; justify-items: center; text-align: center;
@@ -257,6 +264,9 @@
     .selector-favorites {
       display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;
     }
+    .selector-top-actions {
+      display: flex; justify-content: flex-end; margin-bottom: 10px;
+    }
     .selector-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
     .select-card { position: relative; padding: 10px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel-strong); display: grid; gap: 8px; }
     .select-card .portrait { aspect-ratio: 1/1; min-height: 98px; }
@@ -291,8 +301,8 @@
     @media (min-width: 1081px) {
       .panel.mobile-only { display: none; }
       .arena { min-height: 680px; }
-      .hero-slot { width: 112px; padding: 8px; }
-      .pet-slot { width: 100px; padding: 8px; }
+      .hero-slot { width: 96px; padding: 7px; }
+      .pet-slot { width: 86px; padding: 7px; }
     }
 
     @media (max-width: 780px) {
@@ -301,8 +311,8 @@
       .header-actions .pill-btn { display: none; }
       .formation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .arena { min-height: 720px; }
-      .hero-slot { width: 88px; padding: 6px; }
-      .pet-slot { width: 82px; padding: 6px; }
+      .hero-slot { width: 74px; padding: 5px; }
+      .pet-slot { width: 68px; padding: 5px; }
       .selector-toolbar, .admin-grid, .deck-compare, .inline-grid, .stats-grid { grid-template-columns: 1fr; }
       .modal-card { padding: 16px; border-radius: 22px; }
       .banner-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -448,6 +458,7 @@
         </select>
         <button class="ghost-btn" id="selectorResetBtn" type="button">초기화</button>
       </div>
+      <div class="selector-top-actions" id="selectorTopAction"></div>
       <div class="selector-favorites" id="selectorQuickFavorites"></div>
       <div class="selector-grid" id="selectorGrid"></div>
     </div>
@@ -598,65 +609,65 @@
     const formationLayouts = {
       mobile: {
         basic: [
-          { left: 52, top: 52 },
-          { left: 52, top: 20 },
-          { left: 10, top: 68 },
-          { left: 10, top: 44 },
-          { left: 10, top: 20 }
+          { left: 48, top: 50 },
+          { left: 48, top: 18 },
+          { left: 4, top: 66 },
+          { left: 4, top: 38 },
+          { left: 4, top: 10 }
         ],
         balance: [
-          { left: 52, top: 60 },
-          { left: 52, top: 40 },
-          { left: 52, top: 20 },
-          { left: 10, top: 52 },
-          { left: 10, top: 28 }
+          { left: 48, top: 58 },
+          { left: 48, top: 34 },
+          { left: 48, top: 10 },
+          { left: 4, top: 50 },
+          { left: 4, top: 22 }
         ],
         attack: [
-          { left: 52, top: 42 },
-          { left: 10, top: 76 },
-          { left: 10, top: 56 },
-          { left: 10, top: 36 },
-          { left: 10, top: 16 }
+          { left: 48, top: 48 },
+          { left: 4, top: 74 },
+          { left: 4, top: 54 },
+          { left: 4, top: 34 },
+          { left: 4, top: 14 }
         ],
         guard: [
-          { left: 52, top: 76 },
-          { left: 52, top: 56 },
-          { left: 52, top: 36 },
-          { left: 52, top: 16 },
-          { left: 10, top: 46 }
+          { left: 48, top: 74 },
+          { left: 48, top: 54 },
+          { left: 48, top: 34 },
+          { left: 48, top: 14 },
+          { left: 4, top: 44 }
         ],
-        pet: { left: 64, top: 82 }
+        pet: { left: 76, top: 20 }
       },
       desktop: {
         basic: [
-          { left: 52, top: 50 },
-          { left: 52, top: 20 },
-          { left: 10, top: 66 },
-          { left: 10, top: 42 },
-          { left: 10, top: 18 }
+          { left: 48, top: 48 },
+          { left: 48, top: 16 },
+          { left: 4, top: 64 },
+          { left: 4, top: 36 },
+          { left: 4, top: 8 }
         ],
         balance: [
-          { left: 52, top: 58 },
-          { left: 52, top: 38 },
-          { left: 52, top: 18 },
-          { left: 10, top: 50 },
-          { left: 10, top: 26 }
+          { left: 48, top: 56 },
+          { left: 48, top: 32 },
+          { left: 48, top: 8 },
+          { left: 4, top: 48 },
+          { left: 4, top: 20 }
         ],
         attack: [
-          { left: 52, top: 40 },
-          { left: 10, top: 76 },
-          { left: 10, top: 56 },
-          { left: 10, top: 36 },
-          { left: 10, top: 16 }
+          { left: 48, top: 46 },
+          { left: 4, top: 72 },
+          { left: 4, top: 52 },
+          { left: 4, top: 32 },
+          { left: 4, top: 12 }
         ],
         guard: [
-          { left: 52, top: 76 },
-          { left: 52, top: 56 },
-          { left: 52, top: 36 },
-          { left: 52, top: 16 },
-          { left: 10, top: 46 }
+          { left: 48, top: 72 },
+          { left: 48, top: 52 },
+          { left: 48, top: 32 },
+          { left: 48, top: 12 },
+          { left: 4, top: 42 }
         ],
-        pet: { left: 66, top: 80 }
+        pet: { left: 76, top: 18 }
       }
     };
 
@@ -759,7 +770,8 @@
       adminAssetName: document.getElementById("adminAssetName"),
       adminSkills: document.getElementById("adminSkills"),
       selectorResetBtn: document.getElementById("selectorResetBtn"),
-      selectorQuickFavorites: document.getElementById("selectorQuickFavorites")
+      selectorQuickFavorites: document.getElementById("selectorQuickFavorites"),
+      selectorTopAction: document.getElementById("selectorTopAction")
     };
 
     const clone = (data) => structuredClone(data);
@@ -1094,22 +1106,24 @@
         els.skillPickerGrid.innerHTML = `<div class="empty-state">먼저 아무 영웅 슬롯에 1명 이상 배치해 주세요.</div>`;
         return;
       }
-      const candidates = [];
-      [0, 1].forEach((skillIndex) => {
-        appState.skillHeroIds.forEach((heroId, columnIndex) => {
-          const hero = appState.board.heroes.find((item) => item.id === heroId) || appState.board.heroes[columnIndex];
-          candidates.push({ hero, columnIndex, skillIndex, candidate: makeSkillCandidate(hero, skillIndex) });
-        });
-      });
+      appState.skillHeroIds.forEach((heroId) => {
+        const hero = appState.board.heroes.find((item) => item.id === heroId);
+        const group = document.createElement("div");
+        group.className = "skill-hero-group";
+        group.innerHTML = `<div class="skill-hero-name">${hero?.heroName || `영웅 슬롯 ${heroId}`}</div>`;
 
-      candidates.forEach(({ hero, columnIndex, skillIndex, candidate }) => {
-        const button = document.createElement("button");
-        button.className = `skill-candidate ${appState.selectedSkills.some((item) => item.key === candidate.key) ? "active" : ""}`;
-        button.type = "button";
-        const assetSlot = buildMiniSlot(candidate.label, "skill", candidate.assetName, { asButton: false });
-        button.appendChild(assetSlot);
-        button.addEventListener("click", () => toggleSelectedSkill(candidate));
-        els.skillPickerGrid.appendChild(button);
+        [0, 1].forEach((skillIndex) => {
+          const candidate = makeSkillCandidate(hero, skillIndex);
+          const button = document.createElement("button");
+          button.className = `skill-candidate ${appState.selectedSkills.some((item) => item.key === candidate.key) ? "active" : ""}`;
+          button.type = "button";
+          const assetSlot = buildMiniSlot(candidate.label, "skill", candidate.assetName, { asButton: false });
+          button.appendChild(assetSlot);
+          button.addEventListener("click", () => toggleSelectedSkill(candidate));
+          group.appendChild(button);
+        });
+
+        els.skillPickerGrid.appendChild(group);
       });
     }
 
@@ -1370,6 +1384,29 @@
       if (favoriteMode === "favorites") data = data.filter((item) => getFavoritesBucket(selectorContext.type).includes(item.name));
 
       const favorites = getFavoritesBucket(selectorContext.type);
+      els.selectorTopAction.innerHTML = "";
+      if (selectorContext.type === "hero") {
+        const removeButton = document.createElement("button");
+        removeButton.className = "command-btn";
+        removeButton.type = "button";
+        removeButton.textContent = "현재 영웅 빼기";
+        removeButton.addEventListener("click", () => {
+          const target = appState.board.heroes.find((hero) => hero.id === selectorContext.heroId);
+          if (!target) return;
+          target.heroName = "";
+          target.category = "";
+          target.assetName = "";
+          target.skills = ["기본", "스킬-2", "스킬-3"];
+          target.skillAssetNames = [];
+          target.stats = Object.fromEntries(statFields.map((field) => [field, ""]));
+          target.equipment = ["", "", "", ""];
+          target.accessory = "";
+          syncSkillSelections();
+          saveAll();
+          closeModal("selectionModal");
+        });
+        els.selectorTopAction.appendChild(removeButton);
+      }
       els.selectorQuickFavorites.innerHTML = favorites.length
         ? favorites.map((name) => `<button class="tag" type="button" data-quick-favorite="${name}">${name}</button>`).join("")
         : `<span class="status-line">즐겨찾기 항목이 없습니다.</span>`;
@@ -1409,32 +1446,6 @@
         card.querySelector(".command-btn").addEventListener("click", () => selectItem(selectorContext, item));
         els.selectorGrid.appendChild(card);
       });
-
-      if (selectorContext.type === "hero") {
-        const removeCard = document.createElement("div");
-        removeCard.className = "select-card";
-        removeCard.innerHTML = `
-          <div class="portrait">영웅 빼기</div>
-          <div class="select-card-name">현재 슬롯 비우기</div>
-          <button class="ghost-btn" type="button">빼기</button>
-        `;
-        removeCard.querySelector(".ghost-btn").addEventListener("click", () => {
-          const target = appState.board.heroes.find((hero) => hero.id === selectorContext.heroId);
-          if (!target) return;
-          target.heroName = "";
-          target.category = "";
-          target.assetName = "";
-          target.skills = ["기본", "스킬-2", "스킬-3"];
-          target.skillAssetNames = [];
-          target.stats = Object.fromEntries(statFields.map((field) => [field, ""]));
-          target.equipment = ["", "", "", ""];
-          target.accessory = "";
-          syncSkillSelections();
-          saveAll();
-          closeModal("selectionModal");
-        });
-        els.selectorGrid.appendChild(removeCard);
-      }
 
       els.selectorQuickFavorites.querySelectorAll("[data-quick-favorite]").forEach((button) => {
         button.addEventListener("click", () => {
