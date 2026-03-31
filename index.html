@@ -224,6 +224,7 @@
     .drawer, .modal-backdrop {
       position: fixed; inset: 0; z-index: 40; pointer-events: none; opacity: 0; transition: opacity .2s ease;
     }
+    #detailModal { z-index: 60; }
     .drawer.open, .modal-backdrop.open { opacity: 1; pointer-events: auto; }
     .drawer::before, .modal-backdrop::before {
       content: ""; position: absolute; inset: 0; background: rgba(0, 0, 0, 0.38); backdrop-filter: blur(4px);
@@ -367,17 +368,12 @@
             </div>
           </div>
 
-          <div class="hint-row">
-            <div class="hint-chip">탭: 영웅/펫/스킬 선택</div>
-            <div class="hint-chip">길게 누르기: 상세 스탯/장비/장신구</div>
-          </div>
         </article>
 
         <article class="panel mobile-only">
           <div class="panel-title">
             <div>
               <h2>모바일 빠른 저장</h2>
-              <span>한손으로 입력하기 쉽게 세로형 폼으로 배치했습니다.</span>
             </div>
           </div>
           <div class="deck-form" id="mobileDeckForm"></div>
@@ -688,6 +684,7 @@
     };
 
     const defaultSkillsForHero = (hero) => [`${hero}`, `${hero}-2`, `${hero}-3`];
+    const adminPassword = "1598";
 
     const makeHeroCatalog = () => {
       const catalog = [];
@@ -1242,9 +1239,11 @@
 
     function getDeckDisplayItems(deck) {
       return {
-        heroes: deck.board.heroes.filter((hero) => hero.heroName).slice(0, maxSelectableHeroes)
-          .map((hero) => ({ type: "hero", name: hero.heroName, assetName: hero.assetName })),
-        pets: [{ type: "pet", name: deck.board.pet.name, assetName: deck.board.pet.assetName }],
+        heroPets: [
+          ...deck.board.heroes.filter((hero) => hero.heroName).slice(0, maxSelectableHeroes)
+            .map((hero) => ({ type: "hero", name: hero.heroName, assetName: hero.assetName })),
+          { type: "pet", name: deck.board.pet.name, assetName: deck.board.pet.assetName }
+        ],
         skills: (deck.selectedSkills || []).slice(0, 3)
           .map((skill) => ({ type: "skill", name: skill.label, assetName: skill.assetName }))
       };
@@ -1253,8 +1252,7 @@
     function renderDeckCardImages(deck, container) {
       const groups = getDeckDisplayItems(deck);
       const sections = [
-        { key: "heroes", title: "영웅" },
-        { key: "pets", title: "펫" },
+        { key: "heroPets", title: "영웅 / 펫" },
         { key: "skills", title: "스킬" }
       ];
 
@@ -1754,6 +1752,8 @@
         toggleDrawer(false);
       });
       document.getElementById("adminOpenBtn").addEventListener("click", () => {
+        const enteredPassword = window.prompt("관리자 비밀번호를 입력하세요.");
+        if (enteredPassword !== adminPassword) return;
         toggleDrawer(false);
         renderAdminDefaults();
         openModal("adminModal");
