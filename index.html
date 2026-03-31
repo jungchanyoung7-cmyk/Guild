@@ -188,12 +188,21 @@
     .deck-card-header { display: flex; justify-content: space-between; gap: 12px; align-items: start; }
     .deck-card h4 { margin: 0 0 4px; font-size: 1rem; }
     .deck-meta { color: var(--muted); font-size: 0.84rem; line-height: 1.45; }
-    .banner-strip { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+    .banner-groups { display: grid; gap: 10px; }
+    .banner-group { display: grid; gap: 8px; }
+    .banner-group-title { font-size: 0.78rem; color: var(--muted); font-weight: 700; }
+    .banner-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
     .banner-portrait {
-      aspect-ratio: 1 / 1; border-radius: 14px; overflow: hidden; border: 1px solid var(--line);
-      background: var(--slot-bg); display: grid; place-items: center; font-size: 0.68rem; text-align: center; padding: 4px;
+      border-radius: 14px; overflow: hidden; border: 1px solid var(--line);
+      background: var(--slot-bg); display: grid; gap: 6px; justify-items: center; font-size: 0.68rem; text-align: center; padding: 6px;
+    }
+    .banner-thumb {
+      width: 100%; aspect-ratio: 1 / 1; border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--line); display: grid; place-items: center; padding: 4px;
+      background: rgba(255,255,255,0.2);
     }
     .banner-portrait img { width: 100%; height: 100%; object-fit: cover; }
+    .banner-name { line-height: 1.25; word-break: break-word; }
     .deck-actions { display: flex; flex-wrap: wrap; gap: 8px; }
     .status-line { font-size: 0.82rem; color: var(--muted); }
     .head {
@@ -311,7 +320,7 @@
       .pet-slot { width: 68px; padding: 5px; }
       .selector-toolbar, .admin-grid, .deck-compare, .inline-grid, .stats-grid { grid-template-columns: 1fr; }
       .modal-card { padding: 16px; border-radius: 22px; }
-      .banner-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .banner-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .skill-selected-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .skill-popup-grid { grid-template-columns: 1fr; }
       .head { align-items: start; }
@@ -326,7 +335,6 @@
         <small>가이드덱을 보실려면 삼선메뉴를 누르세요</small>
       </div>
       <div class="header-actions">
-        <button class="pill-btn" id="githubLinkBtn">깃허브 열기</button>
         <button class="menu-btn" id="menuToggleBtn" aria-label="메뉴 열기">☰</button>
       </div>
     </header>
@@ -1233,27 +1241,48 @@
     }
 
     function getDeckDisplayItems(deck) {
-      const heroes = deck.board.heroes.filter((hero) => hero.heroName).slice(0, maxSelectableHeroes)
-        .map((hero) => ({ type: "hero", name: hero.heroName, assetName: hero.assetName }));
-      const pet = { type: "pet", name: deck.board.pet.name, assetName: deck.board.pet.assetName };
-      const skills = (deck.selectedSkills || []).slice(0, 3)
-        .map((skill) => ({ type: "skill", name: skill.label, assetName: skill.assetName }));
-      return [...heroes, pet, ...skills];
+      return {
+        heroes: deck.board.heroes.filter((hero) => hero.heroName).slice(0, maxSelectableHeroes)
+          .map((hero) => ({ type: "hero", name: hero.heroName, assetName: hero.assetName })),
+        pets: [{ type: "pet", name: deck.board.pet.name, assetName: deck.board.pet.assetName }],
+        skills: (deck.selectedSkills || []).slice(0, 3)
+          .map((skill) => ({ type: "skill", name: skill.label, assetName: skill.assetName }))
+      };
     }
 
     function renderDeckCardImages(deck, container) {
-      const allSlots = getDeckDisplayItems(deck);
-      allSlots.forEach((item) => {
-        const box = document.createElement("div");
-        box.className = "banner-portrait";
-        box.textContent = item.name || (item.type === "pet" ? "펫" : item.type === "skill" ? "스킬" : "미선택");
-        if (item.name) {
-          resolveAsset(item.type, item.name, item.assetName).then((url) => {
-            if (!url) return;
-            box.innerHTML = `<img src="${url}" alt="${item.name}" />`;
-          });
-        }
-        container.appendChild(box);
+      const groups = getDeckDisplayItems(deck);
+      const sections = [
+        { key: "heroes", title: "영웅" },
+        { key: "pets", title: "펫" },
+        { key: "skills", title: "스킬" }
+      ];
+
+      sections.forEach(({ key, title }) => {
+        const wrap = document.createElement("div");
+        wrap.className = "banner-group";
+        wrap.innerHTML = `<div class="banner-group-title">${title}</div><div class="banner-strip"></div>`;
+        const strip = wrap.querySelector(".banner-strip");
+        const items = groups[key];
+
+        items.forEach((item) => {
+          const box = document.createElement("div");
+          box.className = "banner-portrait";
+          box.innerHTML = `
+            <div class="banner-thumb">${item.name || title}</div>
+            <div class="banner-name">${item.name || title}</div>
+          `;
+          if (item.name) {
+            const thumb = box.querySelector(".banner-thumb");
+            resolveAsset(item.type, item.name, item.assetName).then((url) => {
+              if (!url) return;
+              thumb.innerHTML = `<img src="${url}" alt="${item.name}" />`;
+            });
+          }
+          strip.appendChild(box);
+        });
+
+        container.appendChild(wrap);
       });
     }
 
@@ -1277,7 +1306,7 @@
             </div>
             <div class="tag ${colorClass}">${deck.type}</div>
           </div>
-          <div class="banner-strip"></div>
+          <div class="banner-groups"></div>
           <div class="deck-meta">${deck.tip || "공략팁이 없습니다."}</div>
           <div class="deck-actions">
             <button class="command-btn active">상세설정</button>
@@ -1287,7 +1316,7 @@
             <button class="ghost-btn" data-action="delete">삭제</button>
           </div>
         `;
-        renderDeckCardImages(deck, card.querySelector(".banner-strip"));
+        renderDeckCardImages(deck, card.querySelector(".banner-groups"));
         card.querySelector(".command-btn").addEventListener("click", () => openDeckPreview(deck.id));
         card.querySelector('[data-action="load"]').addEventListener("click", async () => {
           appState.board = clone(deck.board);
@@ -1594,7 +1623,7 @@
             if (!url) return;
             portrait.innerHTML = `<img src="${url}" alt="${hero.heroName}" />`;
           });
-          attachLongPress(slot, () => openDetailModal(hero.id, entry.board, { readOnly: true }), () => openDetailModal(hero.id, entry.board, { readOnly: true }));
+          attachLongPress(slot, () => {}, () => openDetailModal(hero.id, entry.board, { readOnly: true }));
         } else {
           slot.style.opacity = "0.45";
         }
@@ -1732,9 +1761,6 @@
       document.getElementById("openSkillPickerBtn").addEventListener("click", () => {
         renderSkillPickerModal();
         openModal("skillPickerModal");
-      });
-      document.getElementById("githubLinkBtn").addEventListener("click", () => {
-        window.open(repoConfig.repoUrl, "_blank", "noopener,noreferrer");
       });
       document.querySelectorAll("[data-close-modal]").forEach((button) => {
         button.addEventListener("click", () => closeModal(button.dataset.closeModal));
