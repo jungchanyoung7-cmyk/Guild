@@ -92,7 +92,7 @@
     .panel-title span { color: var(--muted); font-size: 0.88rem; }
     .formation-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
     .arena {
-      position: relative; min-height: 560px; border-radius: 30px; overflow: hidden;
+      position: relative; min-height: 620px; border-radius: 30px; overflow: hidden;
       border: 1px solid var(--line);
       background:
         radial-gradient(circle at 50% 15%, rgba(255,255,255,0.16), transparent 34%),
@@ -109,7 +109,7 @@
     }
     .slot-layer { position: absolute; inset: 0; }
     .hero-slot, .pet-slot {
-      position: absolute; width: min(32vw, 162px); max-width: 162px; min-width: 118px;
+      position: absolute; width: min(28vw, 148px); max-width: 148px; min-width: 108px;
       padding: 10px; border-radius: 24px; background: var(--slot-bg); border: 1px solid var(--line);
       box-shadow: var(--shadow);
       transition: left .45s cubic-bezier(.22, 1, .36, 1), top .45s cubic-bezier(.22, 1, .36, 1), transform .25s ease, border-color .25s ease;
@@ -130,14 +130,26 @@
     }
     .portrait img { width: 100%; height: 100%; object-fit: cover; }
     .name-label { margin-top: 8px; font-weight: 700; font-size: 0.92rem; text-align: center; line-height: 1.3; min-height: 2.5em; }
-    .skill-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 10px; }
+    .slot-meta {
+      margin-top: 8px; font-size: 0.72rem; color: var(--muted); text-align: center;
+      padding: 6px 8px; border-radius: 12px; border: 1px solid var(--line); background: rgba(255,255,255,0.12);
+    }
     .mini-slot {
       border-radius: 12px; padding: 6px 4px; min-height: 62px; border: 1px solid var(--line);
       background: var(--skill-bg); display: grid; place-items: center; text-align: center;
       font-size: 0.68rem; line-height: 1.25; overflow: hidden;
     }
     .mini-slot img { width: 100%; height: 38px; object-fit: contain; }
-    .pet-slot { width: min(28vw, 144px); max-width: 144px; min-width: 108px; }
+    .pet-slot { width: min(24vw, 132px); max-width: 132px; min-width: 100px; }
+    .skill-tray {
+      margin-top: 16px; padding: 14px; border-radius: 24px; border: 1px solid var(--line);
+      background: rgba(255,255,255,0.08);
+    }
+    .skill-tray-header {
+      display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px;
+    }
+    .skill-tray-header h3 { margin: 0; font-size: 0.98rem; }
+    .skill-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
     .hint-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; color: var(--muted); font-size: 0.85rem; }
     .hint-chip { padding: 8px 12px; border-radius: 999px; background: var(--accent-soft); border: 1px solid var(--line); }
     .deck-form { display: grid; gap: 12px; }
@@ -199,13 +211,19 @@
       gap: 12px; align-items: center; padding: 2px 0 12px; background: var(--panel);
     }
     .modal-header h3 { margin: 0; font-size: 1.05rem; }
-    .selector-toolbar { display: grid; grid-template-columns: 1.3fr .8fr .8fr; gap: 10px; margin-bottom: 14px; }
+    .selector-toolbar { display: grid; grid-template-columns: 1.2fr .8fr .8fr auto; gap: 10px; margin-bottom: 10px; }
+    .selector-favorites {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;
+    }
     .selector-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 12px; }
-    .select-card { padding: 10px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel-strong); display: grid; gap: 8px; }
+    .select-card { position: relative; padding: 10px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel-strong); display: grid; gap: 8px; }
     .select-card .portrait { aspect-ratio: 1/1; min-height: 98px; }
     .select-card-name { font-size: 0.85rem; text-align: center; min-height: 2.4em; display: grid; place-items: center; }
-    .favorite-btn { min-height: 36px; border-radius: 12px; border: 1px solid var(--line); background: transparent; }
-    .favorite-btn.active { background: rgba(242, 196, 90, 0.16); color: #b68000; }
+    .favorite-toggle {
+      position: absolute; top: 8px; right: 8px; width: 34px; min-height: 34px;
+      border-radius: 999px; border: 1px solid var(--line); background: rgba(0,0,0,0.08);
+    }
+    .favorite-toggle.active { background: rgba(242, 196, 90, 0.2); color: #b68000; }
     .stats-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
     .equip-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
     .detail-slot {
@@ -226,8 +244,8 @@
 
     @media (min-width: 1081px) {
       .panel.mobile-only { display: none; }
-      .arena { min-height: 640px; }
-      .hero-slot, .pet-slot { width: 156px; }
+      .arena { min-height: 700px; }
+      .hero-slot, .pet-slot { width: 148px; }
     }
 
     @media (max-width: 780px) {
@@ -235,8 +253,8 @@
       .topbar { padding: 10px 12px; border-radius: 20px; }
       .header-actions .pill-btn { display: none; }
       .formation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .arena { min-height: 650px; }
-      .selector-toolbar, .admin-grid, .deck-compare, .inline-grid, .stats-grid { grid-template-columns: 1fr; }
+      .arena { min-height: 760px; }
+      .selector-toolbar, .admin-grid, .deck-compare, .inline-grid, .stats-grid, .skill-grid { grid-template-columns: 1fr; }
       .modal-card { padding: 16px; border-radius: 22px; }
       .banner-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
@@ -270,6 +288,14 @@
 
           <div class="arena" id="arena">
             <div class="slot-layer" id="slotLayer"></div>
+          </div>
+
+          <div class="skill-tray">
+            <div class="skill-tray-header">
+              <h3 id="skillTrayTitle">스킬 슬롯</h3>
+              <span class="status-line" id="skillTrayHint">선택된 영웅의 스킬 3칸이 여기서 관리됩니다.</span>
+            </div>
+            <div class="skill-grid" id="globalSkillSlots"></div>
           </div>
 
           <div class="hint-row">
@@ -349,7 +375,9 @@
           <option value="all">전체</option>
           <option value="favorites">즐겨찾기</option>
         </select>
+        <button class="ghost-btn" id="selectorResetBtn" type="button">초기화</button>
       </div>
+      <div class="selector-favorites" id="selectorQuickFavorites"></div>
       <div class="selector-grid" id="selectorGrid"></div>
     </div>
   </div>
@@ -483,20 +511,10 @@
     ];
 
     const formationLayouts = {
-      mobile: {
-        basic: [{ left: 10, top: 8 }, { left: 56, top: 8 }, { left: 33, top: 31 }, { left: 10, top: 56 }, { left: 56, top: 56 }],
-        balance: [{ left: 7, top: 12 }, { left: 58, top: 12 }, { left: 32, top: 33 }, { left: 18, top: 58 }, { left: 46, top: 58 }],
-        attack: [{ left: 4, top: 12 }, { left: 30, top: 12 }, { left: 56, top: 12 }, { left: 18, top: 48 }, { left: 44, top: 48 }],
-        guard: [{ left: 14, top: 12 }, { left: 48, top: 12 }, { left: 31, top: 36 }, { left: 10, top: 60 }, { left: 53, top: 60 }],
-        pet: { left: 4, top: 78 }
-      },
-      desktop: {
-        basic: [{ left: 8, top: 10 }, { left: 41, top: 10 }, { left: 74, top: 10 }, { left: 25, top: 46 }, { left: 58, top: 46 }],
-        balance: [{ left: 14, top: 14 }, { left: 46, top: 10 }, { left: 74, top: 18 }, { left: 22, top: 48 }, { left: 54, top: 44 }],
-        attack: [{ left: 18, top: 8 }, { left: 50, top: 8 }, { left: 74, top: 30 }, { left: 12, top: 36 }, { left: 44, top: 46 }],
-        guard: [{ left: 8, top: 20 }, { left: 42, top: 16 }, { left: 74, top: 20 }, { left: 22, top: 50 }, { left: 56, top: 50 }],
-        pet: { left: 76, top: 66 }
-      }
+      basic: { leftBottom: [3, 4, 5], rightTop: [1, 2] },
+      balance: { leftBottom: [4, 5], rightTop: [1, 2, 3] },
+      attack: { leftBottom: [2, 3, 4, 5], rightCenter: [1] },
+      guard: { leftCenter: [5], rightTop: [1, 2, 3, 4] }
     };
 
     const repoConfig = {
@@ -539,6 +557,7 @@
       version: 1,
       theme: "light",
       currentFormation: "basic",
+      activeSkillHeroId: 1,
       activeDeckFilter: "전체",
       favorites: { hero: [], pet: [], equipment: [], accessory: [], skill: [] },
       customData: { heroes: [], pets: [], equipment: [], accessory: [] },
@@ -583,11 +602,16 @@
       detailModalTitle: document.getElementById("detailModalTitle"),
       deckPreviewCompare: document.getElementById("deckPreviewCompare"),
       deckPreviewTitle: document.getElementById("deckPreviewTitle"),
+      globalSkillSlots: document.getElementById("globalSkillSlots"),
+      skillTrayTitle: document.getElementById("skillTrayTitle"),
+      skillTrayHint: document.getElementById("skillTrayHint"),
       adminType: document.getElementById("adminType"),
       adminCategory: document.getElementById("adminCategory"),
       adminName: document.getElementById("adminName"),
       adminAssetName: document.getElementById("adminAssetName"),
-      adminSkills: document.getElementById("adminSkills")
+      adminSkills: document.getElementById("adminSkills"),
+      selectorResetBtn: document.getElementById("selectorResetBtn"),
+      selectorQuickFavorites: document.getElementById("selectorQuickFavorites")
     };
 
     const clone = (data) => structuredClone(data);
@@ -734,6 +758,57 @@
       return wrap;
     }
 
+    function getBoardMetrics() {
+      return isMobileLayout()
+        ? {
+            leftX: 8,
+            rightX: 58,
+            centerX: 33,
+            rowTop: [9, 25, 41, 57],
+            pet: { left: 36, top: 76 }
+          }
+        : {
+            leftX: 14,
+            rightX: 67,
+            centerX: 40,
+            rowTop: [10, 25, 40, 55],
+            pet: { left: 42, top: 76 }
+          };
+    }
+
+    function resolveFormationPositions(formationKey) {
+      const metrics = getBoardMetrics();
+      const rules = formationLayouts[formationKey];
+      const positions = new Map();
+      const placeBottom = (ids, sideX) => {
+        ids.forEach((slotId, index) => {
+          const rowIndex = metrics.rowTop.length - 1 - index;
+          positions.set(slotId, { left: sideX, top: metrics.rowTop[rowIndex] });
+        });
+      };
+      const placeTop = (ids, sideX) => {
+        ids.forEach((slotId, index) => {
+          positions.set(slotId, { left: sideX, top: metrics.rowTop[index] });
+        });
+      };
+      const placeCenter = (ids, sideX) => {
+        const centerOffset = Math.floor((metrics.rowTop.length - ids.length) / 2);
+        ids.forEach((slotId, index) => {
+          positions.set(slotId, { left: sideX, top: metrics.rowTop[centerOffset + index] });
+        });
+      };
+
+      if (rules.leftBottom) placeBottom(rules.leftBottom, metrics.leftX);
+      if (rules.rightTop) placeTop(rules.rightTop, metrics.rightX);
+      if (rules.rightCenter) placeCenter(rules.rightCenter, metrics.rightX);
+      if (rules.leftCenter) placeCenter(rules.leftCenter, metrics.leftX);
+      return { positions, pet: metrics.pet };
+    }
+
+    function getActiveSkillHero() {
+      return appState.board.heroes.find((hero) => hero.id === appState.activeSkillHeroId) || appState.board.heroes[0];
+    }
+
     function attachLongPress(element, onTap, onLongPress) {
       const start = (event) => {
         if (event.pointerType === "mouse" && event.button !== 0) return;
@@ -761,14 +836,14 @@
 
     function renderSlots() {
       els.slotLayer.innerHTML = "";
-      const mode = isMobileLayout() ? "mobile" : "desktop";
-      const layout = formationLayouts[mode][appState.currentFormation];
+      const { positions, pet: petPosition } = resolveFormationPositions(appState.currentFormation);
 
-      appState.board.heroes.forEach((hero, index) => {
+      appState.board.heroes.forEach((hero) => {
+        const slotPosition = positions.get(hero.id) || { left: 14, top: 10 };
         const slot = document.createElement("article");
         slot.className = "hero-slot";
-        slot.style.left = `${layout[index].left}%`;
-        slot.style.top = `${layout[index].top}%`;
+        slot.style.left = `${slotPosition.left}%`;
+        slot.style.top = `${slotPosition.top}%`;
         slot.dataset.slotId = String(hero.id);
 
         const head = document.createElement("div");
@@ -793,28 +868,18 @@
         label.className = "name-label";
         label.textContent = hero.heroName || "슬롯을 눌러 영웅 지정";
 
-        const skillRow = document.createElement("div");
-        skillRow.className = "skill-row";
-        const skillNames = hero.heroName ? hero.skills : ["기본", "스킬-2", "스킬-3"];
-        skillNames.forEach((skillName) => {
-          const mini = buildMiniSlot(skillName, "skill", skillName);
-          mini.addEventListener("click", (event) => {
-            event.stopPropagation();
-            openSelectionModal({
-              type: "skill",
-              heroId: hero.id,
-              title: `${hero.heroName || "영웅"} 스킬 선택`,
-              heroName: hero.heroName,
-              currentSkills: hero.skills
-            });
-          });
-          skillRow.appendChild(mini);
-        });
+        const meta = document.createElement("div");
+        meta.className = "slot-meta";
+        meta.textContent = hero.id === appState.activeSkillHeroId ? "현재 스킬 편집 대상" : "탭하면 영웅 선택, 길게 누르면 상세설정";
 
-        slot.append(head, portrait, label, skillRow);
+        slot.append(head, portrait, label, meta);
         attachLongPress(
           slot,
-          () => openSelectionModal({ type: "hero", heroId: hero.id, title: `영웅 슬롯 ${hero.id} 선택` }),
+          () => {
+            appState.activeSkillHeroId = hero.id;
+            openSelectionModal({ type: "hero", heroId: hero.id, title: `영웅 슬롯 ${hero.id} 선택` });
+            renderGlobalSkillSlots();
+          },
           () => openDetailModal(hero.id)
         );
         els.slotLayer.appendChild(slot);
@@ -823,8 +888,8 @@
       const pet = appState.board.pet;
       const petSlot = document.createElement("article");
       petSlot.className = "pet-slot";
-      petSlot.style.left = `${formationLayouts[mode].pet.left}%`;
-      petSlot.style.top = `${formationLayouts[mode].pet.top}%`;
+      petSlot.style.left = `${petPosition.left}%`;
+      petSlot.style.top = `${petPosition.top}%`;
       petSlot.innerHTML = `
         <div class="slot-head"><strong>펫 슬롯</strong><span>${pet.category || "펫"}</span></div>
         <div class="portrait">${pet.name || "펫 선택"}</div>
@@ -839,6 +904,28 @@
       }
       petSlot.addEventListener("click", () => openSelectionModal({ type: "pet", title: "펫 선택" }));
       els.slotLayer.appendChild(petSlot);
+    }
+
+    function renderGlobalSkillSlots() {
+      const hero = getActiveSkillHero();
+      const skillNames = hero?.heroName ? hero.skills : ["기본", "영웅명-2", "영웅명-3"];
+      els.skillTrayTitle.textContent = `${hero?.heroName || "미선택 영웅"} 스킬 슬롯`;
+      els.skillTrayHint.textContent = hero?.heroName ? `영웅 슬롯 ${hero.id} 기준으로 스킬 3칸을 편집합니다.` : "먼저 영웅을 선택하면 스킬 3칸이 연동됩니다.";
+      els.globalSkillSlots.innerHTML = "";
+      skillNames.forEach((skillName, skillIndex) => {
+        const mini = buildMiniSlot(skillName, "skill", skillName);
+        mini.addEventListener("click", () => {
+          openSelectionModal({
+            type: "skill",
+            heroId: hero?.id || 1,
+            title: `${hero?.heroName || "영웅"} 스킬 선택`,
+            heroName: hero?.heroName || "",
+            currentSkills: hero?.skills || [],
+            skillIndex
+          });
+        });
+        els.globalSkillSlots.appendChild(mini);
+      });
     }
 
     function buildDeckForm(target) {
@@ -985,7 +1072,15 @@
     }
 
     function openModal(id) { document.getElementById(id).classList.add("open"); }
-    function closeModal(id) { document.getElementById(id).classList.remove("open"); }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove("open");
+      if (id === "selectionModal" && selectorContext?.returnToDetail && detailContext) {
+        openModal("detailModal");
+      }
+      if (id === "selectionModal" && selectorContext) {
+        selectorContext.returnToDetail = false;
+      }
+    }
 
     function toggleFavorite(type, name) {
       const bucket = getFavoritesBucket(type);
@@ -1007,6 +1102,10 @@
     }
 
     function openSelectionModal(context) {
+      if ((context.type === "equipment" || context.type === "accessory") && detailContext) {
+        context.returnToDetail = true;
+        closeModal("detailModal");
+      }
       selectorContext = context;
       els.selectionModalTitle.textContent = context.title || "선택";
       els.selectionModalHint.textContent = context.type === "skill" ? "선택 즉시 3칸 스킬 슬롯이 갱신됩니다." : "검색, 필터, 즐겨찾기로 빠르게 찾을 수 있습니다.";
@@ -1027,18 +1126,25 @@
         target.assetName = item.assetName || item.name;
         target.skills = item.skills?.length ? item.skills : defaultSkillsForHero(item.name);
         target.skillAssetNames = [...target.skills];
+        appState.activeSkillHeroId = target.id;
       }
       if (context.type === "pet") appState.board.pet = { name: item.name, assetName: item.assetName || item.name, category: item.category || "펫" };
       if (context.type === "skill") {
         const target = appState.board.heroes.find((hero) => hero.id === context.heroId);
-        target.skills = [target.heroName || "영웅", `${item.name}-2`, `${item.name}-3`];
+        const baseName = target.heroName || item.name || "영웅";
+        const list = [baseName, `${baseName}-2`, `${baseName}-3`];
+        const selectedIndex = context.skillIndex ?? 0;
+        list[selectedIndex] = item.name;
+        target.skills = list;
         target.skillAssetNames = [...target.skills];
       }
       if (context.type === "equipment" && detailContext) detailContext.hero.equipment[context.slotIndex] = item.name;
       if (context.type === "accessory" && detailContext) detailContext.hero.accessory = item.name;
       saveAll();
-      if (context.type === "equipment" || context.type === "accessory") renderDetailModalContents();
-      else closeModal("selectionModal");
+      closeModal("selectionModal");
+      if (context.type === "equipment" || context.type === "accessory") {
+        renderDetailModalContents();
+      }
     }
 
     function renderSelectionGrid() {
@@ -1051,6 +1157,11 @@
       if (search) data = data.filter((item) => item.name.includes(search));
       if (favoriteMode === "favorites") data = data.filter((item) => getFavoritesBucket(selectorContext.type).includes(item.name));
 
+      const favorites = getFavoritesBucket(selectorContext.type);
+      els.selectorQuickFavorites.innerHTML = favorites.length
+        ? favorites.map((name) => `<button class="tag" type="button" data-quick-favorite="${name}">${name}</button>`).join("")
+        : `<span class="status-line">즐겨찾기 항목이 없습니다.</span>`;
+
       els.selectorGrid.innerHTML = "";
       if (!data.length) {
         els.selectorGrid.innerHTML = `<div class="empty-state">검색 결과가 없습니다.</div>`;
@@ -1062,9 +1173,9 @@
         card.className = "select-card";
         const isFav = getFavoritesBucket(selectorContext.type).includes(item.name);
         card.innerHTML = `
+          <button class="favorite-toggle ${isFav ? "active" : ""}" type="button" aria-label="즐겨찾기">${isFav ? "★" : "☆"}</button>
           <button class="portrait" type="button">${item.name}</button>
           <div class="select-card-name">${item.name}</div>
-          <button class="favorite-btn ${isFav ? "active" : ""}" type="button">${isFav ? "즐겨찾기 해제" : "즐겨찾기 추가"}</button>
           <button class="command-btn active" type="button">선택</button>
         `;
         const portrait = card.querySelector(".portrait");
@@ -1073,12 +1184,19 @@
           if (!url) return;
           portrait.innerHTML = `<img src="${url}" alt="${item.name}" />`;
         });
-        card.querySelector(".favorite-btn").addEventListener("click", () => {
+        card.querySelector(".favorite-toggle").addEventListener("click", () => {
           toggleFavorite(selectorContext.type, item.name);
           renderSelectionGrid();
         });
         card.querySelector(".command-btn").addEventListener("click", () => selectItem(selectorContext, item));
         els.selectorGrid.appendChild(card);
+      });
+
+      els.selectorQuickFavorites.querySelectorAll("[data-quick-favorite]").forEach((button) => {
+        button.addEventListener("click", () => {
+          els.selectorSearch.value = button.dataset.quickFavorite;
+          renderSelectionGrid();
+        });
       });
     }
 
@@ -1205,6 +1323,7 @@
       setTheme(appState.theme);
       renderFormationButtons();
       renderSlots();
+      renderGlobalSkillSlots();
       renderDeckFilters();
       renderDeckList();
     }
@@ -1238,6 +1357,12 @@
       els.selectorSearch.addEventListener("input", renderSelectionGrid);
       els.selectorCategory.addEventListener("change", renderSelectionGrid);
       els.selectorFavoriteFilter.addEventListener("change", renderSelectionGrid);
+      els.selectorResetBtn.addEventListener("click", () => {
+        els.selectorSearch.value = "";
+        els.selectorFavoriteFilter.value = "all";
+        if (els.selectorCategory.options.length) els.selectorCategory.selectedIndex = 0;
+        renderSelectionGrid();
+      });
       document.getElementById("detailSaveBtn").addEventListener("click", async () => {
         document.querySelectorAll("[data-stat-field]").forEach((input) => {
           detailContext.hero.stats[input.dataset.statField] = input.value;
