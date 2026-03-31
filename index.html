@@ -1480,4 +1480,13 @@
     async function bootstrap() {
       await initializeFirebase();
       await loadState();
-      
+      buildDeckForm(els.mobileDeckForm);
+      buildDeckForm(els.desktopDeckForm);
+      bindEvents();
+      renderAll();
+    }
+
+    bootstrap();
+  </script>
+</body>
+</html>
