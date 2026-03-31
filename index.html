@@ -110,27 +110,28 @@
     }
     .slot-layer { position: absolute; inset: 0; }
     .hero-slot, .pet-slot {
-      position: absolute; width: 92px;
-      padding: 6px; border-radius: 18px; background: var(--slot-bg); border: 1px solid var(--line);
+      position: absolute; width: 84px;
+      padding: 5px; border-radius: 16px; background: var(--slot-bg); border: 1px solid var(--line);
       box-shadow: var(--shadow);
       transition: left .45s cubic-bezier(.22, 1, .36, 1), top .45s cubic-bezier(.22, 1, .36, 1), transform .25s ease, border-color .25s ease;
     }
     .hero-slot:hover, .pet-slot:hover { transform: translateY(-2px); }
     .slot-head {
       display: flex; justify-content: space-between; align-items: center; gap: 8px;
-      margin-bottom: 6px; font-size: 0.72rem; color: var(--muted);
+      margin-bottom: 4px; font-size: 0.66rem; color: var(--muted);
     }
-    .slot-head strong { color: var(--text); font-size: 0.8rem; }
+    .slot-head strong { color: var(--text); font-size: 0.72rem; }
+    .slot-head span { display: none; }
     .portrait {
-      aspect-ratio: 1 / 1; border-radius: 14px; border: 1px solid var(--line);
+      aspect-ratio: 1 / 1; border-radius: 12px; border: 1px solid var(--line);
       background:
         linear-gradient(180deg, rgba(255,255,255,0.12), rgba(0,0,0,0.08)),
         linear-gradient(135deg, rgba(240,184,93,0.32), rgba(177,64,27,0.16));
       display: grid; place-items: center; overflow: hidden; font-weight: 700;
-      text-align: center; padding: 5px;
+      text-align: center; padding: 4px;
     }
     .portrait img { width: 100%; height: 100%; object-fit: cover; }
-    .name-label { margin-top: 5px; font-weight: 700; font-size: 0.82rem; text-align: center; line-height: 1.15; min-height: 1.1em; }
+    .name-label { margin-top: 4px; font-weight: 700; font-size: 0.72rem; text-align: center; line-height: 1.05; min-height: 1em; }
     .slot-meta { display: none; }
     .mini-slot {
       border-radius: 12px; padding: 6px 4px; min-height: 62px; border: 1px solid var(--line);
@@ -138,7 +139,7 @@
       font-size: 0.68rem; line-height: 1.25; overflow: hidden;
     }
     .mini-slot img { width: 100%; height: 40px; object-fit: contain; }
-    .pet-slot { width: 84px; }
+    .pet-slot { width: 74px; }
     .skill-tray {
       margin-top: 16px; padding: 14px; border-radius: 24px; border: 1px solid var(--line);
       background: rgba(255,255,255,0.08);
@@ -316,8 +317,8 @@
     @media (min-width: 1081px) {
       .panel.mobile-only { display: none; }
       .arena { min-height: 680px; }
-      .hero-slot { width: 88px; padding: 6px; }
-      .pet-slot { width: 84px; padding: 6px; }
+      .hero-slot { width: 76px; padding: 5px; }
+      .pet-slot { width: 68px; padding: 5px; }
     }
 
     @media (max-width: 780px) {
@@ -326,8 +327,8 @@
       .header-actions .pill-btn { display: none; }
       .formation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .arena { min-height: 720px; }
-      .hero-slot { width: 72px; padding: 5px; }
-      .pet-slot { width: 68px; padding: 5px; }
+      .hero-slot { width: 58px; padding: 4px; }
+      .pet-slot { width: 52px; padding: 4px; }
       .selector-toolbar, .admin-grid, .deck-compare, .inline-grid, .stats-grid { grid-template-columns: 1fr; }
       .modal-card { padding: 16px; border-radius: 22px; }
       .banner-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -414,7 +415,7 @@
             <h2>가이드덱 저장 리스트</h2>
             <span>저장한 덱을 배너 형식으로 보고, 전체 모습과 카운터덱을 비교할 수 있습니다.</span>
           </div>
-          <button class="ghost-btn" id="backToMainBtn" type="button">뒤로가기</button>
+          <button class="ghost-btn" id="backToMainBtn" type="button" aria-label="뒤로가기">←</button>
         </div>
         <div class="type-filter" id="deckFilters"></div>
         <div class="deck-list" id="deckList"></div>
@@ -426,7 +427,7 @@
     <div class="drawer-panel">
       <div class="drawer-header">
         <strong>메뉴</strong>
-        <button class="ghost-btn" id="drawerCloseBtn" type="button">닫기</button>
+        <button class="ghost-btn" id="drawerCloseBtn" type="button" aria-label="닫기">✕</button>
       </div>
       <div class="drawer-section">
         <div class="drawer-label">일반 메뉴</div>
@@ -498,7 +499,7 @@
         <div id="accessorySlot"></div>
       </div>
       <div style="margin-top:16px; display:flex; justify-content:flex-end; gap:10px;">
-        <button class="ghost-btn" data-close-modal="detailModal">닫기</button>
+        <button class="ghost-btn" data-close-modal="detailModal" aria-label="닫기">✕</button>
         <button class="save-btn" id="detailSaveBtn">상세 저장</button>
       </div>
     </div>
@@ -541,7 +542,7 @@
         </div>
       </div>
       <div style="margin-top:16px; display:flex; justify-content:flex-end; gap:10px;">
-        <button class="ghost-btn" data-close-modal="adminModal">닫기</button>
+        <button class="ghost-btn" data-close-modal="adminModal" aria-label="닫기">✕</button>
         <button class="save-btn" id="adminSaveBtn">추가/수정 저장</button>
       </div>
     </div>
@@ -622,65 +623,65 @@
     const formationLayouts = {
       mobile: {
         basic: [
-          { left: 34, top: 40 },
-          { left: 34, top: 14 },
-          { left: 4, top: 64 },
-          { left: 4, top: 38 },
-          { left: 4, top: 12 }
+          { left: 42, top: 44 },
+          { left: 42, top: 18 },
+          { left: 6, top: 66 },
+          { left: 6, top: 40 },
+          { left: 6, top: 14 }
         ],
         balance: [
-          { left: 34, top: 58 },
-          { left: 34, top: 32 },
-          { left: 34, top: 6 },
-          { left: 4, top: 46 },
-          { left: 4, top: 20 }
+          { left: 42, top: 64 },
+          { left: 42, top: 38 },
+          { left: 42, top: 12 },
+          { left: 6, top: 50 },
+          { left: 6, top: 24 }
         ],
         attack: [
-          { left: 34, top: 32 },
-          { left: 4, top: 74 },
-          { left: 4, top: 52 },
-          { left: 4, top: 30 },
-          { left: 4, top: 8 }
+          { left: 42, top: 38 },
+          { left: 6, top: 78 },
+          { left: 6, top: 56 },
+          { left: 6, top: 34 },
+          { left: 6, top: 12 }
         ],
         guard: [
-          { left: 66, top: 76 },
-          { left: 66, top: 54 },
-          { left: 66, top: 32 },
-          { left: 66, top: 10 },
-          { left: 36, top: 42 }
+          { left: 74, top: 80 },
+          { left: 74, top: 58 },
+          { left: 74, top: 36 },
+          { left: 74, top: 14 },
+          { left: 42, top: 46 }
         ],
-        pet: { left: 82, top: 42 }
+        pet: { left: 78, top: 42 }
       },
       desktop: {
         basic: [
-          { left: 34, top: 40 },
-          { left: 34, top: 14 },
-          { left: 4, top: 64 },
-          { left: 4, top: 38 },
-          { left: 4, top: 12 }
+          { left: 44, top: 42 },
+          { left: 44, top: 16 },
+          { left: 8, top: 64 },
+          { left: 8, top: 38 },
+          { left: 8, top: 12 }
         ],
         balance: [
-          { left: 34, top: 58 },
-          { left: 34, top: 32 },
-          { left: 34, top: 6 },
-          { left: 4, top: 46 },
-          { left: 4, top: 20 }
+          { left: 44, top: 62 },
+          { left: 44, top: 36 },
+          { left: 44, top: 10 },
+          { left: 8, top: 48 },
+          { left: 8, top: 22 }
         ],
         attack: [
-          { left: 34, top: 32 },
-          { left: 4, top: 74 },
-          { left: 4, top: 52 },
-          { left: 4, top: 30 },
-          { left: 4, top: 8 }
+          { left: 44, top: 36 },
+          { left: 8, top: 76 },
+          { left: 8, top: 54 },
+          { left: 8, top: 32 },
+          { left: 8, top: 10 }
         ],
         guard: [
-          { left: 66, top: 76 },
-          { left: 66, top: 54 },
-          { left: 66, top: 32 },
-          { left: 66, top: 10 },
-          { left: 36, top: 42 }
+          { left: 74, top: 78 },
+          { left: 74, top: 56 },
+          { left: 74, top: 34 },
+          { left: 74, top: 12 },
+          { left: 44, top: 44 }
         ],
-        pet: { left: 82, top: 42 }
+        pet: { left: 78, top: 40 }
       }
     };
 
@@ -1053,7 +1054,7 @@
           });
         }
 
-        label.textContent = hero.heroName || "슬롯을 눌러 영웅 지정";
+        label.textContent = hero.heroName || "";
         meta.textContent = "";
         if (!slot.dataset.bound) {
           const boundHeroId = hero.id;
@@ -1075,7 +1076,7 @@
       petSlot.style.top = `${petPosition.top}%`;
       petSlot.querySelector(".slot-head").innerHTML = `<strong>펫 슬롯</strong><span>${pet.category || "펫"}</span>`;
       petSlot.querySelector(".portrait").innerHTML = pet.name || "펫 선택";
-      petSlot.querySelector(".name-label").textContent = pet.name || "슬롯을 눌러 펫 지정";
+      petSlot.querySelector(".name-label").textContent = pet.name || "";
       if (pet.name) {
         const petPortrait = petSlot.querySelector(".portrait");
         resolveAsset("pet", pet.name, pet.assetName).then((url) => {
