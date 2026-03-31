@@ -192,10 +192,18 @@
     .banner-group { display: grid; gap: 8px; }
     .banner-group-title { font-size: 0.78rem; color: var(--muted); font-weight: 700; }
     .banner-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-    .banner-strip.hero-pet-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .banner-strip.hero-pet-strip {
+      display: flex; flex-wrap: nowrap; gap: 6px; overflow-x: auto;
+    }
     .banner-portrait {
       border-radius: 14px; overflow: hidden; border: 1px solid var(--line);
       background: var(--slot-bg); display: grid; gap: 4px; justify-items: center; font-size: 0.62rem; text-align: center; padding: 5px;
+    }
+    .hero-pet-strip .banner-portrait {
+      flex: 0 0 78px;
+      width: 78px;
+      padding: 4px;
+      gap: 3px;
     }
     .banner-thumb {
       width: 100%; aspect-ratio: 1 / 1; border-radius: 12px; overflow: hidden;
@@ -323,7 +331,10 @@
       .selector-toolbar, .admin-grid, .deck-compare, .inline-grid, .stats-grid { grid-template-columns: 1fr; }
       .modal-card { padding: 16px; border-radius: 22px; }
       .banner-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .banner-strip.hero-pet-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .hero-pet-strip .banner-portrait {
+        flex-basis: 64px;
+        width: 64px;
+      }
       .skill-selected-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .skill-popup-grid { grid-template-columns: 1fr; }
       .head { align-items: start; }
@@ -612,62 +623,62 @@
       mobile: {
         basic: [
           { left: 4, top: 8 },
-          { left: 34, top: 18 },
+          { left: 36, top: 16 },
           { left: 4, top: 34 },
-          { left: 34, top: 44 },
-          { left: 4, top: 60 }
+          { left: 20, top: 22 },
+          { left: 12, top: 12 }
         ],
         balance: [
-          { left: 4, top: 8 },
-          { left: 34, top: 18 },
-          { left: 4, top: 34 },
-          { left: 34, top: 44 },
-          { left: 4, top: 60 }
+          { left: 22, top: 24 },
+          { left: 38, top: 16 },
+          { left: 30, top: 10 },
+          { left: 12, top: 18 },
+          { left: 4, top: 12 }
         ],
         attack: [
-          { left: 4, top: 8 },
-          { left: 34, top: 18 },
-          { left: 4, top: 34 },
-          { left: 34, top: 44 },
-          { left: 4, top: 60 }
+          { left: 40, top: 24 },
+          { left: 30, top: 18 },
+          { left: 20, top: 14 },
+          { left: 10, top: 10 },
+          { left: 4, top: 28 }
         ],
         guard: [
-          { left: 4, top: 8 },
-          { left: 34, top: 18 },
-          { left: 4, top: 34 },
-          { left: 34, top: 44 },
-          { left: 4, top: 60 }
+          { left: 6, top: 26 },
+          { left: 16, top: 20 },
+          { left: 28, top: 14 },
+          { left: 40, top: 8 },
+          { left: 4, top: 8 }
         ],
         pet: { left: 72, top: 34 }
       },
       desktop: {
         basic: [
           { left: 4, top: 8 },
-          { left: 34, top: 18 },
+          { left: 36, top: 16 },
           { left: 4, top: 34 },
-          { left: 34, top: 44 },
-          { left: 4, top: 60 }
+          { left: 20, top: 22 },
+          { left: 12, top: 12 }
         ],
         balance: [
-          { left: 4, top: 8 },
-          { left: 34, top: 18 },
-          { left: 4, top: 34 },
-          { left: 34, top: 44 },
-          { left: 4, top: 60 }
+          { left: 22, top: 24 },
+          { left: 38, top: 16 },
+          { left: 30, top: 10 },
+          { left: 12, top: 18 },
+          { left: 4, top: 12 }
         ],
         attack: [
-          { left: 4, top: 8 },
-          { left: 34, top: 18 },
-          { left: 4, top: 34 },
-          { left: 34, top: 44 },
-          { left: 4, top: 60 }
+          { left: 40, top: 24 },
+          { left: 30, top: 18 },
+          { left: 20, top: 14 },
+          { left: 10, top: 10 },
+          { left: 4, top: 28 }
         ],
         guard: [
-          { left: 4, top: 8 },
-          { left: 34, top: 18 },
-          { left: 4, top: 34 },
-          { left: 34, top: 44 },
-          { left: 4, top: 60 }
+          { left: 6, top: 26 },
+          { left: 16, top: 20 },
+          { left: 28, top: 14 },
+          { left: 40, top: 8 },
+          { left: 4, top: 8 }
         ],
         pet: { left: 72, top: 34 }
       }
@@ -733,6 +744,8 @@
     let detailContext = null;
     let assetCache = new Map();
     let longPressTimer = null;
+    let slotNodeMap = new Map();
+    let petSlotNode = null;
 
     const els = {
       body: document.body,
@@ -978,29 +991,57 @@
       appState.selectedSkills = appState.selectedSkills.filter((item) => validKeys.has(item.key)).slice(0, 3);
     }
 
+    function ensureHeroSlotNode(heroId) {
+      if (slotNodeMap.has(heroId)) return slotNodeMap.get(heroId);
+      const slot = document.createElement("article");
+      slot.className = "hero-slot";
+      slot.dataset.slotId = String(heroId);
+      const head = document.createElement("div");
+      head.className = "slot-head";
+      const portrait = document.createElement("div");
+      portrait.className = "portrait";
+      const label = document.createElement("div");
+      label.className = "name-label";
+      const meta = document.createElement("div");
+      meta.className = "slot-meta";
+      slot.append(head, portrait, label, meta);
+      slotNodeMap.set(heroId, slot);
+      els.slotLayer.appendChild(slot);
+      return slot;
+    }
+
+    function ensurePetSlotNode() {
+      if (petSlotNode) return petSlotNode;
+      petSlotNode = document.createElement("article");
+      petSlotNode.className = "pet-slot";
+      petSlotNode.innerHTML = `
+        <div class="slot-head"><strong>펫 슬롯</strong><span>펫</span></div>
+        <div class="portrait">펫 선택</div>
+        <div class="name-label">슬롯을 눌러 펫 지정</div>
+      `;
+      petSlotNode.addEventListener("click", () => openSelectionModal({ type: "pet", title: "펫 선택" }));
+      els.slotLayer.appendChild(petSlotNode);
+      return petSlotNode;
+    }
+
     function renderSlots() {
-      els.slotLayer.innerHTML = "";
       syncSkillSelections();
-      const filledHeroCount = getFilledHeroCount();
       const layoutMode = isMobileLayout() ? "mobile" : "desktop";
       const currentLayout = formationLayouts[layoutMode][appState.currentFormation];
       const petPosition = formationLayouts[layoutMode].pet;
 
       appState.board.heroes.forEach((hero, index) => {
         const slotPosition = currentLayout[index] || { left: 14, top: 12 };
-        const slot = document.createElement("article");
-        slot.className = "hero-slot";
+        const slot = ensureHeroSlotNode(hero.id);
         slot.style.left = `${slotPosition.left}%`;
         slot.style.top = `${slotPosition.top}%`;
-        slot.dataset.slotId = String(hero.id);
-
-        const head = document.createElement("div");
-        head.className = "slot-head";
+        const head = slot.querySelector(".slot-head");
+        const portrait = slot.querySelector(".portrait");
+        const label = slot.querySelector(".name-label");
+        const meta = slot.querySelector(".slot-meta");
         head.innerHTML = `<strong>영웅 슬롯 ${hero.id}</strong><span>${hero.heroName ? "" : "미선택"}</span>`;
-
-        const portrait = document.createElement("div");
-        portrait.className = "portrait";
         portrait.textContent = hero.heroName || "영웅 선택";
+        portrait.innerHTML = hero.heroName || "영웅 선택";
         if (hero.heroName) {
           resolveAsset("hero", hero.heroName, hero.assetName).then((url) => {
             if (!url) return;
@@ -1012,35 +1053,29 @@
           });
         }
 
-        const label = document.createElement("div");
-        label.className = "name-label";
         label.textContent = hero.heroName || "슬롯을 눌러 영웅 지정";
-
-        const meta = document.createElement("div");
-        meta.className = "slot-meta";
-
-        slot.append(head, portrait, label, meta);
-        attachLongPress(
-          slot,
-          () => {
-            if (!canAssignHeroToSlot(hero.id)) return;
-            openSelectionModal({ type: "hero", heroId: hero.id, title: `영웅 슬롯 ${hero.id} 선택` });
-          },
-          () => openDetailModal(hero.id)
-        );
-        els.slotLayer.appendChild(slot);
+        meta.textContent = "";
+        if (!slot.dataset.bound) {
+          const boundHeroId = hero.id;
+          attachLongPress(
+            slot,
+            () => {
+              if (!canAssignHeroToSlot(boundHeroId)) return;
+              openSelectionModal({ type: "hero", heroId: boundHeroId, title: `영웅 슬롯 ${boundHeroId} 선택` });
+            },
+            () => openDetailModal(boundHeroId)
+          );
+          slot.dataset.bound = "true";
+        }
       });
 
       const pet = appState.board.pet;
-      const petSlot = document.createElement("article");
-      petSlot.className = "pet-slot";
+      const petSlot = ensurePetSlotNode();
       petSlot.style.left = `${petPosition.left}%`;
       petSlot.style.top = `${petPosition.top}%`;
-      petSlot.innerHTML = `
-        <div class="slot-head"><strong>펫 슬롯</strong><span>${pet.category || "펫"}</span></div>
-        <div class="portrait">${pet.name || "펫 선택"}</div>
-        <div class="name-label">${pet.name || "슬롯을 눌러 펫 지정"}</div>
-      `;
+      petSlot.querySelector(".slot-head").innerHTML = `<strong>펫 슬롯</strong><span>${pet.category || "펫"}</span>`;
+      petSlot.querySelector(".portrait").innerHTML = pet.name || "펫 선택";
+      petSlot.querySelector(".name-label").textContent = pet.name || "슬롯을 눌러 펫 지정";
       if (pet.name) {
         const petPortrait = petSlot.querySelector(".portrait");
         resolveAsset("pet", pet.name, pet.assetName).then((url) => {
@@ -1048,8 +1083,6 @@
           petPortrait.innerHTML = `<img src="${url}" alt="${pet.name}" />`;
         });
       }
-      petSlot.addEventListener("click", () => openSelectionModal({ type: "pet", title: "펫 선택" }));
-      els.slotLayer.appendChild(petSlot);
     }
 
     function makeSkillCandidate(hero, skillIndex) {
