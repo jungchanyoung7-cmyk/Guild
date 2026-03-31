@@ -131,11 +131,7 @@
     }
     .portrait img { width: 100%; height: 100%; object-fit: cover; }
     .name-label { margin-top: 5px; font-weight: 700; font-size: 0.82rem; text-align: center; line-height: 1.15; min-height: 1.1em; }
-    .slot-meta {
-      margin-top: 5px; font-size: 0.6rem; color: var(--muted); text-align: center;
-      padding: 3px 5px; border-radius: 10px; border: 1px solid var(--line); background: rgba(255,255,255,0.08);
-      line-height: 1.1;
-    }
+    .slot-meta { display: none; }
     .mini-slot {
       border-radius: 12px; padding: 6px 4px; min-height: 62px; border: 1px solid var(--line);
       background: var(--skill-bg); display: grid; place-items: center; text-align: center;
@@ -301,8 +297,8 @@
     @media (min-width: 1081px) {
       .panel.mobile-only { display: none; }
       .arena { min-height: 680px; }
-      .hero-slot { width: 96px; padding: 7px; }
-      .pet-slot { width: 86px; padding: 7px; }
+      .hero-slot { width: 88px; padding: 6px; }
+      .pet-slot { width: 84px; padding: 6px; }
     }
 
     @media (max-width: 780px) {
@@ -311,7 +307,7 @@
       .header-actions .pill-btn { display: none; }
       .formation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .arena { min-height: 720px; }
-      .hero-slot { width: 74px; padding: 5px; }
+      .hero-slot { width: 72px; padding: 5px; }
       .pet-slot { width: 68px; padding: 5px; }
       .selector-toolbar, .admin-grid, .deck-compare, .inline-grid, .stats-grid { grid-template-columns: 1fr; }
       .modal-card { padding: 16px; border-radius: 22px; }
@@ -609,65 +605,65 @@
     const formationLayouts = {
       mobile: {
         basic: [
-          { left: 48, top: 50 },
-          { left: 48, top: 18 },
-          { left: 4, top: 66 },
-          { left: 4, top: 38 },
-          { left: 4, top: 10 }
+          { left: 4, top: 8 },
+          { left: 34, top: 18 },
+          { left: 4, top: 34 },
+          { left: 34, top: 44 },
+          { left: 4, top: 60 }
         ],
         balance: [
-          { left: 48, top: 58 },
-          { left: 48, top: 34 },
-          { left: 48, top: 10 },
-          { left: 4, top: 50 },
-          { left: 4, top: 22 }
+          { left: 4, top: 8 },
+          { left: 34, top: 18 },
+          { left: 4, top: 34 },
+          { left: 34, top: 44 },
+          { left: 4, top: 60 }
         ],
         attack: [
-          { left: 48, top: 48 },
-          { left: 4, top: 74 },
-          { left: 4, top: 54 },
+          { left: 4, top: 8 },
+          { left: 34, top: 18 },
           { left: 4, top: 34 },
-          { left: 4, top: 14 }
+          { left: 34, top: 44 },
+          { left: 4, top: 60 }
         ],
         guard: [
-          { left: 48, top: 74 },
-          { left: 48, top: 54 },
-          { left: 48, top: 34 },
-          { left: 48, top: 14 },
-          { left: 4, top: 44 }
+          { left: 4, top: 8 },
+          { left: 34, top: 18 },
+          { left: 4, top: 34 },
+          { left: 34, top: 44 },
+          { left: 4, top: 60 }
         ],
-        pet: { left: 76, top: 20 }
+        pet: { left: 72, top: 34 }
       },
       desktop: {
         basic: [
-          { left: 48, top: 48 },
-          { left: 48, top: 16 },
-          { left: 4, top: 64 },
-          { left: 4, top: 36 },
-          { left: 4, top: 8 }
+          { left: 4, top: 8 },
+          { left: 34, top: 18 },
+          { left: 4, top: 34 },
+          { left: 34, top: 44 },
+          { left: 4, top: 60 }
         ],
         balance: [
-          { left: 48, top: 56 },
-          { left: 48, top: 32 },
-          { left: 48, top: 8 },
-          { left: 4, top: 48 },
-          { left: 4, top: 20 }
+          { left: 4, top: 8 },
+          { left: 34, top: 18 },
+          { left: 4, top: 34 },
+          { left: 34, top: 44 },
+          { left: 4, top: 60 }
         ],
         attack: [
-          { left: 48, top: 46 },
-          { left: 4, top: 72 },
-          { left: 4, top: 52 },
-          { left: 4, top: 32 },
-          { left: 4, top: 12 }
+          { left: 4, top: 8 },
+          { left: 34, top: 18 },
+          { left: 4, top: 34 },
+          { left: 34, top: 44 },
+          { left: 4, top: 60 }
         ],
         guard: [
-          { left: 48, top: 72 },
-          { left: 48, top: 52 },
-          { left: 48, top: 32 },
-          { left: 48, top: 12 },
-          { left: 4, top: 42 }
+          { left: 4, top: 8 },
+          { left: 34, top: 18 },
+          { left: 4, top: 34 },
+          { left: 34, top: 44 },
+          { left: 4, top: 60 }
         ],
-        pet: { left: 76, top: 18 }
+        pet: { left: 72, top: 34 }
       }
     };
 
@@ -712,6 +708,7 @@
       theme: "light",
       currentFormation: "basic",
       activeDeckFilter: "전체",
+      editingDeckId: "",
       skillHeroIds: [1, 2, 3],
       selectedSkills: [],
       favorites: { hero: [], pet: [], equipment: [], accessory: [], skill: [] },
@@ -1014,11 +1011,6 @@
 
         const meta = document.createElement("div");
         meta.className = "slot-meta";
-        meta.textContent = !hero.heroName && filledHeroCount >= maxSelectableHeroes
-          ? "영웅 3명 선택 완료"
-          : appState.skillHeroIds.includes(hero.id)
-            ? "스킬 후보 영웅"
-            : "탭: 선택 / 길게: 상세";
 
         slot.append(head, portrait, label, meta);
         attachLongPress(
@@ -1128,6 +1120,7 @@
     }
 
     function buildDeckForm(target) {
+      const editingDeck = appState.decks.find((deck) => deck.id === appState.editingDeckId) || null;
       target.innerHTML = `
         <div class="field">
           <label>덱명칭입력</label>
@@ -1163,21 +1156,32 @@
           <label>카운터덱 설정</label>
           <select id="${target.id}-counterDeck"></select>
         </div>
-        <button class="save-btn" id="${target.id}-saveDeckBtn">현재 보드로 가이드덱 저장</button>
+        <div class="deck-actions">
+          <button class="save-btn" id="${target.id}-saveDeckBtn">${editingDeck ? "현재 보드로 덱 수정 저장" : "현재 보드로 가이드덱 저장"}</button>
+          ${editingDeck ? `<button class="ghost-btn" id="${target.id}-cancelEditBtn" type="button">수정 취소</button>` : ""}
+        </div>
       `;
+
+      target.querySelector(`#${target.id}-deckName`).value = editingDeck?.name || "";
+      target.querySelector(`#${target.id}-deckType`).value = editingDeck?.type || "공격덱";
+      target.querySelector(`#${target.id}-deckTempo`).value = editingDeck?.tempo || "속공";
+      target.querySelector(`#${target.id}-speedValue`).value = editingDeck?.speedValue || "";
+      target.querySelector(`#${target.id}-deckTip`).value = editingDeck?.tip || "";
 
       const counterSelect = target.querySelector(`#${target.id}-counterDeck`);
       counterSelect.innerHTML = `<option value="">선택 안함</option>`;
       appState.decks.forEach((deck) => {
+        if (editingDeck && deck.id === editingDeck.id) return;
         const opt = document.createElement("option");
         opt.value = deck.id;
         opt.textContent = deck.name;
         counterSelect.appendChild(opt);
       });
+      counterSelect.value = editingDeck?.counterDeckId || "";
 
       target.querySelector(`#${target.id}-saveDeckBtn`).addEventListener("click", async () => {
         const deck = {
-          id: crypto.randomUUID(),
+          id: editingDeck?.id || crypto.randomUUID(),
           name: target.querySelector(`#${target.id}-deckName`).value.trim() || `가이드덱 ${appState.decks.length + 1}`,
           type: target.querySelector(`#${target.id}-deckType`).value,
           tempo: target.querySelector(`#${target.id}-deckTempo`).value,
@@ -1187,13 +1191,28 @@
           formation: appState.currentFormation,
           board: clone(appState.board),
           selectedSkills: clone(appState.selectedSkills),
-          createdAt: new Date().toISOString()
+          createdAt: editingDeck?.createdAt || new Date().toISOString(),
+          updatedAt: new Date().toISOString()
         };
-        appState.decks.unshift(deck);
+        if (editingDeck) {
+          const targetIndex = appState.decks.findIndex((item) => item.id === editingDeck.id);
+          if (targetIndex >= 0) appState.decks[targetIndex] = deck;
+          appState.editingDeckId = "";
+        } else {
+          appState.decks.unshift(deck);
+        }
         await saveAll({ syncFirebase: true });
         buildDeckForm(els.mobileDeckForm);
         buildDeckForm(els.desktopDeckForm);
       });
+
+      if (editingDeck) {
+        target.querySelector(`#${target.id}-cancelEditBtn`).addEventListener("click", () => {
+          appState.editingDeckId = "";
+          buildDeckForm(els.mobileDeckForm);
+          buildDeckForm(els.desktopDeckForm);
+        });
+      }
     }
 
     function renderDeckFilters() {
@@ -1262,17 +1281,59 @@
           <div class="deck-meta">${deck.tip || "공략팁이 없습니다."}</div>
           <div class="deck-actions">
             <button class="command-btn active">상세설정</button>
-            <button class="ghost-btn">현재 보드로 불러오기</button>
+            <button class="ghost-btn" data-action="load">현재 보드로 불러오기</button>
+            <button class="ghost-btn" data-action="edit">수정</button>
+            <button class="ghost-btn" data-action="duplicate">복제</button>
+            <button class="ghost-btn" data-action="delete">삭제</button>
           </div>
         `;
         renderDeckCardImages(deck, card.querySelector(".banner-strip"));
         card.querySelector(".command-btn").addEventListener("click", () => openDeckPreview(deck.id));
-        card.querySelector(".ghost-btn").addEventListener("click", async () => {
+        card.querySelector('[data-action="load"]').addEventListener("click", async () => {
           appState.board = clone(deck.board);
           appState.currentFormation = deck.formation;
           appState.selectedSkills = clone(deck.selectedSkills || []);
+          appState.editingDeckId = "";
           await saveAll();
+          buildDeckForm(els.mobileDeckForm);
+          buildDeckForm(els.desktopDeckForm);
           openPage("main");
+        });
+        card.querySelector('[data-action="edit"]').addEventListener("click", async () => {
+          appState.board = clone(deck.board);
+          appState.currentFormation = deck.formation;
+          appState.selectedSkills = clone(deck.selectedSkills || []);
+          appState.editingDeckId = deck.id;
+          await saveAll();
+          buildDeckForm(els.mobileDeckForm);
+          buildDeckForm(els.desktopDeckForm);
+          openPage("main");
+        });
+        card.querySelector('[data-action="duplicate"]').addEventListener("click", async () => {
+          const copiedDeck = {
+            ...clone(deck),
+            id: crypto.randomUUID(),
+            name: `${deck.name} 복제본`,
+            counterDeckId: deck.counterDeckId === deck.id ? "" : deck.counterDeckId,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          };
+          appState.decks.unshift(copiedDeck);
+          appState.editingDeckId = "";
+          await saveAll({ syncFirebase: true });
+          buildDeckForm(els.mobileDeckForm);
+          buildDeckForm(els.desktopDeckForm);
+        });
+        card.querySelector('[data-action="delete"]').addEventListener("click", async () => {
+          appState.decks = appState.decks.filter((item) => item.id !== deck.id)
+            .map((item) => ({
+              ...item,
+              counterDeckId: item.counterDeckId === deck.id ? "" : item.counterDeckId
+            }));
+          if (appState.editingDeckId === deck.id) appState.editingDeckId = "";
+          await saveAll({ syncFirebase: true });
+          buildDeckForm(els.mobileDeckForm);
+          buildDeckForm(els.desktopDeckForm);
         });
         els.deckList.appendChild(card);
       });
