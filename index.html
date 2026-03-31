@@ -598,65 +598,65 @@
     const formationLayouts = {
       mobile: {
         basic: [
-          { left: 64, top: 58 },
-          { left: 64, top: 18 },
-          { left: 6, top: 58 },
-          { left: 6, top: 38 },
-          { left: 6, top: 18 }
+          { left: 52, top: 52 },
+          { left: 52, top: 20 },
+          { left: 10, top: 68 },
+          { left: 10, top: 44 },
+          { left: 10, top: 20 }
         ],
         balance: [
-          { left: 64, top: 58 },
-          { left: 64, top: 38 },
-          { left: 64, top: 18 },
-          { left: 6, top: 38 },
-          { left: 6, top: 18 }
+          { left: 52, top: 60 },
+          { left: 52, top: 40 },
+          { left: 52, top: 20 },
+          { left: 10, top: 52 },
+          { left: 10, top: 28 }
         ],
         attack: [
-          { left: 64, top: 40 },
-          { left: 6, top: 70 },
-          { left: 6, top: 52 },
-          { left: 6, top: 34 },
-          { left: 6, top: 16 }
+          { left: 52, top: 42 },
+          { left: 10, top: 76 },
+          { left: 10, top: 56 },
+          { left: 10, top: 36 },
+          { left: 10, top: 16 }
         ],
         guard: [
-          { left: 64, top: 70 },
-          { left: 64, top: 52 },
-          { left: 64, top: 34 },
-          { left: 64, top: 16 },
-          { left: 6, top: 38 }
+          { left: 52, top: 76 },
+          { left: 52, top: 56 },
+          { left: 52, top: 36 },
+          { left: 52, top: 16 },
+          { left: 10, top: 46 }
         ],
-        pet: { left: 40, top: 86 }
+        pet: { left: 64, top: 82 }
       },
       desktop: {
         basic: [
-          { left: 70, top: 52 },
-          { left: 70, top: 16 },
-          { left: 8, top: 54 },
-          { left: 8, top: 34 },
-          { left: 8, top: 14 }
+          { left: 52, top: 50 },
+          { left: 52, top: 20 },
+          { left: 10, top: 66 },
+          { left: 10, top: 42 },
+          { left: 10, top: 18 }
         ],
         balance: [
-          { left: 70, top: 54 },
-          { left: 70, top: 34 },
-          { left: 70, top: 14 },
-          { left: 8, top: 34 },
-          { left: 8, top: 14 }
+          { left: 52, top: 58 },
+          { left: 52, top: 38 },
+          { left: 52, top: 18 },
+          { left: 10, top: 50 },
+          { left: 10, top: 26 }
         ],
         attack: [
-          { left: 70, top: 36 },
-          { left: 8, top: 72 },
-          { left: 8, top: 54 },
-          { left: 8, top: 36 },
-          { left: 8, top: 18 }
+          { left: 52, top: 40 },
+          { left: 10, top: 76 },
+          { left: 10, top: 56 },
+          { left: 10, top: 36 },
+          { left: 10, top: 16 }
         ],
         guard: [
-          { left: 70, top: 72 },
-          { left: 70, top: 54 },
-          { left: 70, top: 36 },
-          { left: 70, top: 18 },
-          { left: 8, top: 36 }
+          { left: 52, top: 76 },
+          { left: 52, top: 56 },
+          { left: 52, top: 36 },
+          { left: 52, top: 16 },
+          { left: 10, top: 46 }
         ],
-        pet: { left: 44, top: 87 }
+        pet: { left: 66, top: 80 }
       }
     };
 
@@ -950,18 +950,7 @@
 
     function syncSkillSelections() {
       const occupied = getOccupiedHeroIds();
-      const fallback = appState.board.heroes.map((hero) => hero.id);
-      const source = occupied.length ? occupied : fallback;
-      const nextIds = [];
-      [...appState.skillHeroIds, ...source].forEach((id) => {
-        if (!nextIds.includes(id) && nextIds.length < 3) nextIds.push(id);
-      });
-      while (nextIds.length < 3) {
-        const extra = fallback.find((id) => !nextIds.includes(id));
-        if (!extra) break;
-        nextIds.push(extra);
-      }
-      appState.skillHeroIds = nextIds;
+      appState.skillHeroIds = occupied.slice(0, 3);
 
       const validKeys = new Set();
       appState.skillHeroIds.forEach((heroId) => {
@@ -1081,6 +1070,12 @@
       els.skillTrayHint.textContent = "선택한 영웅 3명의 스킬(위/아래) 6개 후보 중 최종 3개를 선택합니다.";
 
       els.selectedSkillSlots.innerHTML = "";
+      if (!appState.skillHeroIds.length) {
+        for (let i = 0; i < 3; i += 1) {
+          els.selectedSkillSlots.appendChild(buildMiniSlot(`선택 스킬 ${i + 1}`, "skill", ""));
+        }
+        return;
+      }
       for (let i = 0; i < 3; i += 1) {
         const selected = appState.selectedSkills[i];
         const slot = buildMiniSlot(selected?.label || `선택 스킬 ${i + 1}`, "skill", selected?.assetName || "");
@@ -1095,6 +1090,10 @@
     function renderSkillPickerModal() {
       syncSkillSelections();
       els.skillPickerGrid.innerHTML = "";
+      if (!appState.skillHeroIds.length) {
+        els.skillPickerGrid.innerHTML = `<div class="empty-state">먼저 아무 영웅 슬롯에 1명 이상 배치해 주세요.</div>`;
+        return;
+      }
       const candidates = [];
       [0, 1].forEach((skillIndex) => {
         appState.skillHeroIds.forEach((heroId, columnIndex) => {
@@ -1297,7 +1296,14 @@
 
     function getSelectorData(context) {
       switch (context.type) {
-        case "hero": return getHeroCatalog();
+        case "hero": {
+          const selectedHeroNames = new Set(
+            appState.board.heroes
+              .filter((hero) => hero.heroName && hero.id !== context.heroId)
+              .map((hero) => hero.heroName)
+          );
+          return getHeroCatalog().filter((hero) => !selectedHeroNames.has(hero.name));
+        }
         case "pet": return getPetCatalog();
         case "equipment": return getEquipmentCatalog();
         case "accessory": return getAccessoryCatalog();
@@ -1333,6 +1339,8 @@
           closeModal("selectionModal");
           return;
         }
+        const duplicateHero = appState.board.heroes.some((hero) => hero.id !== context.heroId && hero.heroName === item.name);
+        if (duplicateHero) return;
         target.heroName = item.name;
         target.category = item.category;
         target.assetName = item.assetName || item.name;
@@ -1401,6 +1409,32 @@
         card.querySelector(".command-btn").addEventListener("click", () => selectItem(selectorContext, item));
         els.selectorGrid.appendChild(card);
       });
+
+      if (selectorContext.type === "hero") {
+        const removeCard = document.createElement("div");
+        removeCard.className = "select-card";
+        removeCard.innerHTML = `
+          <div class="portrait">영웅 빼기</div>
+          <div class="select-card-name">현재 슬롯 비우기</div>
+          <button class="ghost-btn" type="button">빼기</button>
+        `;
+        removeCard.querySelector(".ghost-btn").addEventListener("click", () => {
+          const target = appState.board.heroes.find((hero) => hero.id === selectorContext.heroId);
+          if (!target) return;
+          target.heroName = "";
+          target.category = "";
+          target.assetName = "";
+          target.skills = ["기본", "스킬-2", "스킬-3"];
+          target.skillAssetNames = [];
+          target.stats = Object.fromEntries(statFields.map((field) => [field, ""]));
+          target.equipment = ["", "", "", ""];
+          target.accessory = "";
+          syncSkillSelections();
+          saveAll();
+          closeModal("selectionModal");
+        });
+        els.selectorGrid.appendChild(removeCard);
+      }
 
       els.selectorQuickFavorites.querySelectorAll("[data-quick-favorite]").forEach((button) => {
         button.addEventListener("click", () => {
