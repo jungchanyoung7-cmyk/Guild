@@ -1,4 +1,3 @@
-
 ﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -1027,18 +1026,12 @@
       if (petSlotNode) return petSlotNode;
       petSlotNode = document.createElement("article");
       petSlotNode.className = "pet-slot";
+      petSlotNode.dataset.role = "pet-slot";
       petSlotNode.innerHTML = `
         <div class="slot-head"><strong>펫 슬롯</strong><span>펫</span></div>
         <div class="portrait">펫 선택</div>
         <div class="name-label">슬롯을 눌러 펫 지정</div>
       `;
-      const openPetSelector = (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        openSelectionModal({ type: "pet", title: "펫 선택" });
-      };
-      petSlotNode.addEventListener("click", openPetSelector);
-      petSlotNode.addEventListener("pointerup", openPetSelector);
       els.slotLayer.appendChild(petSlotNode);
       return petSlotNode;
     }
@@ -1624,6 +1617,7 @@
         const button = document.createElement("button");
         button.className = "detail-slot";
         button.type = "button";
+        button.dataset.detailEquip = String(index);
         button.innerHTML = `<strong>장비 ${index + 1}</strong><span>${item || "선택"}</span>`;
         if (item) {
           resolveAsset("equipment", item, item).then((url) => {
@@ -1631,36 +1625,19 @@
             button.innerHTML = `<strong>장비 ${index + 1}</strong><img src="${url}" alt="${item}" /><span>${item}</span>`;
           });
         }
-        if (!readOnly) {
-          const openEquipmentSelector = (event) => {
-            event.preventDefault();
-            event.stopPropagation();
-            openSelectionModal({ type: "equipment", title: `장비 ${index + 1} 선택`, slotIndex: index });
-          };
-          button.addEventListener("click", openEquipmentSelector);
-          button.addEventListener("pointerup", openEquipmentSelector);
-        }
         els.equipGrid.appendChild(button);
       });
 
       const accessory = document.createElement("button");
       accessory.className = "detail-slot";
       accessory.type = "button";
+      accessory.dataset.detailAccessory = "true";
       accessory.innerHTML = `<strong>장신구</strong><span>${hero.accessory || "선택"}</span>`;
       if (hero.accessory) {
         resolveAsset("accessory", hero.accessory, hero.accessory).then((url) => {
           if (!url) return;
           accessory.innerHTML = `<strong>장신구</strong><img src="${url}" alt="${hero.accessory}" /><span>${hero.accessory}</span>`;
         });
-      }
-      if (!readOnly) {
-        const openAccessorySelector = (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          openSelectionModal({ type: "accessory", title: "장신구 선택" });
-        };
-        accessory.addEventListener("click", openAccessorySelector);
-        accessory.addEventListener("pointerup", openAccessorySelector);
       }
       els.accessorySlot.innerHTML = "";
       els.accessorySlot.appendChild(accessory);
@@ -1923,6 +1900,33 @@
       document.getElementById("openSkillPickerBtn").addEventListener("click", () => {
         renderSkillPickerModal();
         openModal("skillPickerModal");
+      });
+      els.slotLayer.addEventListener("click", (event) => {
+        const petTarget = event.target.closest('[data-role="pet-slot"]');
+        if (!petTarget) return;
+        if (els.selectionModal.classList.contains("open")) return;
+        event.preventDefault();
+        event.stopPropagation();
+        openSelectionModal({ type: "pet", title: "펫 선택" });
+      });
+      els.detailModal.addEventListener("click", (event) => {
+        if (!detailContext || detailContext.readOnly) return;
+        const equipTarget = event.target.closest("[data-detail-equip]");
+        if (equipTarget) {
+          const slotIndex = Number(equipTarget.dataset.detailEquip);
+          if (!Number.isNaN(slotIndex)) {
+            event.preventDefault();
+            event.stopPropagation();
+            openSelectionModal({ type: "equipment", title: `장비 ${slotIndex + 1} 선택`, slotIndex });
+          }
+          return;
+        }
+        const accessoryTarget = event.target.closest("[data-detail-accessory]");
+        if (accessoryTarget) {
+          event.preventDefault();
+          event.stopPropagation();
+          openSelectionModal({ type: "accessory", title: "장신구 선택" });
+        }
       });
       document.querySelectorAll("[data-close-modal]").forEach((button) => {
         button.addEventListener("click", () => closeModal(button.dataset.closeModal));
