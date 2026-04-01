@@ -1,3 +1,4 @@
+
 ﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -810,6 +811,125 @@
     const updateSaveState = (text) => { els.saveStateLabel.textContent = `저장 상태: ${text}`; };
     const getFavoritesKey = (type) => type === "skillHero" ? "hero" : type;
     const getFavoritesBucket = (type) => appState.favorites[getFavoritesKey(type)] || [];
+    const asArray = (value) => Array.isArray(value) ? value : [];
+
+    function sanitizeHeroSlot(slot, id) {
+      const safe = createEmptyHeroSlot(id);
+      if (!slot || typeof slot !== "object") return safe;
+      safe.heroName = typeof slot.heroName === "string" ? slot.heroName : "";
+      safe.category = typeof slot.category === "string" ? slot.category : "";
+      safe.assetName = typeof slot.assetName === "string" ? slot.assetName : "";
+      safe.skills = asArray(slot.skills).map((item) => String(item)).filter(Boolean).slice(0, 3);
+      if (!safe.skills.length) safe.skills = defaultSkillsForHero(safe.heroName || `영웅${id}`);
+      safe.skillAssetNames = asArray(slot.skillAssetNames).map((item) => String(item)).filter(Boolean).slice(0, 3);
+      const rawStats = slot.stats && typeof slot.stats === "object" ? slot.stats : {};
+      safe.stats = Object.fromEntries(statFields.map((field) => [field, rawStats[field] ?? ""]));
+      safe.equipment = asArray(slot.equipment).map((item) => String(item || "")).slice(0, 4);
+      while (safe.equipment.length < 4) safe.equipment.push("");
+      safe.accessory = typeof slot.accessory === "string" ? slot.accessory : "";
+      return safe;
+    }
+
+    function sanitizeBoard(board) {
+      const safeBoard = {
+        heroes: Array.from({ length: 5 }, (_, index) => createEmptyHeroSlot(index + 1)),
+        pet: { name: "", assetName: "", category: "펫" }
+      };
+      const sourceHeroes = asArray(board?.heroes);
+      for (let i = 0; i < 5; i += 1) {
+        safeBoard.heroes[i] = sanitizeHeroSlot(sourceHeroes[i], i + 1);
+      }
+      if (board?.pet && typeof board.pet === "object") {
+        safeBoard.pet = {
+          name: typeof board.pet.name === "string" ? board.pet.name : "",
+          assetName: typeof board.pet.assetName === "string" ? board.pet.assetName : "",
+          category: typeof board.pet.category === "string" ? board.pet.category : "펫"
+        };
+      }
+      return safeBoard;
+    }
+
+    function normalizeAppState(rawState) {
+      const source = rawState && typeof rawState === "object" ? rawState : {};
+      const safe = clone(defaultState);
+      safe.version = Number.isFinite(Number(source.version)) ? Number(source.version) : 1;
+      safe.theme = source.theme === "dark" ? "dark" : "light";
+      safe.currentFormation = formationMeta.some((item) => item.key === source.currentFormation) ? source.currentFormation : "basic";
+      safe.activeDeckFilter = typeof source.activeDeckFilter === "string" ? source.activeDeckFilter : "전체";
+      safe.editingDeckId = typeof source.editingDeckId === "string" ? source.editingDeckId : "";
+      safe.skillHeroIds = asArray(source.skillHeroIds)
+        .map((id) => Number(id))
+        .filter((id) => Number.isInteger(id) && id >= 1 && id <= 5)
+        .filter((id, index, arr) => arr.indexOf(id) === index)
+        .slice(0, 3);
+      safe.selectedSkills = asArray(source.selectedSkills)
+        .filter((item) => item && typeof item === "object")
+        .map((item) => ({
+          heroId: Number(item.heroId) || 0,
+          heroName: typeof item.heroName === "string" ? item.heroName : "",
+          skillIndex: Number(item.skillIndex) || 0,
+          label: typeof item.label === "string" ? item.label : "",
+          assetName: typeof item.assetName === "string" ? item.assetName : "",
+          key: typeof item.key === "string" ? item.key : ""
+        }))
+        .filter((item) => item.key)
+        .slice(0, 3);
+      const favorites = source.favorites && typeof source.favorites === "object" ? source.favorites : {};
+      safe.favorites = {
+        hero: asArray(favorites.hero).map(String),
+        pet: asArray(favorites.pet).map(String),
+        equipment: asArray(favorites.equipment).map(String),
+        accessory: asArray(favorites.accessory).map(String),
+        skill: asArray(favorites.skill).map(String)
+      };
+      const customData = source.customData && typeof source.customData === "object" ? source.customData : {};
+      safe.customData = {
+        heroes: asArray(customData.heroes).filter((item) => item && typeof item === "object" && item.name).map((item) => ({
+          name: String(item.name),
+          category: String(item.category || "기타"),
+          assetName: String(item.assetName || item.name),
+          skills: asArray(item.skills).map(String).filter(Boolean).slice(0, 3)
+        })),
+        pets: asArray(customData.pets).filter((item) => item && typeof item === "object" && item.name).map((item) => ({
+          name: String(item.name),
+          category: "펫",
+          assetName: String(item.assetName || item.name)
+        })),
+        equipment: asArray(customData.equipment).filter((item) => item && typeof item === "object" && item.name).map((item) => ({
+          name: String(item.name),
+          category: "장비",
+          assetName: String(item.assetName || item.name)
+        })),
+        accessory: asArray(customData.accessory).filter((item) => item && typeof item === "object" && item.name).map((item) => ({
+          name: String(item.name),
+          category: "장신구",
+          assetName: String(item.assetName || item.name)
+        }))
+      };
+      safe.board = sanitizeBoard(source.board);
+      safe.decks = asArray(source.decks).filter((deck) => deck && typeof deck === "object").map((deck, index) => ({
+        id: typeof deck.id === "string" && deck.id ? deck.id : `deck-${index + 1}`,
+        name: typeof deck.name === "string" && deck.name ? deck.name : `가이드덱 ${index + 1}`,
+        type: typeof deck.type === "string" ? deck.type : "공격덱",
+        tempo: typeof deck.tempo === "string" ? deck.tempo : "속공",
+        speedValue: typeof deck.speedValue === "string" ? deck.speedValue : "",
+        tip: typeof deck.tip === "string" ? deck.tip : "",
+        counterDeckId: typeof deck.counterDeckId === "string" ? deck.counterDeckId : "",
+        formation: formationMeta.some((item) => item.key === deck.formation) ? deck.formation : "basic",
+        board: sanitizeBoard(deck.board),
+        selectedSkills: asArray(deck.selectedSkills).filter((item) => item && typeof item === "object").map((item) => ({
+          heroId: Number(item.heroId) || 0,
+          heroName: typeof item.heroName === "string" ? item.heroName : "",
+          skillIndex: Number(item.skillIndex) || 0,
+          label: typeof item.label === "string" ? item.label : "",
+          assetName: typeof item.assetName === "string" ? item.assetName : "",
+          key: typeof item.key === "string" ? item.key : ""
+        })).filter((item) => item.key).slice(0, 3),
+        createdAt: typeof deck.createdAt === "string" ? deck.createdAt : new Date().toISOString(),
+        updatedAt: typeof deck.updatedAt === "string" ? deck.updatedAt : ""
+      }));
+      return safe;
+    }
 
     function buildAssetCandidates(type, name, explicitAssetName = "") {
       const baseName = normalizeName(explicitAssetName || name);
@@ -894,7 +1014,7 @@
     async function loadState() {
       const local = localStorage.getItem("guild-guide-state");
       if (local) {
-        try { appState = Object.assign(clone(defaultState), JSON.parse(local)); }
+        try { appState = normalizeAppState(JSON.parse(local)); }
         catch (error) { console.warn("로컬 상태 복구 실패", error); }
       }
       const savedTheme = localStorage.getItem("guild-guide-theme");
@@ -903,13 +1023,14 @@
         try {
           const snapshot = await get(child(ref(database), "guildGuide/appState"));
           if (snapshot.exists()) {
-            appState = Object.assign(clone(defaultState), snapshot.val());
+            appState = normalizeAppState(snapshot.val());
             updateSaveState("Firebase 데이터 불러옴");
           }
         } catch (error) {
           console.warn("Firebase 로드 실패", error);
         }
       }
+      appState = normalizeAppState(appState);
     }
 
     function renderFormationButtons() {
@@ -1594,6 +1715,7 @@
 
     function openDetailModal(heroId, sourceBoard = appState.board, options = {}) {
       const hero = sourceBoard.heroes.find((slot) => slot.id === heroId);
+      if (!hero) return;
       detailContext = { heroId, hero, readOnly: Boolean(options.readOnly) };
       els.detailModalTitle.textContent = `${hero.heroName || `영웅 슬롯 ${heroId}`} 상세 설정`;
       renderDetailModalContents();
@@ -1603,6 +1725,7 @@
     function renderDetailModalContents() {
       if (!detailContext) return;
       const { hero, readOnly } = detailContext;
+      if (!hero) return;
       document.getElementById("detailSaveBtn").style.display = readOnly ? "none" : "";
       els.statsGrid.innerHTML = "";
       statFields.forEach((field) => {
