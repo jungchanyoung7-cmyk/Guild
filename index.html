@@ -553,6 +553,7 @@
       </div>
       <div style="margin-top:16px; display:flex; justify-content:flex-end; gap:10px;">
         <button class="ghost-btn" data-close-modal="adminModal" aria-label="닫기">✕</button>
+        <button class="ghost-btn" id="adminDeleteBtn" type="button">삭제</button>
         <button class="save-btn" id="adminSaveBtn">추가/수정 저장</button>
       </div>
     </div>
@@ -1031,7 +1032,13 @@
         <div class="portrait">펫 선택</div>
         <div class="name-label">슬롯을 눌러 펫 지정</div>
       `;
-      petSlotNode.addEventListener("click", () => openSelectionModal({ type: "pet", title: "펫 선택" }));
+      const openPetSelector = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        openSelectionModal({ type: "pet", title: "펫 선택" });
+      };
+      petSlotNode.addEventListener("click", openPetSelector);
+      petSlotNode.addEventListener("pointerup", openPetSelector);
       els.slotLayer.appendChild(petSlotNode);
       return petSlotNode;
     }
@@ -1478,8 +1485,8 @@
       const data = getSelectorData(selectorContext);
       const categories = ["전체", ...new Set(data.map((item) => item.category || "기타"))];
       els.selectorCategory.innerHTML = categories.map((category) => `<option value="${category}">${category}</option>`).join("");
-      renderSelectionGrid();
       openModal("selectionModal");
+      renderSelectionGrid();
     }
 
     function selectItem(context, item) {
@@ -1511,6 +1518,7 @@
 
     function renderSelectionGrid() {
       if (!selectorContext) return;
+      if (!els.selectorTopAction || !els.selectorGrid || !els.selectorQuickFavorites) return;
       const search = els.selectorSearch.value.trim();
       const selectedCategory = els.selectorCategory.value || "전체";
       const favoriteMode = els.selectorFavoriteFilter.value;
@@ -1615,6 +1623,7 @@
       hero.equipment.forEach((item, index) => {
         const button = document.createElement("button");
         button.className = "detail-slot";
+        button.type = "button";
         button.innerHTML = `<strong>장비 ${index + 1}</strong><span>${item || "선택"}</span>`;
         if (item) {
           resolveAsset("equipment", item, item).then((url) => {
@@ -1622,12 +1631,21 @@
             button.innerHTML = `<strong>장비 ${index + 1}</strong><img src="${url}" alt="${item}" /><span>${item}</span>`;
           });
         }
-        if (!readOnly) button.addEventListener("click", () => openSelectionModal({ type: "equipment", title: `장비 ${index + 1} 선택`, slotIndex: index }));
+        if (!readOnly) {
+          const openEquipmentSelector = (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            openSelectionModal({ type: "equipment", title: `장비 ${index + 1} 선택`, slotIndex: index });
+          };
+          button.addEventListener("click", openEquipmentSelector);
+          button.addEventListener("pointerup", openEquipmentSelector);
+        }
         els.equipGrid.appendChild(button);
       });
 
       const accessory = document.createElement("button");
       accessory.className = "detail-slot";
+      accessory.type = "button";
       accessory.innerHTML = `<strong>장신구</strong><span>${hero.accessory || "선택"}</span>`;
       if (hero.accessory) {
         resolveAsset("accessory", hero.accessory, hero.accessory).then((url) => {
@@ -1635,7 +1653,15 @@
           accessory.innerHTML = `<strong>장신구</strong><img src="${url}" alt="${hero.accessory}" /><span>${hero.accessory}</span>`;
         });
       }
-      if (!readOnly) accessory.addEventListener("click", () => openSelectionModal({ type: "accessory", title: "장신구 선택" }));
+      if (!readOnly) {
+        const openAccessorySelector = (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          openSelectionModal({ type: "accessory", title: "장신구 선택" });
+        };
+        accessory.addEventListener("click", openAccessorySelector);
+        accessory.addEventListener("pointerup", openAccessorySelector);
+      }
       els.accessorySlot.innerHTML = "";
       els.accessorySlot.appendChild(accessory);
     }
@@ -1774,6 +1800,94 @@
       closeModal("adminModal");
     }
 
+    function clearHeroFromBoard(board, heroName) {
+      board.heroes.forEach((hero) => {
+        if (hero.heroName !== heroName) return;
+        hero.heroName = "";
+        hero.category = "";
+        hero.assetName = "";
+        hero.skills = ["기본", "스킬-2", "스킬-3"];
+        hero.skillAssetNames = [];
+        hero.stats = Object.fromEntries(statFields.map((field) => [field, ""]));
+        hero.equipment = ["", "", "", ""];
+        hero.accessory = "";
+      });
+    }
+
+    function cleanupDeletedAdminItem(type, name) {
+      if (type === "hero") {
+        clearHeroFromBoard(appState.board, name);
+        appState.decks.forEach((deck) => {
+          clearHeroFromBoard(deck.board, name);
+          deck.selectedSkills = (deck.selectedSkills || []).filter((skill) => !(skill.assetName || "").startsWith(`${name}-`));
+        });
+        syncSkillSelections();
+        return;
+      }
+
+      if (type === "pet") {
+        if (appState.board.pet.name === name) appState.board.pet = { name: "", assetName: "", category: "펫" };
+        appState.decks.forEach((deck) => {
+          if (deck.board.pet.name === name) deck.board.pet = { name: "", assetName: "", category: "펫" };
+        });
+        return;
+      }
+
+      if (type === "equipment") {
+        appState.board.heroes.forEach((hero) => {
+          hero.equipment = hero.equipment.map((item) => item === name ? "" : item);
+        });
+        appState.decks.forEach((deck) => {
+          deck.board.heroes.forEach((hero) => {
+            hero.equipment = hero.equipment.map((item) => item === name ? "" : item);
+          });
+        });
+        return;
+      }
+
+      if (type === "accessory") {
+        appState.board.heroes.forEach((hero) => {
+          if (hero.accessory === name) hero.accessory = "";
+        });
+        appState.decks.forEach((deck) => {
+          deck.board.heroes.forEach((hero) => {
+            if (hero.accessory === name) hero.accessory = "";
+          });
+        });
+      }
+    }
+
+    async function handleAdminDelete() {
+      const type = els.adminType.value;
+      const name = els.adminName.value.trim();
+      if (!name) return;
+
+      const labelMap = {
+        hero: "영웅",
+        pet: "펫",
+        equipment: "장비",
+        accessory: "장신구"
+      };
+      const confirmed = window.confirm(`${labelMap[type]} "${name}" 데이터를 삭제할까요?`);
+      if (!confirmed) return;
+
+      const keyMap = {
+        hero: "heroes",
+        pet: "pets",
+        equipment: "equipment",
+        accessory: "accessory"
+      };
+      const key = keyMap[type];
+      const beforeLength = appState.customData[key].length;
+      appState.customData[key] = appState.customData[key].filter((item) => item.name !== name);
+      if (beforeLength === appState.customData[key].length) return;
+
+      cleanupDeletedAdminItem(type, name);
+      await saveAll({ syncFirebase: true });
+      renderAdminDefaults();
+      closeModal("adminModal");
+    }
+
     function renderAll() {
       setTheme(appState.theme);
       renderFormationButtons();
@@ -1838,6 +1952,7 @@
         closeModal("detailModal");
       });
       document.getElementById("adminSaveBtn").addEventListener("click", handleAdminSave);
+      document.getElementById("adminDeleteBtn").addEventListener("click", handleAdminDelete);
       window.addEventListener("resize", () => {
         renderSlots();
         renderSkillSelectionArea();
